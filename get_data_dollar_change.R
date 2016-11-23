@@ -24,7 +24,7 @@ cleanBPC <- function(column1, column2, column3, year) {
   temp <- distribution %>%
     select_(column1, column2, column3)
   
-  names(temp) <- c("group", "income.source", temp[1, 3:ncol(temp)])
+  names(temp) <- c("subgroup", "income.source", temp[1, 3:ncol(temp)])
   
   temp <- temp %>%
     slice(-1) %>%
@@ -41,16 +41,17 @@ cleanBPC <- function(column1, column2, column3, year) {
   temp[837, 1] <- "Quintile 4 (Lifetime Earnings)"
   temp[866, 1] <- "Top Quintile (Lifetime Earnings)"
   
-  while (sum(is.na(temp$group)) > 1) {
+  while (sum(is.na(temp$subgroup)) > 1) {
     
     temp <- temp %>%
-      mutate(group = ifelse(is.na(group), lag(group), group))
+      mutate(subgroup = ifelse(is.na(subgroup), lag(subgroup), subgroup))
     
   }
   
   temp <- temp %>%
     filter(!is.na(P10) & P10 != "P10") %>%
     filter(!is.na(income.source)) %>%
+    mutate_all(funs(trimws)) %>%
     distinct()
 
   return(temp)
@@ -69,8 +70,43 @@ distribution <- bind_rows(
   cleanBPC(column1 = "X71", column2 = "X72", column3 = "X76:X83", year = 2065)
 )
 
-# check for duplicates
-
+# create tidy data frame
 distribution <- distribution %>%
-  gather(key = percentile, value = value, -group, -income.source, -year) %>%
-  spread(income.source, value)
+  gather(key = percentile, value = value, -subgroup, -income.source, -year) %>%
+  spread(income.source, value) %>%
+  arrange(subgroup, year, percentile)
+
+# Create a variable for groups
+distribution <- distribution %>%
+  mutate(subgroup = ifelse(subgroup == "Male", "Males", subgroup)) %>%
+  mutate(subgroup = ifelse(subgroup == "High School Graduate", "High School Graduates", subgroup)) %>%
+  mutate(group = ifelse(subgroup == "All Individuals", "All Individuals", NA)) %>%
+  mutate(group = ifelse(subgroup %in% c("Males", "Females"), "Sex", group)) %>%
+  mutate(group = ifelse(subgroup %in% c("High School Dropouts",
+                                        "High School Graduates", 
+                                        "Some College", "College Graduates"),
+                        "Education", group)) %>%
+  mutate(group = ifelse(subgroup %in% c("African-Americans", 
+                                        "Hispanics",
+                                        "White, Non-Hispanics"),
+                        "Race/Ethnicity", group)) %>%
+  mutate(group = ifelse(subgroup %in% c("Never Married Individuals",
+                                        "Divorced Individuals",
+                                        "Married Individuals",
+                                        "Widowed Individuals"),
+                        "Marital Status", group)) %>%
+  mutate(group = ifelse(subgroup %in% c("Bottom Quintile (Per Capita Income)", 
+                                        "Quintile 2 (Per Capita Income)", 
+                                        "Quintile 3 (Per Capita Income)",
+                                        "Quintile 4 (Per Capita Income)", 
+                                        "Top Quintile (Per Capita Income)"), 
+                        "Per Capita Income Quintile", group)) %>%
+  mutate(group = ifelse(subgroup %in% c("Bottom Quintile (Lifetime Earnings)",
+                                        "Quintile 2 (Lifetime Earnings)",
+                                        "Quintile 3 (Lifetime Earnings)",
+                                        "Quintile 4 (Lifetime Earnings)",
+                                        "Top Quintile (Lifetime Earnings)"), 
+                        "Lifetime Earnings Quintile", group))
+
+# Write tidy data frame
+write_csv(distribution, "data/dollar_change.csv")
