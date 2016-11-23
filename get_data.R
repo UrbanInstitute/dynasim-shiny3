@@ -30,6 +30,17 @@ cleanBPC <- function(column1, column2, column3, year) {
     slice(-1) %>%
     mutate(year = year)
   
+  temp[566, 1] <- "Bottom Quintile (Per Capita Income)"
+  temp[595, 1] <- "Quintile 2 (Per Capita Income)"
+  temp[624, 1] <- "Quintile 3 (Per Capita Income)"
+  temp[653, 1] <- "Quintile 4 (Per Capita Income)"
+  temp[682, 1] <- "Top Quintile (Per Capita Income)"
+  temp[750, 1] <- "Bottom Quintile (Lifetime Earnings)"
+  temp[779, 1] <- "Quintile 2 (Lifetime Earnings)"
+  temp[808, 1] <- "Quintile 3 (Lifetime Earnings)"
+  temp[837, 1] <- "Quintile 4 (Lifetime Earnings)"
+  temp[866, 1] <- "Top Quintile (Lifetime Earnings)"
+  
   while (sum(is.na(temp$group)) > 1) {
     
     temp <- temp %>%
@@ -38,16 +49,28 @@ cleanBPC <- function(column1, column2, column3, year) {
   }
   
   temp <- temp %>%
-    filter(!is.na(P10) & P10 != "P10")
+    filter(!is.na(P10) & P10 != "P10") %>%
+    filter(!is.na(income.source)) %>%
+    distinct()
 
   return(temp)
   
 }
 
-distribution2015 <- cleanBPC(column1 = "X0", column2 = "X1", column3 = "X6:X13", year = 2015)
-distribution2025 <- cleanBPC(column1 = "X15", column2 = "X16", column3 = "X20:X27", year = 2025)
-distribution2035 <- cleanBPC(column1 = "X29", column2 = "X30", column3 = "X34:X41", year = 2035)
-distribution2045 <- cleanBPC(column1 = "X43", column2 = "X44", column3 = "X48:X55", year = 2045)
-distribution2055 <- cleanBPC(column1 = "X57", column2 = "X58", column3 = "X62:X69", year = 2055)
-distribution2065 <- cleanBPC(column1 = "X71", column2 = "X72", column3 = "X76:X83", year = 2065)
+# TODO(awunderground): Add check to see if duplicated rows are only the repeated
+# charts in the Excel files
 
+distribution <- bind_rows(
+  cleanBPC(column1 = "X0", column2 = "X1", column3 = "X6:X13", year = 2015),
+  cleanBPC(column1 = "X15", column2 = "X16", column3 = "X20:X27", year = 2025),
+  cleanBPC(column1 = "X29", column2 = "X30", column3 = "X34:X41", year = 2035),
+  cleanBPC(column1 = "X43", column2 = "X44", column3 = "X48:X55", year = 2045),
+  cleanBPC(column1 = "X57", column2 = "X58", column3 = "X62:X69", year = 2055),
+  cleanBPC(column1 = "X71", column2 = "X72", column3 = "X76:X83", year = 2065)
+)
+
+# check for duplicates
+
+distribution <- distribution %>%
+  gather(key = percentile, value = value, -group, -income.source, -year) %>%
+  spread(income.source, value)
