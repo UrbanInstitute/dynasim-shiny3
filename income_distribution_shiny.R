@@ -25,11 +25,13 @@ dollar.change <- read_csv("data/dollar_change.csv")
 
 levels <- levels %>%
   gather(-subgroup, -year, -percentile, -group, key = income.source, value = income) %>%
-  mutate(percentile = factor(percentile, c("P5", "P10", "P25", "P50", "P75", "P90", "P95"))) %>%
+  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99"))) %>%
   mutate(group = factor(group, unique(levels$group)))
 
 dollar.change <- dollar.change %>%
-  gather(-subgroup, -year, -percentile, -group, key = income.source, value = income)
+  gather(-subgroup, -year, -percentile, -group, key = income.source, value = income) %>%
+  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99"))) %>%
+  mutate(group = factor(group, unique(levels$group)))
 
 ##
 ## SHINY
@@ -52,14 +54,14 @@ ui <- fluidPage(
                             "DB Pension Income" = "DB Pension Income",
                             "Earned Income" = "Earned Income",
                             "Federal Income Tax" = "Federal Income Tax",
-                            "HI Tax" = "HI Tax",
+                            "HI Tax" = "HI tax",
                             "Imputed Rental Income" = "Imputed Rental Income",
                             "Means and Non-Means Tested Benefits" = "Means+Nonmeans Benefits",
                             "Medicare Part B Premium" = "Medicare Part B Premium",
                             "Medicare Surtax" = "Medicare Surtax",
-                            "Net Aunnuity Income" = "Net Aunnuity Income",
+                            "Net Annuity Income" = "Net Annuity Income",
                             "Net Cash Income" = "Net Cash Income",
-                            "OASDI Tax" = "OASDI Tax",
+                            "OASDI Tax" = "OASDI tax",
                             "Other Family Member Income" = "Other Family Member Income",
                             "Own Benefit" = "Own Benefit",
                             "Own Earnings" = "Own Earnings",
@@ -69,7 +71,7 @@ ui <- fluidPage(
                             "Per Capita Interest Income" = "Per Capita Interest Income",
                             "Per Capita IRA Withdrawal" = "Per Capita IRA Withdrawal",
                             "Per Capita Rental Income" = "Per Capita Rental Income",
-                            "Social Secuirty Benefits" = "Social Secuirty Benefits",
+                            "Social Security Benefits" = "Social Security Benefits",
                             "Spouse Benefit" = "Spouse Benefit",
                             "Spouse Earnings" = "Spouse Earnings",
                             "SSI" = "SSI",
@@ -106,8 +108,9 @@ server <- function(input, output){
   output$chart <- renderPlot({  
   
     levels %>%
-      filter(group == "Race/Ethnicity") %>%  
-      filter(year == 2015) %>%
+      filter(group == input$group) %>%  
+      filter(year == input$year) %>%
+      filter(income.source == input$income.tax.premium) %>%
       ggplot() +
       geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
       scale_y_continuous(labels = scales::dollar)
