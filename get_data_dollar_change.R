@@ -108,5 +108,8 @@ distribution <- distribution %>%
                                         "Top Quintile (Lifetime Earnings)"), 
                         "Lifetime Earnings Quintile", group))
 
+# Mutate numeric variables into class dbl
+distribution <- mutate_each(distribution, funs(as.numeric), `Annuitized Financial Income`:`State Income Tax`)
+
 # Write tidy data frame
 write_csv(distribution, "data/dollar_change.csv")

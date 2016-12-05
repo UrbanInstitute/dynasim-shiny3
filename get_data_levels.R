@@ -11,7 +11,9 @@ library(tidyverse)
 library(readxl)
 
 # Read unformatted data from Microsoft Excel
-distribution <- read_excel("X:/programs/Run912/run5SaveOpt4/BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx", sheet = "income Distribution by Source", skip = 4, col_names = FALSE)
+distribution <- read_excel("X:/programs/Run912/run5SaveOpt4/BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx", 
+                           sheet = "income Distribution by Source", 
+                           skip = 4, col_names = FALSE)
 
 # Turn the data into untidy data frames for each year with no missing values
 cleanBPC <- function(column1, column2, column3, year) {
@@ -107,6 +109,9 @@ distribution <- distribution %>%
                                         "Quintile 4 (Lifetime Earnings)",
                                         "Top Quintile (Lifetime Earnings)"), 
                         "Lifetime Earnings Quintile", group))
+
+# Mutate numeric variables into class dbl
+distribution <- mutate_each(distribution, funs(as.numeric), `Annuitized Financial Income`:`State Income Tax`)
 
 # Write tidy data frame
 write_csv(distribution, "data/levels.csv")
