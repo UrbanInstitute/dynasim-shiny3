@@ -9,9 +9,9 @@ library(scales)
 options(scipen = 999)
 
 # Source file for Windows
-Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
+#Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-source('urban_institute_themes/urban_theme_windows.R')
+#source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
@@ -104,9 +104,9 @@ server <- function(input, output){
   output$chart <- ({  
   
   levels %>%
-    filter(subgroup == "All Individuals") %>%  
+    filter(group == "All Individuals") %>%  
     filter(year == 2015) %>%
-    ggplot(aes(percentile, income, fill = subgroup)) +
+    ggplot(aes(percentile, income, fill = group)) +
     geom_bar(stat = "identity", position = "dodge") +
     scale_y_continuous(labels = scales::dollar)
   
