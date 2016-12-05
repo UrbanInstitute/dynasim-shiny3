@@ -9,9 +9,9 @@ library(scales)
 options(scipen = 999)
 
 # Source file for Windows
-#Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
+Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-#source('urban_institute_themes/urban_theme_windows.R')
+source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
@@ -24,7 +24,9 @@ dollar.change <- read_csv("data/dollar_change.csv")
 # Gather the data
 
 levels <- levels %>%
-  gather(-subgroup, -year, -percentile, -group, key = income.source, value = income)
+  gather(-subgroup, -year, -percentile, -group, key = income.source, value = income) %>%
+  mutate(percentile = factor(percentile, c("P5", "P10", "P25", "P50", "P75", "P90", "P95"))) %>%
+  mutate(group = factor(group, unique(levels$group)))
 
 dollar.change <- dollar.change %>%
   gather(-subgroup, -year, -percentile, -group, key = income.source, value = income)
@@ -34,6 +36,8 @@ dollar.change <- dollar.change %>%
 ##
 
 ui <- fluidPage(
+  
+  titlePanel("Distribution of Incomes, Premiums, and Taxes"),
   
   fluidRow(
     
@@ -70,8 +74,6 @@ ui <- fluidPage(
                             "Spouse Earnings" = "Spouse Earnings",
                             "SSI" = "SSI",
                             "State Income Tax" = "State Income Tax")),
-  
-
     
     selectInput(inputId = "group",
                 label = "Group",
@@ -101,14 +103,14 @@ ui <- fluidPage(
 
 server <- function(input, output){
   
-  output$chart <- ({  
+  output$chart <- renderPlot({  
   
-  levels %>%
-    filter(group == "All Individuals") %>%  
-    filter(year == 2015) %>%
-    ggplot(aes(percentile, income, fill = group)) +
-    geom_bar(stat = "identity", position = "dodge") +
-    scale_y_continuous(labels = scales::dollar)
+    levels %>%
+      filter(group == "Race/Ethnicity") %>%  
+      filter(year == 2015) %>%
+      ggplot() +
+      geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
+      scale_y_continuous(labels = scales::dollar)
   
   })
   
