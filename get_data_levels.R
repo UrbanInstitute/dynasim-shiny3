@@ -10,7 +10,7 @@
 library(tidyverse)
 library(readxl)
 
-# Read unformatted data from Microsoft Excel
+# Read untidy data from Microsoft Excel
 distribution <- read_excel("X:/programs/Run912/run5SaveOpt4/BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx", 
                            sheet = "income Distribution by Source", 
                            skip = 4, col_names = FALSE)
@@ -110,8 +110,10 @@ distribution <- distribution %>%
                                         "Top Quintile (Lifetime Earnings)"), 
                         "Lifetime Earnings Quintile", group))
 
-# Mutate numeric variables into class dbl
-distribution <- mutate_each(distribution, funs(as.numeric), `Annuitized Financial Income`:`State Income Tax`)
+# Mutate numeric variables into class dbl and simplify quintiles
+distribution <- mutate_each(distribution, funs(as.numeric), `Annuitized Financial Income`:`State Income Tax`) %>%
+  mutate(subgroup = gsub(" \\(Lifetime Earnings\\)", "", subgroup)) %>%
+  mutate(subgroup = gsub(" \\(Per Capita Income\\)", "", subgroup))
 
 # Write tidy data frame
 write_csv(distribution, "data/levels.csv")
