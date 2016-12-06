@@ -25,27 +25,50 @@ dollar.change <- read_csv("data/dollar_change.csv")
 
 levels <- levels %>%
   gather(-subgroup, -year, -percentile, -group, key = income.source, value = income) %>%
-  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99")))
-
-
-
-African-Americans
-Bottom
-
-
-
-
-
-
-
-
-
-
+  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99"))) %>%
+  mutate(subgroup = factor(subgroup, levels = c("All Individuals",
+                                                "Females",
+                                                "Males",
+                                                "African-Americans",
+                                                "Hispanics",
+                                                "White, Non-Hispanics",
+                                                "Bottom Quintile",
+                                                "Quintile 2",
+                                                "Quintile 3",
+                                                "Quintile 4",
+                                                "Top Quintile",
+                                                "Never Married Individuals",
+                                                "Divorced Individuals",
+                                                "Married Individuals",
+                                                "Widowed Individuals",
+                                                "High School Dropouts",
+                                                "High School Graduates",
+                                                "Some College",
+                                                "College Graduates")))
 
 dollar.change <- dollar.change %>%
   gather(-subgroup, -year, -percentile, -group, key = income.source, value = income) %>%
   mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99"))) %>%
-  mutate(group = factor(group, unique(levels$group)))
+  mutate(group = factor(group, unique(levels$group))) %>%
+  mutate(subgroup = factor(subgroup, levels = c("All Individuals",
+                                                "Females",
+                                                "Males",
+                                                "African-Americans",
+                                                "Hispanics",
+                                                "White, Non-Hispanics",
+                                                "Bottom Quintile",
+                                                "Quintile 2",
+                                                "Quintile 3",
+                                                "Quintile 4",
+                                                "Top Quintile",
+                                                "Never Married Individuals",
+                                                "Divorced Individuals",
+                                                "Married Individuals",
+                                                "Widowed Individuals",
+                                                "High School Dropouts",
+                                                "High School Graduates",
+                                                "Some College",
+                                                "College Graduates")))
 
 ##
 ## SHINY
@@ -66,6 +89,7 @@ ui <- fluidPage(
   ),
     
   fluidRow(
+    column(4,
   
     selectInput(inputId = "income.tax.premium",
                 label = "Income, Tax, or Premium",
@@ -106,6 +130,13 @@ ui <- fluidPage(
                             "Per Capita Income Quintile" = "Per Capita Income Quintile",
                             "Lifetime Earnings Quintile" = "Lifetime Earnings Quintile")),
     
+    selectInput(inputId = "graph.type",
+                label = "Graph Type",
+                choices = c("Overlayed Histograms" = "geom_histogram",
+                            "Bar" = "geom_bar"))),
+    
+    column(4, 
+    
     selectInput(inputId = "year",
                 label = "Year",
                 choices = c("2015" = 2015,
@@ -115,10 +146,10 @@ ui <- fluidPage(
                             "2055" = 2055,
                             "2065" = 2065)),
     
-    selectInput(inputId = "graph.type",
-                label = "Graph Type",
-                choices = c("Overlayed Histograms" = "geom_histogram",
-                            "Bar" = "geom_bar"))
+    radioButtons(inputId = "comparison",
+                label = "Comparison",
+                choices = c("Level" = "levels",
+                            "Dollar Change" = "dollar.change")))
   )
 )
 
@@ -126,13 +157,71 @@ server <- function(input, output){
   
   output$chart <- renderPlot({  
   
+    title <- if (input$income.tax.premium == "Annuitized Financial Income") {"Annuitized Financial Income"} else
+             if (input$income.tax.premium == "DB Pension Income") {"Defined Benefit Pension Income"} else
+             if (input$income.tax.premium == "Earned Income") {"Earned Income"} else
+             if (input$income.tax.premium == "Federal Income Tax") {"Federal Income Tax"} else
+             if (input$income.tax.premium == "HI Tax") {"Hospital Insurance Tax"} else
+             if (input$income.tax.premium == "Imputed Rental Income") {"Imputed Rental Income"} else
+             if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"Means and Non-Means Tested Benefits"} else
+             if (input$income.tax.premium == "Medicare Part B Premium") {"Medicare Part B Premium"} else
+             if (input$income.tax.premium == "Medicare Surtax") {"Medicare Surtax"} else
+             if (input$income.tax.premium == "Net Annuity Income") {"Net Annuity Income"} else
+             if (input$income.tax.premium == "Net Cash Income") {"Net Cash Income"} else
+             if (input$income.tax.premium == "OASDI Tax") {"OASDI Tax"} else
+             if (input$income.tax.premium == "Other Family Member Income") {"Other Family Member Income"} else
+             if (input$income.tax.premium == "Own Benefit") {"Own Benefit"} else
+             if (input$income.tax.premium == "Own Earnings") {"Own Earnings"} else
+             if (input$income.tax.premium == "Per Capita Annuity Income") {"Per Capita Annuity Income"} else
+             if (input$income.tax.premium == "Per Capita Cash Income") {"Per Capita Cash Income"} else
+             if (input$income.tax.premium == "Per Capita Dividend Income") {"Per Capita Dividend Income"} else
+             if (input$income.tax.premium == "Per Capita Interest Income") {"Per Capita Interest Income"} else
+             if (input$income.tax.premium == "Per Capita IRA Withdrawal") {"Per Capita IRA Withdrawal"} else
+             if (input$income.tax.premium == "Per Capita Rental Income") {"Per Capita Rental Income"} else
+             if (input$income.tax.premium == "Social Security Benefits") {"Social Security Benefits"} else
+             if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit"} else
+             if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings"} else
+             if (input$income.tax.premium == "SSI") {"SSI"} else
+             if (input$income.tax.premium == "State Income Tax") {"State Income Tax"}
+    
+    subtitle <- if (input$group == "All Individuals") {"All Individuals"} else
+                if (input$group == "Sex") {"Sex"} else
+                if (input$group == "Race/Ethnicity") {"Race/Ethnicity"} else
+                if (input$group == "Education") {"Education"} else
+                if (input$group == "Marital Status") {"Marital Status"} else
+                if (input$group == "Per Capita Income Quintile") {"Per Capita Income Quintile"} else
+                if (input$group == "Lifetime Earnings Quintile") {"Lifetime Earnings Quintile"}
+    
+    if (input$comparison == "levels") {
+    
     levels %>%
       filter(group == input$group) %>%  
       filter(year == input$year) %>%
       filter(income.source == input$income.tax.premium) %>%
       ggplot() +
       geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
-      scale_y_continuous(expand = c(0,0), labels = scales::dollar)
+      scale_y_continuous(expand = c(0,0), labels = scales::dollar) +
+      labs(title = title,
+           subtitle = subtitle,
+           caption = "DYNASIM4") +
+      xlab("Mean and Percentiles") +
+      ylab("2015 Dollars")
+    } else if (input$comparison == "dollar.change") {
+      
+      dollar.change %>%
+        filter(group == input$group) %>%  
+        filter(year == input$year) %>%
+        filter(income.source == input$income.tax.premium) %>%
+        ggplot() +
+        geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
+        scale_y_continuous(labels = scales::dollar) +
+        labs(title = title,
+             subtitle = subtitle,
+             caption = "DYNASIM4") +
+        xlab("Mean and Percentiles") +
+        ylab("Change in 2015 Dollars")
+      
+    }
   })
   
     # Chart
