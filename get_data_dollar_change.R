@@ -115,5 +115,9 @@ distribution <- mutate_each(distribution, funs(as.numeric), `Annuitized Financia
   mutate(subgroup = gsub(" \\(Lifetime Earnings\\)", "", subgroup)) %>%
   mutate(subgroup = gsub(" \\(Per Capita Income\\)", "", subgroup))
 
+# Drop the 99th percentile
+distribution <- distribution %>%
+  filter(percentile != "P99")
+
 # Write tidy data frame
 write_csv(distribution, "data/dollar_change.csv")
