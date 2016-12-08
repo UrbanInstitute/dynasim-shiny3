@@ -11,7 +11,8 @@ options(scipen = 999)
 # Source file for Windows
 Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-source('urban_institute_themes/urban_theme_windows.R')
+#source('urban_institute_themes/urban_theme_windows.R')
+source('urban_institute_themes/urban_ggplot_theme_new_formatting.R')
 
 # Source file for Mac
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
@@ -132,8 +133,8 @@ ui <- fluidPage(
     
     selectInput(inputId = "graph.type",
                 label = "Graph Type",
-                choices = c("Overlayed Histograms" = "geom_histogram",
-                            "Bar" = "geom_bar"))),
+                choices = c("Bar" = "geom_bar",
+                            "Overlayed Histograms" = "geom_histogram"))),
     
     column(4, 
     
@@ -166,32 +167,32 @@ server <- function(input, output){
   
   output$chart <- renderPlot({  
   
-    title <- if (input$income.tax.premium == "Annuitized Financial Income") {"Annuitized Financial Income"} else
-             if (input$income.tax.premium == "DB Pension Income") {"Defined Benefit Pension Income"} else
-             if (input$income.tax.premium == "Earned Income") {"Earned Income"} else
-             if (input$income.tax.premium == "Federal Income Tax") {"Federal Income Tax"} else
-             if (input$income.tax.premium == "HI Tax") {"Hospital Insurance Tax"} else
-             if (input$income.tax.premium == "Imputed Rental Income") {"Imputed Rental Income"} else
-             if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"Means and Non-Means Tested Benefits"} else
-             if (input$income.tax.premium == "Medicare Part B Premium") {"Medicare Part B Premium"} else
-             if (input$income.tax.premium == "Medicare Surtax") {"Medicare Surtax"} else
-             if (input$income.tax.premium == "Net Annuity Income") {"Net Annuity Income"} else
-             if (input$income.tax.premium == "Net Cash Income") {"Net Cash Income"} else
-             if (input$income.tax.premium == "OASDI Tax") {"OASDI Tax"} else
-             if (input$income.tax.premium == "Other Family Member Income") {"Other Family Member Income"} else
-             if (input$income.tax.premium == "Own Benefit") {"Own Benefit"} else
-             if (input$income.tax.premium == "Own Earnings") {"Own Earnings"} else
-             if (input$income.tax.premium == "Per Capita Annuity Income") {"Per Capita Annuity Income"} else
-             if (input$income.tax.premium == "Per Capita Cash Income") {"Per Capita Cash Income"} else
-             if (input$income.tax.premium == "Per Capita Dividend Income") {"Per Capita Dividend Income"} else
-             if (input$income.tax.premium == "Per Capita Interest Income") {"Per Capita Interest Income"} else
-             if (input$income.tax.premium == "Per Capita IRA Withdrawal") {"Per Capita IRA Withdrawal"} else
-             if (input$income.tax.premium == "Per Capita Rental Income") {"Per Capita Rental Income"} else
-             if (input$income.tax.premium == "Social Security Benefits") {"Social Security Benefits"} else
-             if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit"} else
-             if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings"} else
-             if (input$income.tax.premium == "SSI") {"SSI"} else
-             if (input$income.tax.premium == "State Income Tax") {"State Income Tax"}
+    title <- if (input$income.tax.premium == "Annuitized Financial Income") {"Annuitized Financial Income ($2015)"} else
+             if (input$income.tax.premium == "DB Pension Income") {"Defined Benefit Pension Income ($2015)"} else
+             if (input$income.tax.premium == "Earned Income") {"Earned Income ($2015)"} else
+             if (input$income.tax.premium == "Federal Income Tax") {"Federal Income Tax ($2015)"} else
+             if (input$income.tax.premium == "HI Tax") {"Hospital Insurance Tax ($2015)"} else
+             if (input$income.tax.premium == "Imputed Rental Income") {"Imputed Rental Income ($2015)"} else
+             if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"Means and Non-Means Tested Benefits ($2015)"} else
+             if (input$income.tax.premium == "Medicare Part B Premium") {"Medicare Part B Premium ($2015)"} else
+             if (input$income.tax.premium == "Medicare Surtax") {"Medicare Surtax ($2015)"} else
+             if (input$income.tax.premium == "Net Annuity Income") {"Net Annuity Income ($2015)"} else
+             if (input$income.tax.premium == "Net Cash Income") {"Net Cash Income ($2015)"} else
+             if (input$income.tax.premium == "OASDI Tax") {"OASDI Tax ($2015)"} else
+             if (input$income.tax.premium == "Other Family Member Income") {"Other Family Member Income ($2015)"} else
+             if (input$income.tax.premium == "Own Benefit") {"Own Benefit ($2015)"} else
+             if (input$income.tax.premium == "Own Earnings") {"Own Earnings ($2015)"} else
+             if (input$income.tax.premium == "Per Capita Annuity Income") {"Per Capita Annuity Income ($2015)"} else
+             if (input$income.tax.premium == "Per Capita Cash Income") {"Per Capita Cash Income ($2015)"} else
+             if (input$income.tax.premium == "Per Capita Dividend Income") {"Per Capita Dividend Income ($2015)"} else
+             if (input$income.tax.premium == "Per Capita Interest Income") {"Per Capita Interest Income ($2015)"} else
+             if (input$income.tax.premium == "Per Capita IRA Withdrawal") {"Per Capita IRA Withdrawal ($2015)"} else
+             if (input$income.tax.premium == "Per Capita Rental Income") {"Per Capita Rental Income ($2015)"} else
+             if (input$income.tax.premium == "Social Security Benefits") {"Social Security Benefits ($2015)"} else
+             if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit ($2015)"} else
+             if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings ($2015)"} else
+             if (input$income.tax.premium == "SSI") {"SSI ($2015)"} else
+             if (input$income.tax.premium == "State Income Tax") {"State Income Tax ($2015)"}
     
     subtitle <- if (input$group == "All Individuals") {"All Individuals"} else
                 if (input$group == "Sex") {"Sex"} else
@@ -214,7 +215,16 @@ server <- function(input, output){
            subtitle = subtitle,
            caption = "DYNASIM4") +
       xlab("Mean and Percentiles") +
-      ylab("2015 Dollars")
+      ylab(NULL) +
+      theme(plot.subtitle = element_text(margin = structure(c(2, 0, 2, 0), 
+                                              unit = "pt", 
+                                              valid.unit = 8L, 
+                                              class = c("margin", "unit"))),
+            axis.ticks.length = unit(0, "points"),
+            axis.text.x = element_text(margin = structure(c(4, 0, 0, 0), 
+                                                          unit = "pt", 
+                                                          valid.unit = 8L, 
+                                                          class = c("margin", "unit"))))
     } else if (input$comparison == "dollar.change") {
       
       dollar.change %>%
@@ -228,7 +238,16 @@ server <- function(input, output){
              subtitle = subtitle,
              caption = "DYNASIM4") +
         xlab("Mean and Percentiles") +
-        ylab("Change in 2015 Dollars")
+        ylab(NULL) +
+        theme(plot.subtitle = element_text(margin = structure(c(2, 0, 2, 0), 
+                                                              unit = "pt", 
+                                                              valid.unit = 8L, 
+                                                              class = c("margin", "unit"))),
+              axis.ticks.length = unit(0, "points"),
+              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0), 
+                                                            unit = "pt", 
+                                                            valid.unit = 8L, 
+                                                            class = c("margin", "unit"))))
       
     }
   })
