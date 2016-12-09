@@ -23,7 +23,6 @@ levels <- read_csv("data/levels.csv")
 dollar.change <- read_csv("data/dollar_change.csv")
 
 # Gather the data
-
 levels <- levels %>%
   gather(-subgroup, -year, -percentile, -group, key = income.source, value = income) %>%
   mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99"))) %>%
@@ -74,7 +73,6 @@ dollar.change <- dollar.change %>%
 ##
 ## SHINY
 ##
-
 ui <- fluidPage(
   
   theme = "shiny.css",
@@ -94,7 +92,8 @@ ui <- fluidPage(
   
       selectInput(inputId = "option", 
                   label = "Social Security Reform", 
-                  choices = c("Mini.PIA" = "mini.pia", 
+                  choices = c("BPC Option" = "bpc.option",
+                              "Mini.PIA" = "mini.pia", 
                               "Tax SSB" = "tax.ssb",
                               "Cap Spouse" = "cap.spouse",
                               "SurvivorJS75" = "survivor.js75",
@@ -159,7 +158,7 @@ ui <- fluidPage(
                 step = 10,
                 value = 2015,
                 sep = "",
-                animate = TRUE),
+                animate = animationOptions(loop = TRUE)),
     
     radioButtons(inputId = "comparison",
                 label = "Comparison",
@@ -215,26 +214,33 @@ server <- function(input, output){
     
     if (input$comparison == "levels") {
     
-    levels %>%
-      filter(group == input$group) %>%  
-      filter(year == input$year) %>%
-      filter(income.source == input$income.tax.premium) %>%
-      ggplot() +
-      geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
-      scale_y_continuous(expand = c(0,0), labels = scales::dollar) +
-      labs(title = title,
-           subtitle = subtitle,
-           caption = "DYNASIM4") +
-      xlab("Mean and Percentiles") +
-      ylab(NULL) +
-      theme(plot.subtitle = element_text(margin = structure(c(2, 0, 2, 0), 
-                                              unit = "pt", 
-                                              valid.unit = 8L, 
-                                              class = c("margin", "unit"))),
-            axis.ticks.length = unit(0, "points"),
-            axis.text.x = element_text(margin = structure(c(4, 0, 0, 0), 
-                                                          unit = "pt", 
-                                                          valid.unit = 8L, 
+      # Calculate the maximum for the y-axis (because of the animation)
+      y.max <- levels %>%
+        filter(group == input$group) %>%  
+        filter(income.source == input$income.tax.premium) %>%
+        select(income) %>%
+        summarize(max = max(income))
+      
+      levels %>%
+        filter(group == input$group) %>%  
+        filter(year == input$year) %>%
+        filter(income.source == input$income.tax.premium) %>%
+        ggplot() +
+        geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
+        scale_y_continuous(limits = c(0, as.numeric(y.max)), expand = c(0,0), labels = scales::dollar) +
+        labs(title = title,
+             subtitle = subtitle,
+             caption = "DYNASIM4") +
+        xlab("Mean and Percentiles") +
+        ylab(NULL) +
+        theme(plot.subtitle = element_text(margin = structure(c(2, 0, 2, 0), 
+                                                unit = "pt", 
+                                                valid.unit = 8L, 
+                                                class = c("margin", "unit"))),
+              axis.ticks.length = unit(0, "points"),
+              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0), 
+                                                            unit = "pt", 
+                                                            valid.unit = 8L, 
                                                           class = c("margin", "unit"))))
     } else if (input$comparison == "dollar.change") {
       
