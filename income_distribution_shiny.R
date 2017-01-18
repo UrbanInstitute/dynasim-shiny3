@@ -70,6 +70,8 @@ dollar.change <- dollar.change %>%
                                                 "Some College",
                                                 "College Graduates")))
 
+group.names <- c("All Individuals", "Sex", "Race/Ethnicity", "Education", "Marital Status", "Per Capita Income Quintile", "Lifetime Earnings Quintile")
+
 ##
 ## SHINY
 ##
@@ -141,7 +143,7 @@ ui <- fluidPage(
     
       selectInput(inputId = "group",
                   label = "Group",
-                  choices = c("All Individuals" = "All Individuals",
+                  choices = c("All Individuals" = 1,
                               "Sex" = "Sex",
                               "Race/Ethnicity" = "Race/Ethnicity",
                               "Education" = "Education",
@@ -173,7 +175,7 @@ ui <- fluidPage(
   )
 )
 
-server <- function(input, output){
+server <- function(input, output) {
   
   output$chart <- renderPlot({  
   
@@ -204,7 +206,7 @@ server <- function(input, output){
              if (input$income.tax.premium == "SSI") {"SSI ($2015)"} else
              if (input$income.tax.premium == "State Income Tax") {"State Income Tax ($2015)"}
     
-    subtitle <- if (input$group == "All Individuals") {"All Individuals"} else
+    subtitle <- if (input$group == 1) {"All Individuals"} else
                 if (input$group == "Sex") {"Sex"} else
                 if (input$group == "Race/Ethnicity") {"Race/Ethnicity"} else
                 if (input$group == "Education") {"Education"} else
@@ -216,7 +218,7 @@ server <- function(input, output){
     
       # Calculate the maximum for the y-axis (because of the animation)
       y.max <- levels %>%
-        filter(group == input$group) %>%  
+        filter(group == group.names[input$group]) %>%  
         filter(income.source == input$income.tax.premium) %>%
         select(income) %>%
         summarize(max = max(income))
@@ -312,4 +314,3 @@ server <- function(input, output){
 }
     
 shinyApp(ui = ui, server = server)
-
