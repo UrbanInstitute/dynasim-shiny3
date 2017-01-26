@@ -70,7 +70,6 @@ dollar.change <- dollar.change %>%
                                                 "Some College",
                                                 "College Graduates")))
 
-group.names <- c("All Individuals", "Sex", "Race/Ethnicity", "Education", "Marital Status", "Per Capita Income Quintile", "Lifetime Earnings Quintile")
 
 ##
 ## SHINY
@@ -198,7 +197,20 @@ ui <- fluidPage(
     
     htmlOutput("text1"))
     
-    )
+    ),
+  
+  fluidRow(
+    
+    column(8,
+           
+           # Explanation of Baseline
+           
+           htmlOutput("text2"))
+    
+  )
+  
+  
+  
   
 )
 
@@ -345,6 +357,13 @@ server <- function(input, output) {
       else {"<p><h4></h4></p><p><strong>Current Law Scheduled</strong> assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
       
       })
+    
+    output$text2 <- renderText({
+      
+      if (input$baseline == "current.law.payable") {"<p><h4>Current Law Payable</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, but reduces Social Security benefits by a uniform amount after the trust fund runs out so that all benefits in each year can be paid out of revenues from that year.</p>"} else
+      if (input$baseline == "current.law.scheduled") {"<p><h4>Current Law Scheduled</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+      
+    })
     
     # Chart
     output$hover_info <- renderUI({
