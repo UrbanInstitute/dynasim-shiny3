@@ -98,10 +98,10 @@ ui <- fluidPage(
   
   fluidRow(
     column(6,
-           style = "position:relative",
-           plotOutput("chart",
-                      hover = hoverOpts("plot_hover", delay = 100, delayType = "debounce")),
-           uiOutput("hover_info"))
+           
+           plotOutput("chart")
+           
+           )
   ),
     
   fluidRow(
@@ -365,46 +365,6 @@ server <- function(input, output) {
       
     })
     
-    # Chart
-    output$hover_info <- renderUI({
-      hover <- input$plot_hover
-      
-      levels.temp <- levels %>%
-        filter(group == input$group) %>%
-        filter(year == input$year) %>%
-        filter(income.source == input$income.tax.premium)
-
-      point <- nearPoints(levels.temp, hover, threshold = 20, maxpoints = 1)
-      if (nrow(point) == 0) return(NULL)
-      
-      # calculate point position inside the image as percent of total dimensions
-      # from left (horizontal) and from top (vertical)
-      left_pct <- (hover$x - hover$domain$left) / (hover$domain$right - hover$domain$left)
-      top_pct <- (hover$domain$top - hover$y) / (hover$domain$top - hover$domain$bottom)
-      
-      # calculate distance from left and bottom side of the picture in pixels
-      left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
-      top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
-      
-      # create style property for tooltip
-      # background color is set so tooltip is a bit transparent
-      # z-index is set so we are sure are tooltip will be on top
-      style <- paste0("position:absolute; z-index:100; 
-                    background-color: rgba(245, 245, 245, 0.85); ",
-                      "left:", left_px + 2, "px; top:", top_px + 2, "px;")
-      
-      # actual tooltip created as wellPanel
-      wellPanel(
-        style = style,
-        p(
-          HTML(
-            paste0(
-              "<b> Percentile: </b>", point$percentile, "<br/>",
-              "<b> Amount: </b>", dollar_format()(point$income), "<br/>")
-            )
-          )
-        )
-    })
 }
     
 shinyApp(ui = ui, server = server)
