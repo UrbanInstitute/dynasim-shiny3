@@ -16,8 +16,7 @@ options(scipen = 999)
 files <- read_excel("options_guide.xlsx") %>%
   select(option, scale, link)
 
-
-
+# Create functions that clean the clunky Excel files
 distributionScrapeR <- function(link, bpcpackage) {
 
   distribution <- read_excel(link, 
@@ -177,46 +176,54 @@ for (i in 37:38) {
   final.distribution <- bind_rows(final.distribution, distribution)
   
 }
+# Should be 43,776 observations
+# 24 subgroups * 6 years * 8 percentiles * 38 options
 
+# Spread the data into long format
+final.distribution <- final.distribution %>%
+  gather(c(`Annuitized Financial Income`:`State Income Tax`, BMB), key = "incomes.taxes",value = "value")
+# Should be 1,225,728 observations
+# 24 subgroups * 6 years * 8 percentiles * 38 options * 28 incomes/taxes/premiums
 
+# Create a baseline data frame
+baselines <- final.distribution %>%
+  filter(option == "Scheduled Law" | option == "Payable Law") %>%
+  rename(baseline.value = value, baseline.type = option)
+# Should be 129,024 observations
+# 1,225,728 * 4 / 38
 
+# Create a options data frame
+options <- final.distribution %>%
+  filter(option != "Scheduled Law" & option != "Payable Law")
+# Should be 1,096,704 observations
+# 1,225,728 * 34 / 38
 
+final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "incomes.taxes"))
+# should double
 
+# Calculate the dollar and percent changes
+final.distribution <- final.distribution %>%
+  mutate(dollar.change = value - baseline.value) %>%
+  mutate(percent.change = (value - baseline.value) / baseline.value) %>%
+  select(-baseline.value)
 
+# Clean up baselines so it matches final.income
+baselines <- baselines %>%
+  rename(value = baseline.value) %>%
+  rename(option = baseline.type) %>%
+  mutate(dollar.change = 0) %>%
+  mutate(percent.change = 0) %>%
+  mutate(baseline.type = option)
 
+# Combine the baselines (with zeroes for changes) and the options
+final.distribution <- union(final.distribution, baselines) %>%
+  rename(baseline = baseline.type, level = value) %>%
+  gather(level, percent.change, dollar.change, key = "comparison", value = "value") %>%
+  spread(key = incomes.taxes, value = value)
+# Should be 248,832
+# 24 subgroups * 6 years * 8 percentiles * (38 options - 2) * 2 scales * 2 baselines * 2 comparisons
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+rm(files, distribution, options, baselines)
 
 # Write tidy data frame
-#write_csv(distribution, "data/levels.csv")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+write_csv(final.distribution, "data/distributions.csv")
