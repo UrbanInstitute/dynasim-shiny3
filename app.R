@@ -10,12 +10,9 @@ options(scipen = 999)
 
 # Source file for Windows
 Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
-#source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-#source('urban_institute_themes/urban_theme_windows.R')
-source('urban_institute_themes/urban_ggplot_theme_new_formatting.R')
+source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
-#source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
@@ -84,6 +81,21 @@ ui <- fluidPage(
   ),
     
   fluidRow(
+    column(4, 
+           
+           sliderInput(inputId = "year", 
+                       label = "Year",
+                       min = 2015,
+                       max = 2065, 
+                       step = 10,
+                       value = 2015,
+                       sep = "",
+                       animate = animationOptions(loop = TRUE))
+           )
+  ),
+  
+  fluidRow(
+    
     column(4,
       selectInput(inputId = "option",
                   label = "Social Security Reform",
@@ -147,30 +159,20 @@ ui <- fluidPage(
                               "Lifetime Earnings Quintile" = "Lifetime Earnings Quintile"))),
     
     column(4, 
-    
-      sliderInput(inputId = "year", 
-                label = "Year",
-                min = 2015,
-                max = 2065, 
-                step = 10,
-                value = 2015,
-                sep = "",
-                animate = animationOptions(loop = TRUE)),
-    
-    radioButtons(inputId = "comparison",
-                label = "Comparison",
-                choices = c("Level" = "level",
-                            "Dollar Change" = "dollar.change")),
-    
-    radioButtons(inputId = "baseline",
-                 label = "Baseline",
-                 choices = c("Current Law Payable" = "Payable Law",
-                             "Current Law Scheduled" = "Scheduled Law")),
-    
-    selectInput(inputId = "scale",
-                label = "Scale",
-                choices = c("Per Capita" = "per capita",
-                            "Equivalent" = "equivalent")))),
+      selectInput(inputId = "comparison",
+                  label = "Comparison",
+                  choices = c("Level" = "level",
+                              "Dollar Change" = "dollar.change")),
+      
+      selectInput(inputId = "baseline",
+                   label = "Baseline",
+                   choices = c("Current Law Payable" = "Payable Law",
+                               "Current Law Scheduled" = "Scheduled Law")),
+      
+      selectInput(inputId = "scale",
+                  label = "Scale",
+                  choices = c("Per Capita" = "per capita",
+                              "Equivalent" = "equivalent")))),
   
   fluidRow(
     
@@ -245,8 +247,21 @@ server <- function(input, output) {
       filter(scale == input$scale) %>%
       filter(income.tax.premium == input$income.tax.premium) %>%
       summarize(max = max(value))
+
+    # Calculate the maximum for the y-axis (because of the animation)
+    y.min <- distribution %>%
+      filter(option == input$option) %>%
+      filter(group == input$group) %>%  
+      filter(comparison == input$comparison) %>%   
+      filter(baseline == input$baseline) %>% 
+      filter(scale == input$scale) %>%
+      filter(income.tax.premium == input$income.tax.premium) %>%
+      summarize(min = min(value))
+    
+    y.min <- min(0, as.numeric(y.min))
     
     print(y.max)
+    print(y.min)
     
     graphr <- function(origin, line.placement, line.color){
     
@@ -260,7 +275,7 @@ server <- function(input, output) {
         filter(income.tax.premium == input$income.tax.premium) %>%
         ggplot() +
         geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
-        scale_y_continuous(limits = c(0, as.numeric(y.max)), expand = c(0, 0), labels = scales::dollar) +
+        scale_y_continuous(limits = c(y.min, as.numeric(y.max)), labels = scales::dollar) +
         labs(title = title,
              subtitle = subtitle,
              caption = "DYNASIM3") +
@@ -268,11 +283,12 @@ server <- function(input, output) {
         ylab(NULL) +
         expand_limits(y = origin) +
         geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.ticks.length = unit(0, "points"))
+        theme(axis.ticks.length = unit(0, "points"),
+              axis.line = element_blank())
     }
     
     if (input$comparison == "level") {
-      graphr(origin = NULL, line.placement = 50000, line.color = NA) 
+      graphr(origin = NULL, line.placement = 0, line.color = "black") 
     } 
     else if (input$comparison == "dollar.change") {
       graphr(origin = 0, line.placement = 0, line.color = "black")
