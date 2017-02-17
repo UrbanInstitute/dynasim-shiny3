@@ -160,8 +160,7 @@ ui <- fluidPage(
     radioButtons(inputId = "comparison",
                 label = "Comparison",
                 choices = c("Level" = "level",
-                            "Dollar Change" = "dollar.change",
-                            "Percent Change" = "percent.change")),
+                            "Dollar Change" = "dollar.change")),
     
     radioButtons(inputId = "baseline",
                  label = "Baseline",
@@ -249,55 +248,36 @@ server <- function(input, output) {
     
     print(y.max)
     
-    distribution %>%
-      filter(option == input$option) %>%
-      filter(group == input$group) %>%  
-      filter(year == input$year) %>%
-      filter(comparison == input$comparison) %>%   
-      filter(baseline == input$baseline) %>% 
-      filter(scale == input$scale) %>%
-      filter(income.tax.premium == input$income.tax.premium) %>%
-      ggplot() +
-      geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
-      scale_y_continuous(limits = c(0, as.numeric(y.max)), expand = c(0,0), labels = scales::dollar) +
-      labs(title = title,
-           subtitle = subtitle,
-           caption = "DYNASIM3") +
-      xlab("Mean and Percentiles") +
-      ylab(NULL) +
-      theme(plot.subtitle = element_text(margin = structure(c(2, 0, 2, 0), 
-                                              unit = "pt", 
-                                              valid.unit = 8L, 
-                                              class = c("margin", "unit"))),
-            axis.ticks.length = unit(0, "points"),
-            axis.text.x = element_text(margin = structure(c(4, 0, 0, 0), 
-                                                          unit = "pt", 
-                                                          valid.unit = 8L, 
-                                                        class = c("margin", "unit"))))
-
+    graphr <- function(origin, line.placement, line.color){
     
-#    dollar.change %>%
-#      filter(group == input$group) %>%  
-#      filter(year == input$year) %>%
-#      filter(income.source == input$income.tax.premium) %>%
-#      ggplot() +
-#      geom_bar(aes(x = percentile, y = income, fill = subgroup), position = "dodge", stat = "identity") +
-#      scale_y_continuous(limits = c(0, as.numeric(y.max)), expand = c(0,0), labels = scales::dollar) +
-#      labs(title = title,
-#           subtitle = subtitle,
-#           caption = "DYNASIM4") +
-#      xlab("Mean and Percentiles") +
-#      ylab(NULL) +
-#      theme(plot.subtitle = element_text(margin = structure(c(2, 0, 2, 0), 
-#                                                            unit = "pt", 
-#                                                            valid.unit = 8L, 
-#                                                            class = c("margin", "unit"))),
-#            axis.ticks.length = unit(0, "points"),
-#            axis.text.x = element_text(margin = structure(c(4, 0, 0, 0), 
-#                                                          unit = "pt", 
-#                                                          valid.unit = 8L, 
-#                                                          class = c("margin", "unit"))))
-
+      distribution %>%
+        filter(option == input$option) %>%
+        filter(group == input$group) %>%  
+        filter(year == input$year) %>%
+        filter(comparison == input$comparison) %>%   
+        filter(baseline == input$baseline) %>% 
+        filter(scale == input$scale) %>%
+        filter(income.tax.premium == input$income.tax.premium) %>%
+        ggplot() +
+        geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
+        scale_y_continuous(limits = c(0, as.numeric(y.max)), expand = c(0, 0), labels = scales::dollar) +
+        labs(title = title,
+             subtitle = subtitle,
+             caption = "DYNASIM3") +
+        xlab("Mean and Percentiles") +
+        ylab(NULL) +
+        expand_limits(y = origin) +
+        geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
+        theme(axis.ticks.length = unit(0, "points"))
+    }
+    
+    if (input$comparison == "level") {
+      graphr(origin = NULL, line.placement = 50000, line.color = NA) 
+    } 
+    else if (input$comparison == "dollar.change") {
+      graphr(origin = 0, line.placement = 0, line.color = "black")
+    } 
+    
   })  
   
     output$text1 <- renderText({
