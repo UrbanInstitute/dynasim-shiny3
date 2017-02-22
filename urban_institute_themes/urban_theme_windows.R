@@ -126,60 +126,45 @@ theme_urban <- function(base_size = 12, base_family = "Lato") {
                         vjust = 0.5, 
                         angle = 0, 
                         lineheight = 0.9, 
-                        margin = structure(c(0, 0, 0, 0), 
-                                           unit = "pt", 
-                                           valid.unit = 8L, 
-                                           class = c("margin", "unit")),
+                        margin = margin(),
                         debug = FALSE),
-    title = element_text(size = 18L, 
-                         margin = structure(c(0, 0, 2, 0), 
-                                            unit = "pt", 
-                                            valid.unit = 8L, 
-                                            class = c("margin", "unit"))),
     
     ## Plot Attributes
     
     plot.title = element_text(size = 18L,
-                              hjust = 0), 
+                              hjust = 0,
+                              margin = margin(b = 2)), 
     plot.subtitle = element_text(size = 14L,
                                  hjust = 0,
-                                 margin = structure(c(0, 0, 10, 0), 
-                                                    unit = "pt", 
-                                                    valid.unit = 8L, 
-                                                    class = c("margin", "unit"))), 
-    plot.caption = element_text(size = 12L,
+                                 margin = margin(b = 10)),
+                                 
+    plot.caption = element_text(size = 8L,
                                 hjust = 1,
                                 vjust = 1,
                                 margin = margin(t = base_size / 2 * 0.9)),
     plot.background = NULL, 
     
-    plot.margin = unit(c(10L, 10L, 10L, 10L), "points"), 
+    plot.margin = margin(10L, 10L, 10L, 10L), 
     
     ## Axis Attributes
     
     axis.text = element_text(size = 12L),
-    axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
-                                                  unit = "pt",
-                                                  valid.unit = 8L,
-                                                  class = c("margin", "unit"))), 
+    axis.text.x = element_text(margin = margin(t = 4)),
     axis.text.y = NULL, 
     axis.text.x.top = NULL, 
     axis.text.y.right = NULL, 
     
     axis.ticks = element_line(), 
     axis.title = element_text(face = "italic", 
-                              size = 13L, 
-                              margin = structure(c(0, 10, 0, 0), 
-                                                 unit = "pt", 
-                                                 valid.unit = 8L, 
-                                                 class = c("margin", "unit"))), 
-    axis.title.x = NULL, 
-    axis.title.y = element_text(angle = 90), 
+                              size = 12L), 
+    axis.title.x = element_text(margin = margin(t = 8)), 
+    axis.title.y = element_text(angle = 90,
+                                margin = margin(r = 4)),
     axis.title.x.top = NULL, 
     axis.title.y.right = NULL,
     
     
-    axis.ticks.length = unit(4L, "points"),
+    axis.ticks.length = unit(4L, "pt"),
     axis.ticks.x = element_line(colour = NULL, 
                                 size = NULL, 
                                 linetype = NULL, 
@@ -197,12 +182,12 @@ theme_urban <- function(base_size = 12, base_family = "Lato") {
     
     legend.background = element_blank(), 
     
-    legend.spacing = unit(8L, "points"), 
+    legend.spacing = unit(20L, "pt"), 
     legend.spacing.x = NULL, 
     legend.spacing.y = NULL,
     
     legend.key = element_blank(), 
-    legend.key.size = unit(10L, "points"), 
+    legend.key.size = unit(10L, "pt"), 
     legend.key.height = NULL, 
     legend.key.width = NULL, 
     
@@ -214,7 +199,7 @@ theme_urban <- function(base_size = 12, base_family = "Lato") {
     legend.position = "top", 
     legend.direction = "horizontal", 
     legend.justification = NULL, 
-    legend.margin = margin(6, 0, 6, 0, "points"), 
+    legend.margin = margin(6, 0, 6, 0, "pt"), 
     
     legend.box = "horizontal", 
     legend.box.margin = NULL, 
@@ -227,11 +212,10 @@ theme_urban <- function(base_size = 12, base_family = "Lato") {
     panel.border = element_blank(), 
     panel.ontop = FALSE, 
 
-    panel.spacing = unit(2L, "points"),
-    panel.spacing.x = unit(0,"lines"), 
-    panel.spacing.y = unit(0,"lines"), 
+    panel.spacing = unit(6L, "pt"),
+    panel.spacing.x = NULL, 
+    panel.spacing.y = NULL, 
 
-    panel.grid = NULL, 
     panel.grid.major = element_line(), 
     panel.grid.major.x = element_blank(), 
     panel.grid.major.y = element_line(colour = "#DEDDDD"), 
@@ -242,21 +226,20 @@ theme_urban <- function(base_size = 12, base_family = "Lato") {
     ## Strip Attributes (Facetting)
     
     strip.background = element_rect(fill = "#dedddd", 
-                                    colour = NULL, 
-                                    size = NULL, 
-                                    linetype = 0L), 
+                                    colour = NA,
+                                    size = 10), 
     strip.text = element_text(face = "bold", 
-                              size = 14L,
-                              margin = structure(c(0, 0, 0, 0), 
-                                                 unit = "pt", 
-                                                 valid.unit = 8L, 
-                                                 class = c("margin", "unit"))), 
-    strip.text.x = NULL, 
-    strip.text.y = element_text(angle = -90), 
-
-    strip.switch.pad.grid = unit(0,"lines"), 
-    strip.switch.pad.wrap = unit(0,"lines"), 
-    strip.placement = NULL,
+                              size = rel(0.8)),
+  
+    strip.text.x = element_text(margin = margin(t = 4.5, b = 4.5)), 
+    strip.text.y = element_text(angle = -90, margin = margin(l = 4.5, r = 4.5)), 
+    
+    strip.placement = "inside",
+    strip.placement.x =  NULL,
+    strip.placement.y =  NULL,
+    
+    strip.switch.pad.grid = unit(0.1, "cm"), 
+    strip.switch.pad.wrap = unit(0.1, "cm"), 
     
     ## Create a 'complete' format
     complete = TRUE

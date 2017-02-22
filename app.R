@@ -16,9 +16,6 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-#levels <- read_csv("data/levels.csv")
-#dollar.change <- read_csv("data/dollar_change.csv")
-
 distribution <- read_csv("data/distributions.csv")
 
 
@@ -182,7 +179,27 @@ ui <- fluidPage(
     
     htmlOutput("text1"))
     
-    ),
+  ),
+  
+  fluidRow(
+    
+    column(8,
+           
+      # Explanation of Income, Tax, or Premium
+      
+      htmlOutput("text2"))
+    
+  ),
+  
+  fluidRow(
+    
+    column(8,
+           
+      # Explanation of Scales
+      
+      htmlOutput("text3"))
+    
+  ),
   
   fluidRow(
     
@@ -190,12 +207,9 @@ ui <- fluidPage(
            
            # Explanation of Baseline
            
-           htmlOutput("text2"))
+           htmlOutput("text4"))
     
-  )
-  
-  
-  
+  )  
   
 )
 
@@ -332,16 +346,83 @@ server <- function(input, output) {
       
       else if (input$option == "15.4% Payroll Tax") {"<p><h4>15.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 15.4% over 10 years beginning in 2016.</p>"}
       
-      else if (input$option == "Payable Law") {}
+      else if (input$option == "Payable Law") {"<p><h4>Current Law Payable</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out. </p>"}
       
-      else if (input$option == "Scheduled Law") {"<p><h4>Current Law Scheduled</h4></p><p><strong>Current Law Scheduled</strong> assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+      else if (input$option == "Scheduled Law") {"<p><h4>Current Law Scheduled</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
       
       })
     
+    
     output$text2 <- renderText({
       
-      if (input$baseline == "Payable Law") {"<p><h4>Current Law Payable</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, but reduces Social Security benefits by a uniform amount after the trust fund runs out so that all benefits in each year can be paid out of revenues from that year.</p>"} else
-      if (input$baseline == "Scheduled Law") {"<p><h4>Current Law Scheduled</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+      if (input$income.tax.premium == "Annuitized Financial Income") {"<p><h4>Annuitized Financial Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "DB Pension Income") {"<p><h4>DB Pension Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Earned Income") {"<p><h4>Earned Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Federal Income Tax") {"<p><h4>Federal Income Tax</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "HI Tax") {"<p><h4>HI Tax</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Imputed Rental Income") {"<p><h4>Imputed Rental Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"<p><h4>Means and Non-Means Tested Benefits</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Medicare Part B Premium") {"<p><h4>Medicare Part B Premium</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Medicare Surtax") {"<p><h4>Medicare Surtax</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Net Annuity Income") {"<p><h4>Net Annuity Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Net Cash Income") {"<p><h4>Net Cash Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "OASDI Tax") {"<p><h4>OASDI Tax</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Other Family Member Income") {"<p><h4>Other Family Member Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Own Benefit") {"<p><h4>Own Benefit</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Own Earnings") {"<p><h4>Own Earnings</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Annuity Income") {"<p><h4>Annuity Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Cash Income") {"<p><h4>Cash Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Dividend Income") {"<p><h4>Dividend Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Interest Income") {"<p><h4>Interest Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "IRA Withdrawal") {"<p><h4>IRA Withdrawal</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Rental Income") {"<p><h4>Rental Income</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Social Security Benefits") {"<p><h4>Social Security Benefits</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Spouse Benefit") {"<p><h4>Spouse Benefit</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "Spouse Earnings") {"<p><h4>Spouse Earnings</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "SSI") {"<p><h4>SSI</h4></p><p></p>"}
+      
+      else if (input$income.tax.premium == "State Income Tax") {"<p><h4>State Income Tax</h4></p><p></p>"}
+      
+      })
+    
+    output$text3 <- renderText({
+      
+      if (input$scale == "per capita") {"<p><h4>Per Capita</h4></p><p></p>"}
+      
+      else if (input$scale == "equivalent") {"<p><h4>Equivalent</h4></p><p></p>"}
+      
+      })
+    
+    
+    output$text4 <- renderText({
+      
+      if (input$baseline == "Payable Law") {"<p><h4>Current Law Payable</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, but reduces Social Security benefits by a uniform amount after the trust fund runs out so that all benefits in each year can be paid out of revenues from that year.</p>"}
+      
+      else if (input$baseline == "Scheduled Law") {"<p><h4>Current Law Scheduled</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
       
     })
     
