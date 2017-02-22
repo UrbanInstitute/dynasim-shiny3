@@ -204,7 +204,6 @@ final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "
 # Calculate the dollar and percent changes
 final.distribution <- final.distribution %>%
   mutate(dollar.change = value - baseline.value) %>%
-  mutate(percent.change = (value - baseline.value) / baseline.value) %>%
   select(-baseline.value)
 
 # Clean up baselines so it matches final.income
@@ -212,13 +211,12 @@ baselines <- baselines %>%
   rename(value = baseline.value) %>%
   rename(option = baseline.type) %>%
   mutate(dollar.change = 0) %>%
-  mutate(percent.change = 0) %>%
   mutate(baseline.type = option)
 
 # Combine the baselines (with zeroes for changes) and the options
 final.distribution <- union(final.distribution, baselines) %>%
   rename(baseline = baseline.type, level = value) %>%
-  gather(level, percent.change, dollar.change, key = "comparison", value = "value") %>%
+  gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = incomes.taxes, value = value)
 # Should be 248,832
 # 24 subgroups * 6 years * 8 percentiles * (38 options - 2) * 2 scales * 2 baselines * 2 comparisons
