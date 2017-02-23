@@ -18,11 +18,9 @@ source('urban_institute_themes/urban_theme_windows.R')
 # Load Data
 distribution <- read_csv("data/distributions.csv")
 
-
 # Gather the data
-
 distribution <- distribution %>%
-  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99"))) %>%
+  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99", "Percent with Income Source"))) %>%
   mutate(subgroup = factor(subgroup, levels = c("All Individuals",
                                                 "Females",
                                                 "Males",
@@ -59,7 +57,7 @@ ui <- fluidPage(
            
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
-           HTML("<p>Explore the trust fund, by income, <b>by demographics</b>, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065'>the data</a>.</p>"),
+           HTML("<p>Explore the trust fund, by income, <b>by demographics</b>, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
            
            br()
            
@@ -88,7 +86,14 @@ ui <- fluidPage(
                        value = 2015,
                        sep = "",
                        animate = animationOptions(loop = TRUE))
-           )
+           ),
+    
+    column(4,
+           
+           htmlOutput("text5")
+           
+           
+    )
   ),
   
   fluidRow(
@@ -215,6 +220,8 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   
+  options(shiny.sanitize.errors = FALSE)
+  
   output$chart <- renderPlot({  
   
     title <- if (input$income.tax.premium == "Annuitized Financial Income") {"Annuitized Financial Income ($2015)"} else
@@ -287,6 +294,7 @@ server <- function(input, output) {
         filter(baseline == input$baseline) %>% 
         filter(scale == input$scale) %>%
         filter(income.tax.premium == input$income.tax.premium) %>%
+        filter(percentile != "Percent with Income Source") %>%
         ggplot() +
         geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
         scale_y_continuous(limits = c(y.min, as.numeric(y.max)), labels = scales::dollar) +
@@ -425,6 +433,25 @@ server <- function(input, output) {
       else if (input$baseline == "Scheduled Law") {"<p><h4>Current Law Scheduled</h4></p><p>Assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
       
     })
+    
+    output$text5 <- renderUI({
+      
+      percent <- distribution %>%
+        filter(option == input$option) %>%
+        filter(group == input$group) %>%  
+        filter(year == input$year) %>%
+        filter(comparison == input$comparison) %>%   
+        filter(baseline == input$baseline) %>% 
+        filter(scale == input$scale) %>%
+        filter(income.tax.premium == input$income.tax.premium) %>%
+        filter(percentile == "Percent with Income Source") %>% 
+        select(value)
+      
+      HTML(paste("<div class='income-percent'>", as.character(percent * 100), "%", "</div>","<div class='income-text'>", "have", "<b>", input$income.tax.premium, "</b>", "</div>"))
+      
+    })
+    
+
     
 }
     

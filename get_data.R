@@ -24,7 +24,7 @@ distributionScrapeR <- function(link, bpcpackage) {
                              skip = 4, col_names = FALSE)
   
   # Turn the data into untidy data frames for each year with no missing values
-  cleanBPC <- function(column1, column2, column3, year) {
+  cleanBPC <- function(column1, column2, column3, column4, year) {
     # Cleans raw data frame from read_excel and returns an untidy data frame
     #
     # Args: column names and year
@@ -32,9 +32,9 @@ distributionScrapeR <- function(link, bpcpackage) {
     # Returns: 
     
     temp <- distribution %>%
-      select_(column1, column2, column3)
+      select_(column1, column2, column3, column4)
     
-    names(temp) <- c("subgroup", "income.source", temp[1, 3:ncol(temp)])
+    names(temp) <- c("subgroup", "income.source", "Percent with Income Source", temp[1, 4:ncol(temp)])
     
     temp <- temp %>%
       slice(-1) %>%
@@ -90,12 +90,12 @@ distributionScrapeR <- function(link, bpcpackage) {
   # charts in the Excel files
   
   distribution <- bind_rows(
-    cleanBPC(column1 = "X0", column2 = "X1", column3 = "X5:X13", year = 2015),
-    cleanBPC(column1 = "X15", column2 = "X16", column3 = "X19:X27", year = 2025),
-    cleanBPC(column1 = "X29", column2 = "X30", column3 = "X33:X41", year = 2035),
-    cleanBPC(column1 = "X43", column2 = "X44", column3 = "X47:X55", year = 2045),
-    cleanBPC(column1 = "X57", column2 = "X58", column3 = "X61:X69", year = 2055),
-    cleanBPC(column1 = "X71", column2 = "X72", column3 = "X75:X83", year = 2065)
+    cleanBPC(column1 = "X0",  column2 = "X1",  column3 = "X3", column4 = "X5:X13",  year = 2015),
+    cleanBPC(column1 = "X15", column2 = "X16", column3 = "X17", column4 = "X19:X27", year = 2025),
+    cleanBPC(column1 = "X29", column2 = "X30", column3 = "X31", column4 = "X33:X41", year = 2035),
+    cleanBPC(column1 = "X43", column2 = "X44", column3 = "X45", column4 = "X47:X55", year = 2045),
+    cleanBPC(column1 = "X57", column2 = "X58", column3 = "X59", column4 = "X61:X69", year = 2055),
+    cleanBPC(column1 = "X71", column2 = "X72", column3 = "X73", column4 = "X75:X83", year = 2065)
   )
   
   # create tidy data frame
@@ -148,8 +148,6 @@ distributionScrapeR <- function(link, bpcpackage) {
   return(distribution)
 }
 
-
-
 final.distribution <- tibble()
 
 for (i in 1:36) {
@@ -176,30 +174,31 @@ for (i in 37:38) {
   final.distribution <- bind_rows(final.distribution, distribution)
   
 }
-# Should be 43,776 observations
-# 24 subgroups * 6 years * 8 percentiles * 38 options
+# Should be 49,248 observations
+# 24 subgroups * 6 years * 9 percentiles * 38 options
+
 
 # Spread the data into long format
 final.distribution <- final.distribution %>%
-  gather(c(`Annuitized Financial Income`:`State Income Tax`, BMB), key = "incomes.taxes",value = "value")
-# Should be 1,225,728 observations
-# 24 subgroups * 6 years * 8 percentiles * 38 options * 28 incomes/taxes/premiums
+  gather(c(`Annuitized Financial Income`:`State Income Tax`, BMB), key = "incomes.taxes", value = "value")
+# Should be 1,378,944 observations
+# 24 subgroups * 6 years * 9 percentiles * 38 options * 28 incomes/taxes/premiums
 
 # Create a baseline data frame
 baselines <- final.distribution %>%
   filter(option == "Scheduled Law" | option == "Payable Law") %>%
   rename(baseline.value = value, baseline.type = option)
-# Should be 129,024 observations
-# 1,225,728 * 4 / 38
+# Should be 145,152 observations
+# 1,378,944 * 4 / 38
 
 # Create a options data frame
 options <- final.distribution %>%
   filter(option != "Scheduled Law" & option != "Payable Law")
-# Should be 1,096,704 observations
-# 1,225,728 * 34 / 38
+# Should be 1,233,792 observations
+# 1,378,944 * 34 / 38
 
 final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "incomes.taxes"))
-# should double
+# 2,467,584
 
 # Calculate the dollar and percent changes
 final.distribution <- final.distribution %>%
@@ -218,8 +217,8 @@ final.distribution <- union(final.distribution, baselines) %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = incomes.taxes, value = value)
-# Should be 248,832
-# 24 subgroups * 6 years * 8 percentiles * (38 options - 2) * 2 scales * 2 baselines * 2 comparisons
+# Should be 186,624
+# 24 subgroups * 6 years * 9 percentiles * (38 options - 2) * 2 scales * 2 baselines
 
 rm(files, distribution, options, baselines)
 

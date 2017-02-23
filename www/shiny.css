@@ -3,3 +3,78 @@
 * {
   font-family: Lato;
 }
+
+.selectize-input.focus{
+    border-color: #cccccc;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.control-label {
+  color:#1696d2;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: Lato, sans-serif !important;
+}
+
+.irs-grid-pol.small {
+  display: none;
+}
+
+.slider-animate-button {
+  position: relative;
+  top: 10px;
+}
+
+.irs-grid-text,
+.iris-min,
+.iris-max,
+.irs-from,
+.irs-to,
+.irs-single {
+  font-size:11px;
+}
+
+
+.income-percent {
+    color: #1696d2;
+    text-transform: uppercase;
+    font-size: 24px;
+    padding-top: 30px;
+}
+
+.income-text {
+    font-size: 14px;
+}
+
+
+
+	/*border: black;*/
+	/*text-align: left;*/
+	/*white-space: nowrap;*/
+	/*width: 14em;*/
+	/*background: url(../images/urban-select-2x.png) no-repeat right #efefef;*/
+	/*background-size: 45px 45px;*/
+	/*border: none;*/
+	/*width: 45px;*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
