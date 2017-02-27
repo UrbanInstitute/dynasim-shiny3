@@ -20,6 +20,8 @@ distribution <- read_csv("data/distributions.csv")
 
 # Gather the data
 distribution <- distribution %>%
+  mutate(group = gsub("Per Capita ", "", group)) %>%
+  mutate(subgroup = gsub(" \\(Income\\)", "", subgroup)) %>% 
   mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99", "Percent with Income Source"))) %>%
   mutate(subgroup = factor(subgroup, levels = c("All Individuals",
                                                 "Females",
@@ -39,7 +41,26 @@ distribution <- distribution %>%
                                                 "High School Dropouts",
                                                 "High School Graduates",
                                                 "Some College",
-                                                "College Graduates"))) %>%
+                                                "College Graduates"),
+                                      labels = c("All Individuals",
+                                                 "Females",
+                                                 "Males",
+                                                 "African-Americans",
+                                                 "Hispanics",
+                                                 "White, Non-Hispanics",
+                                                 "Bottom Quintile",
+                                                 "2nd Quintile",
+                                                 "3rd Quintile",
+                                                 "4th Quintile",
+                                                 "Top Quintile",
+                                                 "Never Married Individuals",
+                                                 "Divorced Individuals",
+                                                 "Married Individuals",
+                                                 "Widowed Individuals",
+                                                 "High School Dropouts",
+                                                 "High School Graduates",
+                                                 "Some College",
+                                                 "College Graduates"))) %>%
   gather(`Annuitized Financial Income`:`State Income Tax`, key = income.tax.premium, value = value)
 
 ##
@@ -85,7 +106,7 @@ ui <- fluidPage(
                        step = 10,
                        value = 2015,
                        sep = "",
-                       animate = animationOptions(loop = TRUE))
+                       animate = animationOptions(loop = TRUE, interval = 1500))
            ),
     
     column(4,
@@ -108,7 +129,7 @@ ui <- fluidPage(
                               "Increase Benefits Taxation" = "Increase Benefits Taxation",
                               "Cap Spouse Benefits" = "Cap Spouse Benefits",
                               "75% Survivor Benefit" = "75% Survivor Benefit",
-                              "90% Tax max" = " 90% Tax Max",
+                              "90% Tax Max" = "90% Tax Max",
                               "90% Tax Max and 13.4% Payroll Tax" = "90% Tax Max and 13.4% Payroll Tax",
                               "Full Chained-CPI COLA" = "Full Chained-CPI COLA",
                               "Partial Chained-CPI COLA" = "Partial Chained-CPI COLA",
@@ -127,14 +148,14 @@ ui <- fluidPage(
                               "DB Pension Income" = "DB Pension Income",
                               "Earned Income" = "Earned Income",
                               "Federal Income Tax" = "Federal Income Tax",
-                              "HI Tax" = "HI tax",
+                              "HI Tax" = "HI Tax",
                               "Imputed Rental Income" = "Imputed Rental Income",
                               "Means and Non-Means Tested Benefits" = "Means+Nonmeans Benefits",
                               "Medicare Part B Premium" = "Medicare Part B Premium",
                               "Medicare Surtax" = "Medicare Surtax",
                               "Net Annuity Income" = "Net Annuity Income",
                               "Net Cash Income" = "Net Cash Income",
-                              "OASDI Tax" = "OASDI tax",
+                              "OASDI Tax" = "OASDI Tax",
                               "Other Family Member Income" = "Other Family Member Income",
                               "Own Benefit" = "Own Benefit",
                               "Own Earnings" = "Own Earnings",
@@ -151,7 +172,7 @@ ui <- fluidPage(
                               "State Income Tax" = "State Income Tax")),
     
       selectInput(inputId = "group",
-                  label = "Group",
+                  label = "Demographic",
                   choices = c("All Individuals" = "All Individuals",
                               "Sex" = "Sex",
                               "Race/Ethnicity" = "Race/Ethnicity",
@@ -305,10 +326,11 @@ server <- function(input, output) {
         ylab(NULL) +
         expand_limits(y = origin) +
         geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.ticks.length = unit(0, "points"),,
+        theme(axis.ticks.length = unit(0, "points"),
               axis.line = element_blank())
-    }
     
+    }
+      
     if (input$comparison == "level") {
       graphr(origin = NULL, line.placement = 0, line.color = "black") 
     } 

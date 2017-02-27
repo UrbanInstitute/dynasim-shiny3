@@ -182,9 +182,9 @@ theme_urban <- function(base_size = 12, base_family = "Lato") {
     
     legend.background = element_blank(), 
     
-    legend.spacing = unit(20L, "pt"), 
-    legend.spacing.x = NULL, 
-    legend.spacing.y = NULL,
+    legend.spacing = unit(50L, "pt"), 
+    legend.spacing.x = unit(50L, "pt"), 
+    legend.spacing.y = unit(50L, "pt"),
     
     legend.key = element_blank(), 
     legend.key.size = unit(10L, "pt"), 
