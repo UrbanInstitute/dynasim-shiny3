@@ -305,7 +305,7 @@ server <- function(input, output) {
         ylab(NULL) +
         expand_limits(y = origin) +
         geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.ticks.length = unit(0, "points"),
+        theme(axis.ticks.length = unit(0, "points"),,
               axis.line = element_blank())
     }
     
@@ -438,7 +438,7 @@ server <- function(input, output) {
       
       percent <- distribution %>%
         filter(option == input$option) %>%
-        filter(group == input$group) %>%  
+        filter(group == "All Individuals") %>%  
         filter(year == input$year) %>%
         filter(comparison == input$comparison) %>%   
         filter(baseline == input$baseline) %>% 
@@ -447,7 +447,7 @@ server <- function(input, output) {
         filter(percentile == "Percent with Income Source") %>% 
         select(value)
       
-      HTML(paste("<div class='income-percent'>", as.character(percent * 100), "%", "</div>","<div class='income-text'>", "have", "<b>", input$income.tax.premium, "</b>", "</div>"))
+      HTML(paste("<div class='income-percent'>", as.character(round(percent * 100, 1)), "%", "</div>","<div class='income-text'>", "have", "<b>", input$income.tax.premium, "</b>", "</div>"))
       
     })
     
