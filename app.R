@@ -5,7 +5,6 @@ library(extrafont)
 library(grid)
 library(RColorBrewer)
 library(scales)
-library(ggiraph)
 
 options(scipen = 999)
 
@@ -100,8 +99,12 @@ ui <- fluidPage(
   
   fluidRow(
     column(6,
+           style = "position:relative",
            
-           ggiraphOutput("chart", width = "100%", height = "400px")
+           h4(textOutput("title")),
+           h5(textOutput("subtitle")),
+           
+           plotOutput("chart", width = "100%", height = "400px")
            
            )
   ),
@@ -253,43 +256,51 @@ server <- function(input, output) {
   
   options(shiny.sanitize.errors = FALSE)
   
-  output$chart <- renderggiraph({  
+  output$title <- renderText({
+    
+    if (input$income.tax.premium == "Annuitized Financial Income") {"Annuitized Financial Income ($2015)"} else
+    if (input$income.tax.premium == "DB Pension Income") {"Defined Benefit Pension Income ($2015)"} else
+    if (input$income.tax.premium == "Earned Income") {"Earned Income ($2015)"} else
+    if (input$income.tax.premium == "Federal Income Tax") {"Federal Income Tax ($2015)"} else
+    if (input$income.tax.premium == "HI Tax") {"Hospital Insurance Tax ($2015)"} else
+    if (input$income.tax.premium == "Imputed Rental Income") {"Imputed Rental Income ($2015)"} else
+    if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"Means and Non-Means Tested Benefits ($2015)"} else
+    if (input$income.tax.premium == "Medicare Part B Premium") {"Medicare Part B Premium ($2015)"} else
+    if (input$income.tax.premium == "Medicare Surtax") {"Medicare Surtax ($2015)"} else
+    if (input$income.tax.premium == "Net Annuity Income") {"Net Annuity Income ($2015)"} else
+    if (input$income.tax.premium == "Net Cash Income") {"Net Cash Income ($2015)"} else
+    if (input$income.tax.premium == "OASDI Tax") {"OASDI Tax ($2015)"} else
+    if (input$income.tax.premium == "Other Family Member Income") {"Other Family Member Income ($2015)"} else
+    if (input$income.tax.premium == "Own Benefit") {"Own Benefit ($2015)"} else
+    if (input$income.tax.premium == "Own Earnings") {"Own Earnings ($2015)"} else
+    if (input$income.tax.premium == "Annuity Income") {"Annuity Income ($2015)"} else
+    if (input$income.tax.premium == "Cash Income") {"Cash Income ($2015)"} else
+    if (input$income.tax.premium == "Dividend Income") {"Dividend Income ($2015)"} else
+    if (input$income.tax.premium == "Interest Income") {"Interest Income ($2015)"} else
+    if (input$income.tax.premium == "IRA Withdrawal") {"IRA Withdrawal ($2015)"} else
+    if (input$income.tax.premium == "Rental Income") {"Rental Income ($2015)"} else
+    if (input$income.tax.premium == "Social Security Benefits") {"Social Security Benefits ($2015)"} else
+    if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit ($2015)"} else
+    if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings ($2015)"} else
+    if (input$income.tax.premium == "SSI") {"SSI ($2015)"} else
+    if (input$income.tax.premium == "State Income Tax") {"State Income Tax ($2015)"}
+    
+    })
   
-    title <- if (input$income.tax.premium == "Annuitized Financial Income") {"Annuitized Financial Income ($2015)"} else
-             if (input$income.tax.premium == "DB Pension Income") {"Defined Benefit Pension Income ($2015)"} else
-             if (input$income.tax.premium == "Earned Income") {"Earned Income ($2015)"} else
-             if (input$income.tax.premium == "Federal Income Tax") {"Federal Income Tax ($2015)"} else
-             if (input$income.tax.premium == "HI Tax") {"Hospital Insurance Tax ($2015)"} else
-             if (input$income.tax.premium == "Imputed Rental Income") {"Imputed Rental Income ($2015)"} else
-             if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"Means and Non-Means Tested Benefits ($2015)"} else
-             if (input$income.tax.premium == "Medicare Part B Premium") {"Medicare Part B Premium ($2015)"} else
-             if (input$income.tax.premium == "Medicare Surtax") {"Medicare Surtax ($2015)"} else
-             if (input$income.tax.premium == "Net Annuity Income") {"Net Annuity Income ($2015)"} else
-             if (input$income.tax.premium == "Net Cash Income") {"Net Cash Income ($2015)"} else
-             if (input$income.tax.premium == "OASDI Tax") {"OASDI Tax ($2015)"} else
-             if (input$income.tax.premium == "Other Family Member Income") {"Other Family Member Income ($2015)"} else
-             if (input$income.tax.premium == "Own Benefit") {"Own Benefit ($2015)"} else
-             if (input$income.tax.premium == "Own Earnings") {"Own Earnings ($2015)"} else
-             if (input$income.tax.premium == "Annuity Income") {"Annuity Income ($2015)"} else
-             if (input$income.tax.premium == "Cash Income") {"Cash Income ($2015)"} else
-             if (input$income.tax.premium == "Dividend Income") {"Dividend Income ($2015)"} else
-             if (input$income.tax.premium == "Interest Income") {"Interest Income ($2015)"} else
-             if (input$income.tax.premium == "IRA Withdrawal") {"IRA Withdrawal ($2015)"} else
-             if (input$income.tax.premium == "Rental Income") {"Rental Income ($2015)"} else
-             if (input$income.tax.premium == "Social Security Benefits") {"Social Security Benefits ($2015)"} else
-             if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit ($2015)"} else
-             if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings ($2015)"} else
-             if (input$income.tax.premium == "SSI") {"SSI ($2015)"} else
-             if (input$income.tax.premium == "State Income Tax") {"State Income Tax ($2015)"}
+  output$subtitle <- renderText({
     
-    subtitle <- if (input$group == "All Individuals") {"All Individuals"} else
-                if (input$group == "Sex") {"Sex"} else
-                if (input$group == "Race/Ethnicity") {"Race/Ethnicity"} else
-                if (input$group == "Education") {"Education"} else
-                if (input$group == "Marital Status") {"Marital Status"} else
-                if (input$group == "Income Quintile") {"Income Quintile"} else
-                if (input$group == "Lifetime Earnings Quintile") {"Lifetime Earnings Quintile"}
-    
+    if (input$group == "All Individuals") {"All Individuals"} else
+    if (input$group == "Sex") {"Sex"} else
+    if (input$group == "Race/Ethnicity") {"Race/Ethnicity"} else
+    if (input$group == "Education") {"Education"} else
+    if (input$group == "Marital Status") {"Marital Status"} else
+    if (input$group == "Income Quintile") {"Income Quintile"} else
+    if (input$group == "Lifetime Earnings Quintile") {"Lifetime Earnings Quintile"}
+  
+    })
+  
+  output$chart <- renderPlot({  
+
     # Calculate the maximum for the y-axis (because of the animation)
     y.max <- distribution %>%
       filter(option == input$option) %>%
@@ -317,9 +328,7 @@ server <- function(input, output) {
     
     graphr <- function(origin, line.placement, line.color){
     
-      distribution$tooltip <- distribution$value
-      
-      gg_bar <- distribution %>%
+      distribution %>%
         filter(option == input$option) %>%
         filter(group == input$group) %>%  
         filter(year == input$year) %>%
@@ -329,20 +338,15 @@ server <- function(input, output) {
         filter(income.tax.premium == input$income.tax.premium) %>%
         filter(percentile != "Percent with Income Source") %>%
         ggplot() +
-          geom_bar_interactive(aes(x = percentile, y = value, fill = subgroup, tooltip = tooltip), position = "dodge", stat = "identity") +
+          geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
           scale_y_continuous(limits = c(y.min, as.numeric(y.max)), labels = scales::dollar) +
-          labs(title = title,
-               subtitle = subtitle,
-               caption = "DYNASIM3") +
-          xlab("Mean and Percentiles") +
-          ylab(NULL) +
+          labs(caption = "DYNASIM3",
+               x = "Mean and Percentiles",
+               y = NULL) +
           expand_limits(y = origin) +
           geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-          theme_urban() +
           theme(axis.ticks.length = unit(0, "points"),
                 axis.line = element_blank())
-    
-      ggiraph(code = {print(gg_bar)}, width = 1, height = 5.418)
       
       
     }
