@@ -2,7 +2,7 @@
 
 # This script reads mean income data for 64 groups, across 4 measures, in 6 
 # different decades, for user-defined reform options, in two scales. It then 
-# calculates percent and dollar change against two different baselines. 
+# calculates dollar change against two different baselines. 
 # The script also cleans the data and turns them into a long data frame 
 # formatted for ggplot2 
 
@@ -15,6 +15,13 @@ options(scipen = 999)
 # Read df with links to the Excel sheets with the mean income data
 files <- read_excel("options_guide.xlsx") %>%
   select(option, scale, link)
+
+
+distribution <- read_excel(as.character(files[1,3]), 
+                           sheet = "income Distribution by Source", 
+                           skip = 4, col_names = FALSE)
+
+
 
 # Create functions that clean the clunky Excel files
 distributionScrapeR <- function(link, bpcpackage) {
@@ -90,12 +97,12 @@ distributionScrapeR <- function(link, bpcpackage) {
   # charts in the Excel files
   
   distribution <- bind_rows(
-    cleanBPC(column1 = "X0",  column2 = "X1",  column3 = "X3", column4 = "X5:X13",  year = 2015),
-    cleanBPC(column1 = "X15", column2 = "X16", column3 = "X17", column4 = "X19:X27", year = 2025),
-    cleanBPC(column1 = "X29", column2 = "X30", column3 = "X31", column4 = "X33:X41", year = 2035),
-    cleanBPC(column1 = "X43", column2 = "X44", column3 = "X45", column4 = "X47:X55", year = 2045),
-    cleanBPC(column1 = "X57", column2 = "X58", column3 = "X59", column4 = "X61:X69", year = 2055),
-    cleanBPC(column1 = "X71", column2 = "X72", column3 = "X73", column4 = "X75:X83", year = 2065)
+    cleanBPC(column1 = "X__1",  column2 = "X__2",  column3 = "X__4", column4 = "X__6:X__14",  year = 2015),
+    cleanBPC(column1 = "X__16", column2 = "X__17", column3 = "X__18", column4 = "X__20:X__28", year = 2025),
+    cleanBPC(column1 = "X__30", column2 = "X__31", column3 = "X__32", column4 = "X__34:X__42", year = 2035),
+    cleanBPC(column1 = "X__44", column2 = "X__45", column3 = "X__46", column4 = "X__48:X__56", year = 2045),
+    cleanBPC(column1 = "X__58", column2 = "X__59", column3 = "X__60", column4 = "X__62:X__70", year = 2055),
+    cleanBPC(column1 = "X__72", column2 = "X__73", column3 = "X__74", column4 = "X__76:X__84", year = 2065)
   )
   
   # create tidy data frame
@@ -220,7 +227,12 @@ final.distribution <- union(final.distribution, baselines) %>%
 # Should be 186,624
 # 24 subgroups * 6 years * 9 percentiles * (38 options - 2) * 2 scales * 2 baselines
 
-rm(files, distribution, options, baselines)
+rm(files, distribution, options, baselines, i)
+
+# If data directory does not exist, create data directory
+if (!dir.exists("data")) {
+  dir.create("data")
+}
 
 # Write tidy data frame
 write_csv(final.distribution, "data/distributions.csv")
