@@ -16,11 +16,47 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-distribution <- read_csv("data/distributions.csv")
-scale_text <- read_csv("text/scale.csv")
-baseline_text <- read_csv("text/baseline.csv")
-income_tax_premium_text <- read_csv("text/income_tax_premium.csv")
-option_text <- read_csv("text/option.csv")
+distribution <- read_csv("data/distributions.csv", 
+  col_types = cols(
+    .default = col_double(),
+    subgroup = col_character(),
+    year = col_integer(),
+    percentile = col_character(),
+    group = col_character(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    comparison = col_character()
+  )
+)
+
+scale_text <- read_csv("text/scale.csv",
+  col_types = cols(
+    scale = col_character(),
+    text = col_character()
+  )
+)
+
+baseline_text <- read_csv("text/baseline.csv",
+  col_types = cols(
+    baseline = col_character(),
+    text = col_character()
+  )
+)
+
+income_tax_premium_text <- read_csv("text/income_tax_premium.csv",
+  col_types = cols(
+    income_tax_premium = col_character(),
+    text = col_character()
+  )
+)
+
+option_text <- read_csv("text/option.csv",
+  col_types = cols(
+    option = col_character(),
+    text = col_character()
+  )
+)
 
 # Gather the data
 distribution <- distribution %>%
@@ -91,7 +127,6 @@ ui <- fluidPage(
            
            br()
            
-           
            )
   
   ),
@@ -135,8 +170,8 @@ ui <- fluidPage(
     column(4,
       selectInput(inputId = "option",
                   label = "Social Security Reform",
-                  choices = c("Scheduled Law" = "Scheduled Law",
-                              "Payable Law" = "Payable Law",
+                  choices = c("Payable Law" = "Payable Law",
+                              "Scheduled Law" = "Scheduled Law",
                               "BPC Option" = "BPC Package",
                               "Annual PIA" = "Annual PIA", 
                               "Increase Benefits Taxation" = "Increase Benefits Taxation",

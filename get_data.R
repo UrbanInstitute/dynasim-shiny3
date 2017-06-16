@@ -184,7 +184,6 @@ for (i in 37:38) {
 # Should be 49,248 observations
 # 24 subgroups * 6 years * 9 percentiles * 38 options
 
-
 # Spread the data into long format
 final.distribution <- final.distribution %>%
   gather(c(`Annuitized Financial Income`:`State Income Tax`, BMB), key = "incomes.taxes", value = "value")
@@ -199,13 +198,13 @@ baselines <- final.distribution %>%
 # 1,378,944 * 4 / 38
 
 # Create a options data frame
-options <- final.distribution %>%
-  filter(option != "Scheduled Law" & option != "Payable Law")
-# Should be 1,233,792 observations
-# 1,378,944 * 34 / 38
+options <- final.distribution
+#  filter(option != "Scheduled Law" & option != "Payable Law")
+# Should be 1,378,944 observations
 
 final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "incomes.taxes"))
 # 2,467,584
+# 2,757,888
 
 # Calculate the dollar and percent changes
 final.distribution <- final.distribution %>%
@@ -221,11 +220,12 @@ baselines <- baselines %>%
 
 # Combine the baselines (with zeroes for changes) and the options
 final.distribution <- union(final.distribution, baselines) %>%
+  filter(incomes.taxes != "BMB") %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = incomes.taxes, value = value)
-# Should be 186,624
-# 24 subgroups * 6 years * 9 percentiles * (38 options - 2) * 2 scales * 2 baselines
+# Should be 196,992
+# 24 subgroups * 6 years * 9 percentiles * 38 options * 2 scales * 2 baselines
 
 rm(files, distribution, options, baselines, i)
 
