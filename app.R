@@ -361,7 +361,7 @@ server <- function(input, output) {
     distribution %>%
       filter(option == input$option) %>%
       filter(group == input$group) %>%  
-      filter(year == input$year) %>%
+
       filter(comparison == input$comparison) %>%   
       filter(baseline == input$baseline) %>% 
       filter(scale == input$scale) %>%
@@ -372,23 +372,11 @@ server <- function(input, output) {
   output$chart <- renderPlot({  
 
     # Calculate the maximum for the y-axis (because of the animation)
-    y.max <- distribution %>%
-      filter(option == input$option) %>%
-      filter(group == input$group) %>%  
-      filter(comparison == input$comparison) %>%   
-      filter(baseline == input$baseline) %>% 
-      filter(scale == input$scale) %>%
-      filter(income.tax.premium == input$income.tax.premium) %>%
+    y.max <- data_subset() %>%
       summarize(max = max(value))
 
-    # Calculate the maximum for the y-axis (because of the animation)
-    y.min <- distribution %>%
-      filter(option == input$option) %>%
-      filter(group == input$group) %>%  
-      filter(comparison == input$comparison) %>%   
-      filter(baseline == input$baseline) %>% 
-      filter(scale == input$scale) %>%
-      filter(income.tax.premium == input$income.tax.premium) %>%
+    # Calculate the minimum for the y-axis (because of the animation)
+    y.min <- data_subset() %>%
       summarize(min = min(value))
     
     y.min <- min(0, as.numeric(y.min))
@@ -398,16 +386,17 @@ server <- function(input, output) {
 
     graphr <- function(origin, line.placement, line.color){
     
-      ggplot(data_subset()) +
-        geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
-        scale_y_continuous(limits = c(y.min, as.numeric(y.max)), labels = scales::dollar) +
-        labs(caption = "DYNASIM3",
-             x = "Mean and Percentiles",
-             y = NULL) +
-        expand_limits(y = origin) +
-        geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.ticks.length = unit(0, "points"),
-              axis.line = element_blank())
+      filter(data_subset(), year == input$year) %>%  
+        ggplot() +
+          geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
+          scale_y_continuous(limits = c(y.min, as.numeric(y.max)), labels = scales::dollar) +
+          labs(caption = "DYNASIM3",
+               x = "Mean and Percentiles",
+               y = NULL) +
+          expand_limits(y = origin) +
+          geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
+          theme(axis.ticks.length = unit(0, "points"),
+                axis.line = element_blank())
     
     }
       
