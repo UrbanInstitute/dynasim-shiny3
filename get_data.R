@@ -184,6 +184,30 @@ for (i in 37:38) {
 # Should be 49,248 observations
 # 24 subgroups * 6 years * 9 percentiles * 38 options
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Spread the data into long format
 final.distribution <- final.distribution %>%
   gather(c(`Annuitized Financial Income`:`State Income Tax`, BMB), key = "incomes.taxes", value = "value")
