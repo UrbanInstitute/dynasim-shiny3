@@ -118,7 +118,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            titlePanel("Exploring Social Security Reform Options"),
            
@@ -133,7 +133,7 @@ ui <- fluidPage(
   
   
   fluidRow(
-    column(6,
+    column(10,
            style = "position:relative",
            
            h4(textOutput("title")),
@@ -146,7 +146,7 @@ ui <- fluidPage(
   ),
     
   fluidRow(
-    column(4, 
+    column(6, 
            
            sliderInput(inputId = "year", 
                        label = "Year",
@@ -158,7 +158,7 @@ ui <- fluidPage(
                        animate = animationOptions(loop = TRUE, interval = 1500))
            ),
     
-    column(4,
+    column(6,
            
            htmlOutput("text5")
            
@@ -168,7 +168,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(4,
+    column(6,
       selectInput(inputId = "option",
                   label = "Social Security Reform",
                   choices = c("Payable Law" = "Payable Law",
@@ -191,6 +191,11 @@ ui <- fluidPage(
                               "14.4% Payroll Tax" = "14.4% Payroll Tax",
                               "15.4% Payroll Tax" = "15.4% Payroll Tax")),           
 
+      selectInput(inputId = "baseline",
+                  label = "Baseline",
+                  choices = c("Current Law Payable" = "Payable Law",
+                              "Current Law Scheduled" = "Scheduled Law")),      
+      
       selectInput(inputId = "income.tax.premium",
                   label = "Income, Tax, or Premium",
                   choices = c("Annuitized Financial Income" = "Annuitized Financial Income",
@@ -218,8 +223,14 @@ ui <- fluidPage(
                               "Spouse Benefit" = "Spouse Benefit",
                               "Spouse Earnings" = "Spouse Earnings",
                               "SSI" = "SSI",
-                              "State Income Tax" = "State Income Tax")),
-    
+                              "State Income Tax" = "State Income Tax"))),
+
+    column(6, 
+      selectInput(inputId = "comparison",
+                  label = "Comparison",
+                  choices = c("Level" = "level",
+                              "Dollar Change" = "dollar.change")),
+      
       selectInput(inputId = "group",
                   label = "Demographic",
                   choices = c("All Individuals" = "All Individuals",
@@ -228,18 +239,7 @@ ui <- fluidPage(
                               "Education" = "Education",
                               "Marital Status" = "Marital Status",
                               "Income Quintile" = "Income Quintile",
-                              "Lifetime Earnings Quintile" = "Lifetime Earnings Quintile"))),
-    
-    column(4, 
-      selectInput(inputId = "comparison",
-                  label = "Comparison",
-                  choices = c("Level" = "level",
-                              "Dollar Change" = "dollar.change")),
-      
-      selectInput(inputId = "baseline",
-                   label = "Baseline",
-                   choices = c("Current Law Payable" = "Payable Law",
-                               "Current Law Scheduled" = "Scheduled Law")),
+                              "Lifetime Earnings Quintile" = "Lifetime Earnings Quintile")),
       
       selectInput(inputId = "scale",
                   label = "Scale",
@@ -247,7 +247,7 @@ ui <- fluidPage(
                               "Equivalent" = "equivalent")))),
   
   fluidRow(
-    column(8,
+    column(12,
            downloadButton('download_data', 'Download Charted Data')
     )
   ),
@@ -255,7 +255,7 @@ ui <- fluidPage(
   
     fluidRow(
     
-    column(8,
+    column(12,
     
     # Explanation of Social Security Reform
     
@@ -265,7 +265,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
       # Explanation of Income, Tax, or Premium
       
@@ -276,7 +276,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
       # Explanation of Scales
       
@@ -287,7 +287,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Baseline
            

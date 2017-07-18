@@ -140,7 +140,8 @@
 }
 
 /* Download Data Button */
-.btn {
+.btn,
+.btn:active {
   background-color: #efefef;
   display: block;  
   float: left;
@@ -155,6 +156,12 @@
   border-radius: 0px;
   margin: 0px;
 }
+
+.btn:hover {
+    background: #fdbf11;
+    color: #fff !important;
+}
+
 
 .fa-download:before {
     content: none;
