@@ -191,6 +191,11 @@ ui <- fluidPage(
                               "14.4% Payroll Tax" = "14.4% Payroll Tax",
                               "15.4% Payroll Tax" = "15.4% Payroll Tax")),           
 
+      selectInput(inputId = "baseline",
+                  label = "Baseline",
+                  choices = c("Current Law Payable" = "Payable Law",
+                              "Current Law Scheduled" = "Scheduled Law")),      
+      
       selectInput(inputId = "income.tax.premium",
                   label = "Income, Tax, or Premium",
                   choices = c("Annuitized Financial Income" = "Annuitized Financial Income",
@@ -218,8 +223,14 @@ ui <- fluidPage(
                               "Spouse Benefit" = "Spouse Benefit",
                               "Spouse Earnings" = "Spouse Earnings",
                               "SSI" = "SSI",
-                              "State Income Tax" = "State Income Tax")),
-    
+                              "State Income Tax" = "State Income Tax"))),
+
+    column(6, 
+      selectInput(inputId = "comparison",
+                  label = "Comparison",
+                  choices = c("Level" = "level",
+                              "Dollar Change" = "dollar.change")),
+      
       selectInput(inputId = "group",
                   label = "Demographic",
                   choices = c("All Individuals" = "All Individuals",
@@ -228,18 +239,7 @@ ui <- fluidPage(
                               "Education" = "Education",
                               "Marital Status" = "Marital Status",
                               "Income Quintile" = "Income Quintile",
-                              "Lifetime Earnings Quintile" = "Lifetime Earnings Quintile"))),
-    
-    column(6, 
-      selectInput(inputId = "comparison",
-                  label = "Comparison",
-                  choices = c("Level" = "level",
-                              "Dollar Change" = "dollar.change")),
-      
-      selectInput(inputId = "baseline",
-                   label = "Baseline",
-                   choices = c("Current Law Payable" = "Payable Law",
-                               "Current Law Scheduled" = "Scheduled Law")),
+                              "Lifetime Earnings Quintile" = "Lifetime Earnings Quintile")),
       
       selectInput(inputId = "scale",
                   label = "Scale",
