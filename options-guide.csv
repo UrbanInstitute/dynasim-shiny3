@@ -1,0 +1,29 @@
+option.name,option,scale,link,directory,file
+Opt0,Scheduled Law,per capita,X:\programs\run912\opt0\BPCtableShellsOPT0.xlsx,X:\programs\run912\opt0\,BPCtableShellsOPT0.xlsx
+Opt0,Payable Law,per capita,X:\programs\run912\payable\BPCtableShellsPayable.xlsx,X:\programs\run912\payable\,BPCtableShellsPayable.xlsx
+RothIRA2,option1,per capita,X:\programs\run912\RothIRA2\BPCtableShellsRothIRA2v2.xlsx,X:\programs\run912\RothIRA2\,BPCtableShellsRothIRA2v2.xlsx
+RothIRA2allpart,option2,per capita,X:\programs\run912\RothIRA2allpart\BPCtableShellsRothIRA2vallpartV2.xlsx,X:\programs\run912\RothIRA2allpart\,BPCtableShellsRothIRA2vallpartV2.xlsx
+RothIRA2b,option3,per capita,X:\programs\run912\RothIRA2b\BPCtableShellsRothIRA2bV2.xlsx,X:\programs\run912\RothIRA2b\,BPCtableShellsRothIRA2bV2.xlsx
+RothIRA2c,option4,per capita,X:\programs\run912\RothIRA2c\BPCtableShellsRothIRA2cV2.xlsx,X:\programs\run912\RothIRA2c\,BPCtableShellsRothIRA2cV2.xlsx
+RothIRA2d,option5,per capita,X:\programs\run912\RothIRA2d\BPCtableShellsRothIRA2dV2.xlsx,X:\programs\run912\RothIRA2d\,BPCtableShellsRothIRA2dV2.xlsx
+RothIRA2e,option6,per capita,X:\programs\run912\RothIRA2e\BPCtableShellsRothIRA2eV2.xlsx,X:\programs\run912\RothIRA2e\,BPCtableShellsRothIRA2eV2.xlsx
+RothIRA2f,option7,per capita,X:\programs\run912\RothIRA2f\BPCtableShellsRothIRA2fV2.xlsx,X:\programs\run912\RothIRA2f\,BPCtableShellsRothIRA2fV2.xlsx
+RothIRA2g,option8,per capita,X:\programs\run912\RothIRA2g\BPCtableShellsRothIRA2gV2.xlsx,X:\programs\run912\RothIRA2g\,BPCtableShellsRothIRA2gV2.xlsx
+RothIRA2nocashout,option9,per capita,X:\programs\run912\RothIRA2nocashout\BPCtableShellsRothIRA2nocashoutV2.xlsx,X:\programs\run912\RothIRA2nocashout\,BPCtableShellsRothIRA2nocashoutV2.xlsx
+RothIRA3,option10,per capita,X:\programs\run912\RothIRA3\BPCtableShellsRothIRA3V2.xlsx,X:\programs\run912\RothIRA3\,BPCtableShellsRothIRA3V2.xlsx
+RothIRA3b,option11,per capita,X:\programs\run912\RothIRA3b\BPCtableShellsRothIRA3bV2.xlsx,X:\programs\run912\RothIRA3b\,BPCtableShellsRothIRA3bV2.xlsx
+RothIRA3c,option12,per capita,X:\programs\run912\RothIRA3c\BPCtableShellsRothIRA3cV2.xlsx,X:\programs\run912\RothIRA3c\,BPCtableShellsRothIRA3cV2.xlsx
+RothIRA3d,option13,per capita,X:\programs\run912\RothIRA3d\BPCtableShellsRothIRA3dV2.xlsx,X:\programs\run912\RothIRA3d\,BPCtableShellsRothIRA3dV2.xlsx
+RothIRA4,option14,per capita,X:\programs\run912\RothIRA4\BPCtableShellsRothIRA4V2.xlsx,X:\programs\run912\RothIRA4\,BPCtableShellsRothIRA4V2.xlsx
+RothIRA4b,option15,per capita,X:\programs\run912\RothIRA4b\BPCtableShellsRothIRA4bV2.xlsx,X:\programs\run912\RothIRA4b\,BPCtableShellsRothIRA4bV2.xlsx
+RothIRA4c,option16,per capita,X:\programs\run912\RothIRA4c\BPCtableShellsRothIRA4cV2.xlsx,X:\programs\run912\RothIRA4c\,BPCtableShellsRothIRA4cV2.xlsx
+RothIRA4d,option17,per capita,X:\programs\run912\RothIRA4d\BPCtableShellsRothIRA4dV2.xlsx,X:\programs\run912\RothIRA4d\,BPCtableShellsRothIRA4dV2.xlsx
+RothIRAHighLimits,option18,per capita,X:\programs\run912\RothIRAHighLimits\BPCtableShellsRothIRAHighLimitsV2.xlsx,X:\programs\run912\RothIRAHighLimits\,BPCtableShellsRothIRAHighLimitsV2.xlsx
+RothIRALimit2,option19,per capita,X:\programs\run912\RothIRALimit2\BPCtableShellsRothIRALimit2V2.xlsx,X:\programs\run912\RothIRALimit2\,BPCtableShellsRothIRALimit2V2.xlsx
+RothIRALimit2b,option20,per capita,X:\programs\run912\RothIRALimit2b\BPCtableShellsRothIRALimit2bV2.xlsx,X:\programs\run912\RothIRALimit2b\,BPCtableShellsRothIRALimit2bV2.xlsx
+RothIRALimit2c,option21,per capita,X:\programs\run912\RothIRALimit2c\BPCtableShellsRothIRALimit2cV2.xlsx,X:\programs\run912\RothIRALimit2c\,BPCtableShellsRothIRALimit2cV2.xlsx
+RothIRALimit2d,option22,per capita,X:\programs\run912\RothIRALimit2d\BPCtableShellsRothIRALimit2d.xlsx,X:\programs\run912\RothIRALimit2d\,BPCtableShellsRothIRALimit2d.xlsx
+RothIRALimit2e,option23,per capita,X:\programs\run912\RothIRALimit2e\BPCtableShellsRothIRALimit2e.xlsx,X:\programs\run912\RothIRALimit2e\,BPCtableShellsRothIRALimit2e.xlsx
+RothIRALimit3,option24,per capita,X:\programs\run912\RothIRALimit3\BPCtableShellsRothIRALimit3.xlsx,X:\programs\run912\RothIRALimit3\,BPCtableShellsRothIRALimit3.xlsx
+RothIRALimit3b,option25,per capita,X:\programs\run912\RothIRALimit3b\BPCtableShellsRothIRALimit3b.xlsx,X:\programs\run912\RothIRALimit3b\,BPCtableShellsRothIRALimit3b.xlsx
+RothIRALimit4,option26,per capita,X:\programs\run912\RothIRALimit4\BPCtableShellsRothIRALimit4.xlsx,X:\programs\run912\RothIRALimit4\,BPCtableShellsRothIRALimit4.xlsx
