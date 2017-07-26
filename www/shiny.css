@@ -37,6 +37,7 @@
 
 .selectize-input.items.full.has-options.has-items {
   height: 39px;
+  width: calc(100% - 44px);
 }
 
 .selectize-input .item{
