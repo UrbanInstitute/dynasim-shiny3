@@ -2,9 +2,6 @@
   font-family: Lato;
 }
 
-.item {
-  margin-top: 3.5px;
-}
 
 .selectize-control {
   border: black;
@@ -43,6 +40,9 @@
 .selectize-input .item{
 	width: 299px;
 	overflow: hidden;
+  position: relative;
+  display: inline;
+  top: 3.5px;
 }
 
 .selectize-input.items.full.has-options.has-items.focus.input-active.dropdown-active {
@@ -53,6 +53,7 @@
 	background-size: 45px 45px;
 	margin: 0px;
 	cursor: pointer;
+  width: 100%;
 }
 
 .selectize-input.items.full.has-options.has-items.focus.input-active.dropdown-active::after {
