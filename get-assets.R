@@ -44,8 +44,6 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
     
     names(temp) <- c("group", "subgroup", "Percent with Income Source", temp[1, 4:ncol(temp)])
     
-#    mutate(temp, income.source = NA)
-    
     temp[2, "income.source"] <- "Total Assets"
     temp[83, "income.source"] <- "Financial Assets"
     temp[161, "income.source"] <- "Retirement Account Assets"
@@ -56,11 +54,6 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
       mutate(year = year) %>%
       fill(group, income.source)
 
-#    while (sum(is.na(temp$group)) > 0) {
-#      temp <- temp %>%
-#        mutate(group = if_else(is.na(group), lag(group), group))
-#    }
-    
     temp <- temp %>%
       group_by(group) %>%
       mutate(subgroup = if_else(group == "All", "All", subgroup),
@@ -97,10 +90,6 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
     gather(key = percentile, value = value, -group, -subgroup, -year, -income.source) %>%
     arrange(subgroup, year, percentile)
   
-  # Shared Income Quintile
-  # Shared Lifetime Earnings Quintile
-  # Shared Work Years
-  
   # Create a variable for groups
   distribution <- distribution %>%
     mutate(subgroup = if_else(subgroup == "Male", "Males", subgroup),
@@ -127,4 +116,113 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   return(distribution)
 }
 
-boom <- distribution_scraper(files$link[1], FALSE, "option0", "per capita")
+# iterate function
+final.distribution <- pmap(list(files$link, files$bpc_boolean, files$option, files$scale), distribution_scraper) %>%
+  reduce(bind_rows)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Should be 36,288 observations
+# 24 subgroups * 6 years * 9 percentiles * 28 options
+stopifnot(nrow(final.distribution) == 36288)
+
+# Spread the data into long format
+final.distribution <- final.distribution %>%
+  gather(c(`Annuitized Financial Income`:`State Income Tax`), key = "incomes.taxes", value = "value")
+# TODO(aaron): may require re-adding BMB
+
+# Should be 979,776 observations
+# 24 subgroups * 6 years * 9 percentiles * 28 options * 28 incomes/taxes/premiums
+stopifnot(nrow(final.distribution) == 979776)
+
+# Create a baseline data frame
+baselines <- final.distribution %>%
+  filter(option == "Scheduled Law" | option == "Payable Law") %>%
+  rename(baseline.value = value, baseline.type = option)
+
+# Create a options data frame
+options <- final.distribution
+#  filter(option != "Scheduled Law" & option != "Payable Law")
+# Should be 1,378,944 observations
+
+final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "incomes.taxes"))
+
+# Should be 1,959,552 observations
+# 24 subgroups * 6 years * 9 percentiles * 28 options * 28 incomes/taxes/premiums
+stopifnot(nrow(final.distribution) == 1959552)
+
+# Calculate the dollar and percent changes
+final.distribution <- final.distribution %>%
+  mutate(dollar.change = value - baseline.value) %>%
+  select(-baseline.value)
+
+# Clean up baselines so it matches final.income
+baselines <- baselines %>%
+  rename(value = baseline.value) %>%
+  rename(option = baseline.type) %>%
+  mutate(dollar.change = 0) %>%
+  mutate(baseline.type = option)
+
+# Combine the baselines (with zeroes for changes) and the options
+final.distribution <- union(final.distribution, baselines) %>%
+  filter(incomes.taxes != "BMB") %>%
+  rename(baseline = baseline.type, level = value) %>%
+  gather(level, dollar.change, key = "comparison", value = "value") %>%
+  spread(key = incomes.taxes, value = value)
+
+# Should be 145,152
+# 24 subgroups * 6 years * 9 percentiles * 28 options * 2 scales * 2 baselines
+stopifnot(nrow(final.distribution) == 145152)
+
+rm(files, distribution, options, baselines)
+
+# If data directory does not exist, create data directory
+if (!dir.exists("data")) {
+  dir.create("data")
+}
+
+# Write tidy data frame
+write_csv(final.distribution, "data/pensions.csv")
