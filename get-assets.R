@@ -27,7 +27,7 @@ files <- read_csv("options-guide.csv",
 
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   
-  distribution <- read_excel(files$link[1], 
+  distribution <- read_excel(link, 
                              sheet = "Total Asset distribution", 
                              skip = 2, col_names = FALSE)
   
@@ -43,21 +43,29 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
       select_(column1, column2, column3, column4)
     
     names(temp) <- c("group", "subgroup", "Percent with Income Source", temp[1, 4:ncol(temp)])
-   
+    
+#    mutate(temp, income.source = NA)
+    
+    temp[2, "income.source"] <- "Total Assets"
+    temp[83, "income.source"] <- "Financial Assets"
+    temp[161, "income.source"] <- "Retirement Account Assets"
+    temp[240, "income.source"] <- "Home Equity"
+
     temp <- temp %>%
       slice(-1) %>%
-      mutate(year = year)
+      mutate(year = year) %>%
+      fill(group, income.source)
 
-    while (sum(is.na(temp$group)) > 0) {
-      temp <- temp %>%
-        mutate(group = ifelse(is.na(group), lag(group), group))
-    }
+#    while (sum(is.na(temp$group)) > 0) {
+#      temp <- temp %>%
+#        mutate(group = if_else(is.na(group), lag(group), group))
+#    }
     
     temp <- temp %>%
       group_by(group) %>%
-      mutate(subgroup = ifelse(group == "All", "All", subgroup),
-             subgroup = ifelse(group == "Shared Income Quintile", paste(subgroup, "(Income)"), subgroup),
-             subgroup = ifelse(group == "Shared Lifetime Earnings Quintile", paste(subgroup, "(Lifetime Earnings)"), subgroup)) %>%
+      mutate(subgroup = if_else(group == "All", "All", subgroup),
+             subgroup = if_else(group == "Shared Income Quintile", paste(subgroup, "(Income)"), subgroup),
+             subgroup = if_else(group == "Shared Lifetime Earnings Quintile", paste(subgroup, "(Lifetime Earnings)"), subgroup)) %>%
       ungroup()
     
     temp <- temp %>%
@@ -82,53 +90,31 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
     cleanBPC(column1 = "X__72", column2 = "X__73", column3 = "X__74", column4 = "X__76:X__84", year = 2065)
   )
 
-
+  return(distribution)
+  
   # create tidy data frame
   distribution <- distribution %>%
-    gather(key = percentile, value = value, -group, -subgroup, -year) %>%
+    gather(key = percentile, value = value, -group, -subgroup, -year, -income.source) %>%
     arrange(subgroup, year, percentile)
   
-  #Race Ethnicity to Race/Ethnicity
-  
+  # Shared Income Quintile
+  # Shared Lifetime Earnings Quintile
+  # Shared Work Years
   
   # Create a variable for groups
   distribution <- distribution %>%
-    mutate(subgroup = ifelse(subgroup == "Male", "Males", subgroup)) %>%
-    mutate(subgroup = ifelse(subgroup == "High School Graduate", "High School Graduates", subgroup)) %>%
-    mutate(group = ifelse(subgroup == "All Individuals", "All Individuals", NA)) %>%
-    mutate(group = ifelse(subgroup %in% c("Males", "Females"), "Sex", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("High School Dropouts",
-                                          "High School Graduates", 
-                                          "Some College", "College Graduates"),
-                          "Education", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("African-Americans", 
-                                          "Hispanics",
-                                          "White, Non-Hispanics"),
-                          "Race/Ethnicity", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("Never Married Individuals",
-                                          "Divorced Individuals",
-                                          "Married Individuals",
-                                          "Widowed Individuals"),
-                          "Marital Status", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("Bottom Quintile (Income)", 
-                                          "Quintile 2 (Income)", 
-                                          "Quintile 3 (Income)",
-                                          "Quintile 4 (Income)", 
-                                          "Top Quintile (Income)"), 
-                          "Per Capita Income Quintile", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("Bottom Quintile (Lifetime Earnings)",
-                                          "Quintile 2 (Lifetime Earnings)",
-                                          "Quintile 3 (Lifetime Earnings)",
-                                          "Quintile 4 (Lifetime Earnings)",
-                                          "Top Quintile (Lifetime Earnings)"), 
-                          "Lifetime Earnings Quintile", group))
+    mutate(subgroup = if_else(subgroup == "Male", "Males", subgroup),
+           subgroup = if_else(subgroup == "High School Graduate", "High School Graduates", subgroup)) %>%
+    mutate(group = if_else(group == "Race Ethnicity", "Race/Ethnicity", group),
+           group = if_else(group == "Shared Income Quintile", "Income Quintile", group),
+           group = if_else(group == "Shared Lifetime Earnings Quintile", "Lifetime Earnings Quintile", group))
   
   option_label <- enquo(option_label)
   scale_label <- enquo(scale_label)
   
   # Mutate numeric variables into class dbl, simplify quintiles, and add options/scales labels
   distribution <- distribution %>%
-    mutate_at(vars(`Annuitized Financial Income`:`State Income Tax`), funs(as.numeric)) %>%
+#    mutate_at(vars(`Annuitized Financial Income`:`State Income Tax`), funs(as.numeric)) %>%
     mutate(subgroup = gsub(" \\(Lifetime Earnings\\)", "", subgroup),
            subgroup = gsub(" \\(Per Capita Income\\)", "", subgroup)) %>%
     mutate(option = !!option_label,
@@ -140,3 +126,5 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   
   return(distribution)
 }
+
+boom <- distribution_scraper(files$link[1], FALSE, "option0", "per capita")
