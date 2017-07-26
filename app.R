@@ -124,7 +124,6 @@ ui <- fluidPage(
            
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
-           HTML("<p>Explore the trust fund, by income, <b>by demographics</b>, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
            
            br()
            
@@ -347,13 +346,13 @@ server <- function(input, output) {
   
   output$subtitleb <- renderText({
     
-    if (input$group == "All Individuals") {"All Individuals, 2015 dollars"} else
-    if (input$group == "Sex") {"Sex, 2015 dollars"} else
-    if (input$group == "Race/Ethnicity") {"Race & Ethnicity, 2015 dollars"} else
-    if (input$group == "Education") {"Education, 2015 dollars"} else
-    if (input$group == "Marital Status") {"Marital Status, 2015 dollars"} else
-    if (input$group == "Income Quintile") {"Income Quintile, 2015 dollars"} else
-    if (input$group == "Lifetime Earnings Quintile") {"Lifetime Earnings Quintile, 2015 dollars"}
+    if (input$group == "All Individuals") {"Everyone Ages 62+, 2015 dollars"} else
+    if (input$group == "Sex") {"Ages 62+ by Sex, 2015 dollars"} else
+    if (input$group == "Race/Ethnicity") {"Ages 62+ by Race & Ethnicity, 2015 dollars"} else
+    if (input$group == "Education") {"Ages 62+ by Education, 2015 dollars"} else
+    if (input$group == "Marital Status") {"Ages 62+ by Marital Status, 2015 dollars"} else
+    if (input$group == "Income Quintile") {"Ages 62+ by Shared Income Quintile, 2015 dollars"} else
+    if (input$group == "Lifetime Earnings Quintile") {"Ages 62+ by Shared Lifetime Earnings Quintile, 2015 dollars"}
   
     })
 
