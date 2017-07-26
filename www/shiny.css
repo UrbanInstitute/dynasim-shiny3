@@ -34,15 +34,15 @@
 
 .selectize-input.items.full.has-options.has-items {
   height: 39px;
-  width: calc(100% - 44px);
 }
 
 .selectize-input .item{
 	width: 299px;
 	overflow: hidden;
   position: relative;
-  display: inline;
+  display: inline-block;
   top: 3.5px;
+  width: calc(100% - 33px);
 }
 
 .selectize-input.items.full.has-options.has-items.focus.input-active.dropdown-active {
