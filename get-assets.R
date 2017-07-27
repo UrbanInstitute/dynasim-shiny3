@@ -152,6 +152,9 @@ final.distribution <- union(final.distribution, baselines) %>%
 
 rm(files, options, baselines)
 
+# Stop if any of the variables contain missing values
+stopifnot(sum(sapply(final.distribution, function(x) sum(is.na(x))) != 0) == 0)
+
 # If data directory does not exist, create data directory
 if (!dir.exists("data")) {
   dir.create("data")

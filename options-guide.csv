@@ -1,6 +1,42 @@
 option.name,option,scale,link,directory,file
 Opt0,Scheduled Law,per capita,X:\programs\run912\opt0\BPCtableShellsOPT0.xlsx,X:\programs\run912\opt0\,BPCtableShellsOPT0.xlsx
+Opt0,Scheduled Law,equivalent,X:\programs\run912\opt0\BPCtableShellsEQOPT0.xlsx,X:\programs\run912\opt0\,BPCtableShellsEQOPT0.xlsx
 Opt0,Payable Law,per capita,X:\programs\run912\payable\BPCtableShellsPayable.xlsx,X:\programs\run912\payable\,BPCtableShellsPayable.xlsx
+Opt0,Payable Law,equivalent,X:\programs\run912\payable\BPCtableShellsEquivalentPayable.xlsx,X:\programs\run912\payable\,BPCtableShellsEquivalentPayable.xlsx
+1-mini.pia,Annual PIA,per capita,X:\programs\run912\opt1(MiniPIA)\BPCtableShellsMiniPIA.xlsx,X:\programs\run912\opt1(MiniPIA)\,BPCtableShellsMiniPIA.xlsx
+1-mini.pia,Annual PIA,equivalent,X:\programs\run912\opt1(MiniPIA)\BPCtableShellsEquivalentMiniPIA.xlsx,X:\programs\run912\opt1(MiniPIA)\,BPCtableShellsEquivalentMiniPIA.xlsx
+2-taxssb,Increase Benefits Taxation,per capita,X:\programs\run912\opt2(increaseTaxSSB)\BPCtableShellsOPT2.xlsx,X:\programs\run912\opt2(increaseTaxSSB)\,BPCtableShellsOPT2.xlsx
+2-taxssb,Increase Benefits Taxation,equivalent,X:\programs\run912\opt2(increaseTaxSSB)\BPCtableShellsEquivalentOPT2.xlsx,X:\programs\run912\opt2(increaseTaxSSB)\,BPCtableShellsEquivalentOPT2.xlsx
+3-capSpouse,Cap Spouse Benefits,per capita,X:\programs\run912\opt3(capSpouse)\BPCtableShellsCapSpouse.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsCapSpouse.xlsx
+3-capSpouse,Cap Spouse Benefits,equivalent,X:\programs\run912\opt3(capSpouse)\BPCtableShellsEquivalentOPT3.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsEquivalentOPT3.xlsx
+4-survivorjs75,75% Survivor Benefit,per capita,X:\programs\run912\opt4(survivorjs75)\BPCtableShellsOPT4.xlsx,X:\programs\run912\opt4(survivorjs75)\,BPCtableShellsOPT4.xlsx
+4-survivorjs75,75% Survivor Benefit,equivalent,X:\programs\run912\opt4(survivorjs75)\BPCtableShellsEquivalentOPT4.xlsx,X:\programs\run912\opt4(survivorjs75)\,BPCtableShellsEquivalentOPT4.xlsx
+5-taxmax90%,90% Tax Max,per capita,X:\programs\run912\opt5(increaseTAXMAX)\BPCtableShellsOPT5.xlsx,X:\programs\run912\opt5(increaseTAXMAX)\,BPCtableShellsOPT5.xlsx
+5-taxmax90%,90% Tax Max,equivalent,X:\programs\run912\opt5(increaseTAXMAX)\BPCtableShellsEquivalentOPT5.xlsx,X:\programs\run912\opt5(increaseTAXMAX)\,BPCtableShellsEquivalentOPT5.xlsx
+5b-taxmax90+13.4,90% Tax Max and 13.4% Payroll Tax,per capita,X:\programs\run912\opt5B(RaiseFICA)\BPCtableShellsOPT5B.xlsx,X:\programs\run912\opt5B(RaiseFICA)\,BPCtableShellsOPT5B.xlsx
+5b-taxmax90+13.4,90% Tax Max and 13.4% Payroll Tax,equivalent,X:\programs\run912\opt5B(RaiseFICA)\BPCtableShellsEquivalentOPT5b.xlsx,X:\programs\run912\opt5B(RaiseFICA)\,BPCtableShellsEquivalentOPT5b.xlsx
+5c-13.4,13.4% Payroll Tax,per capita,X:\programs\run912\opt5c(RaiseFICAonly)\BPCtableShellsOPT5c.xlsx,X:\programs\run912\opt5c(RaiseFICAonly)\,BPCtableShellsOPT5c.xlsx
+5c-13.4,13.4% Payroll Tax,equivalent,X:\programs\run912\opt5c(RaiseFICAonly)\BPCtableShellsEquivalentOPT5c.xlsx,X:\programs\run912\opt5c(RaiseFICAonly)\,BPCtableShellsEquivalentOPT5c.xlsx
+COLAChainCPI,Reduce COLA,per capita,X:\programs\run912\ChainCPI\BPCtableShellsChainCPI.xlsx,X:\programs\run912\ChainCPI\,BPCtableShellsChainCPI.xlsx
+COLAChainCPI,Reduce COLA,equivalent,X:\programs\run912\ChainCPI\BPCtableShellsEquivalentChainCPI.xlsx,X:\programs\run912\ChainCPI\,BPCtableShellsEquivalentChainCPI.xlsx
+6-reduceCOLA,Chained-CPI COLA,per capita,X:\programs\run912\opt6(decreaseCOLA)\BPCtableShellsOPT6.xlsx,X:\programs\run912\opt6(decreaseCOLA)\,BPCtableShellsOPT6.xlsx
+6-reduceCOLA,Chained-CPI COLA,equivalent,X:\programs\run912\opt6(decreaseCOLA)\BPCtableShellsEquivalentOPT6.xlsx,X:\programs\run912\opt6(decreaseCOLA)\,BPCtableShellsEquivalentOPT6.xlsx
+7-increaseFRA,Increase FRA,per capita,X:\programs\run912\opt7(IncreaseFRA)\BPCtableShellsOPT7.xlsx,X:\programs\run912\opt7(IncreaseFRA)\,BPCtableShellsOPT7.xlsx
+7-increaseFRA,Increase FRA,equivalent,X:\programs\run912\opt7(IncreaseFRA)\BPCtableShellsEquivalentOPT7.xlsx,X:\programs\run912\opt7(IncreaseFRA)\,BPCtableShellsEquivalentOPT7.xlsx
+8-increaseFRA+ERA,Increase FRA and EEA,per capita,X:\programs\run912\opt8(increaseFRAERA)\BPCtableShellsOPT8.xlsx,X:\programs\run912\opt8(increaseFRAERA)\,BPCtableShellsOPT8.xlsx
+8-increaseFRA+ERA,Increase FRA and EEA,equivalent,X:\programs\run912\opt8(increaseFRAERA)\BPCtableShellsEquivalentOPT8.xlsx,X:\programs\run912\opt8(increaseFRAERA)\,BPCtableShellsEquivalentOPT8.xlsx
+12-taxmax150000,"$150,000 Tax Max",per capita,X:\programs\run912\opt12(taxmax150000)\BPCtableShellsOPT12.xlsx,X:\programs\run912\opt12(taxmax150000)\,BPCtableShellsOPT12.xlsx
+12-taxmax150000,"$150,000 Tax Max",equivalent,X:\programs\run912\opt12(taxmax150000)\BPCtableShellsEquivalentOPT12.xlsx,X:\programs\run912\opt12(taxmax150000)\,BPCtableShellsEquivalentOPT12.xlsx
+taxmax180000,"$180,000 Tax Max",per capita,X:\programs\run912\taxmax180000\BPCtableShellsTaxmax180000.xlsx,X:\programs\run912\taxmax180000\,BPCtableShellsTaxmax180000.xlsx
+taxmax180000,"$180,000 Tax Max",equivalent,X:\programs\run912\taxmax180000\BPCtableShellsEquivalentTaxmax180000.xlsx,X:\programs\run912\taxmax180000\,BPCtableShellsEquivalentTaxmax180000.xlsx
+noTAXMAX,Eliminate the Tax Max,per capita,X:\programs\run912\Notaxmax\BPCtableShellsNotaxmax.xlsx,X:\programs\run912\Notaxmax\,BPCtableShellsNotaxmax.xlsx
+noTAXMAX,Eliminate the Tax Max,equivalent,X:\programs\run912\Notaxmax\BPCtableShellsEquivalentNotaxmax.xlsx,X:\programs\run912\Notaxmax\,BPCtableShellsEquivalentNotaxmax.xlsx
+FICA14,14.4% Payroll Tax,per capita,X:\programs\run912\FICA14\BPCtableShellsFICA14.xlsx,X:\programs\run912\FICA14\,BPCtableShellsFICA14.xlsx
+FICA14,14.4% Payroll Tax,equivalent,X:\programs\run912\FICA14\BPCtableShellsEquivalentFICA14.xlsx,X:\programs\run912\FICA14\,BPCtableShellsEquivalentFICA14.xlsx
+FICA15,15.4% Payroll Tax,per capita,X:\programs\run912\Fica15\BPCtableShellsFICA15.xlsx,X:\programs\run912\Fica15\,BPCtableShellsFICA15.xlsx
+FICA15,15.4% Payroll Tax,equivalent,X:\programs\run912\Fica15\BPCtableShellsEquivalentFICA15.xlsx,X:\programs\run912\Fica15\,BPCtableShellsEquivalentFICA15.xlsx
+BPC Package,BPC Package,per capita,X:\programs\Run912\run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx,X:\programs\Run912\run5SaveOpt4\,BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx
+BPC Package,BPC Package,equivalent,X:\programs\Run912\run5SaveOpt4\BPCtableShellsEquivalentRun5SaveOpt4.xlsx,X:\programs\Run912\run5SaveOpt4\,BPCtableShellsEquivalentRun5SaveOpt4.xlsx
 RothIRA2,option1,per capita,X:\programs\run912\RothIRA2\BPCtableShellsRothIRA2v2.xlsx,X:\programs\run912\RothIRA2\,BPCtableShellsRothIRA2v2.xlsx
 RothIRA2allpart,option2,per capita,X:\programs\run912\RothIRA2allpart\BPCtableShellsRothIRA2vallpartV2.xlsx,X:\programs\run912\RothIRA2allpart\,BPCtableShellsRothIRA2vallpartV2.xlsx
 RothIRA2b,option3,per capita,X:\programs\run912\RothIRA2b\BPCtableShellsRothIRA2bV2.xlsx,X:\programs\run912\RothIRA2b\,BPCtableShellsRothIRA2bV2.xlsx
