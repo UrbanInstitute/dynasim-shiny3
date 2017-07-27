@@ -79,7 +79,7 @@ distributionScrapeR <- function(link, bpcpackage) {
     while (sum(is.na(temp$subgroup)) > 1) {
       
       temp <- temp %>%
-        mutate(subgroup = ifelse(is.na(subgroup), lag(subgroup), subgroup))
+        mutate(subgroup = if_else(is.na(subgroup), lag(subgroup), subgroup))
       
     }
     
@@ -113,30 +113,30 @@ distributionScrapeR <- function(link, bpcpackage) {
   
   # Create a variable for groups
   distribution <- distribution %>%
-    mutate(subgroup = ifelse(subgroup == "Male", "Males", subgroup)) %>%
-    mutate(subgroup = ifelse(subgroup == "High School Graduate", "High School Graduates", subgroup)) %>%
-    mutate(group = ifelse(subgroup == "All Individuals", "All Individuals", NA)) %>%
-    mutate(group = ifelse(subgroup %in% c("Males", "Females"), "Sex", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("High School Dropouts",
+    mutate(subgroup = if_else(subgroup == "Male", "Males", subgroup)) %>%
+    mutate(subgroup = if_else(subgroup == "High School Graduate", "High School Graduates", subgroup)) %>%
+    mutate(group = if_else(subgroup == "All Individuals", "All Individuals", NA)) %>%
+    mutate(group = if_else(subgroup %in% c("Males", "Females"), "Sex", group)) %>%
+    mutate(group = if_else(subgroup %in% c("High School Dropouts",
                                           "High School Graduates", 
                                           "Some College", "College Graduates"),
                           "Education", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("African-Americans", 
+    mutate(group = if_else(subgroup %in% c("African-Americans", 
                                           "Hispanics",
                                           "White, Non-Hispanics"),
                           "Race/Ethnicity", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("Never Married Individuals",
+    mutate(group = if_else(subgroup %in% c("Never Married Individuals",
                                           "Divorced Individuals",
                                           "Married Individuals",
                                           "Widowed Individuals"),
                           "Marital Status", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("Bottom Quintile (Income)", 
+    mutate(group = if_else(subgroup %in% c("Bottom Quintile (Income)", 
                                           "Quintile 2 (Income)", 
                                           "Quintile 3 (Income)",
                                           "Quintile 4 (Income)", 
                                           "Top Quintile (Income)"), 
                           "Per Capita Income Quintile", group)) %>%
-    mutate(group = ifelse(subgroup %in% c("Bottom Quintile (Lifetime Earnings)",
+    mutate(group = if_else(subgroup %in% c("Bottom Quintile (Lifetime Earnings)",
                                           "Quintile 2 (Lifetime Earnings)",
                                           "Quintile 3 (Lifetime Earnings)",
                                           "Quintile 4 (Lifetime Earnings)",
@@ -145,8 +145,8 @@ distributionScrapeR <- function(link, bpcpackage) {
   
   # Mutate numeric variables into class dbl and simplify quintiles
   distribution <- mutate_each(distribution, funs(as.numeric), `Annuitized Financial Income`:`State Income Tax`) %>%
-    mutate(subgroup = gsub(" \\(Lifetime Earnings\\)", "", subgroup)) %>%
-    mutate(subgroup = gsub(" \\(Per Capita Income\\)", "", subgroup))
+    mutate(subgroup = gsub(" \\(Lifetime Earnings\\)", "", subgroup),
+           subgroup = gsub(" \\(Per Capita Income\\)", "", subgroup))
   
   # Drop the 99th percentile
   distribution <- distribution %>%
@@ -183,30 +183,6 @@ for (i in 37:38) {
 }
 # Should be 49,248 observations
 # 24 subgroups * 6 years * 9 percentiles * 38 options
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Spread the data into long format
 final.distribution <- final.distribution %>%
@@ -252,6 +228,9 @@ final.distribution <- union(final.distribution, baselines) %>%
 # 24 subgroups * 6 years * 9 percentiles * 38 options * 2 scales * 2 baselines
 
 rm(files, distribution, options, baselines, i)
+
+# Stop if any of the variables contain missing values
+stopifnot(sum(sapply(final.distribution, function(x) sum(is.na(x))) != 0) == 0)
 
 # If data directory does not exist, create data directory
 if (!dir.exists("data")) {

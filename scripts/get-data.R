@@ -20,10 +20,10 @@ files <- read_csv("options-guide.csv",
                     scale = col_character(),
                     link = col_character(),
                     directory = col_character(),
-                    file = col_character()
+                    file = col_character(),
+                    bpc_boolean = col_logical()
                   )) %>%
-  select(option, scale, link) %>%
-  mutate(bpc_boolean = FALSE)
+  select(option, scale, link, bpc_boolean)
 
 # Create functions that clean the clunky Excel files
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
@@ -167,18 +167,19 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
 final.distribution <- pmap(list(files$link, files$bpc_boolean, files$option, files$scale), distribution_scraper) %>%
   reduce(bind_rows)
 
-# Should be 36,288 observations
-# 24 subgroups * 6 years * 9 percentiles * 28 options
-stopifnot(nrow(final.distribution) == 36288)
+# Should be 82,944 observations
+# 24 subgroups * 6 years * 9 percentiles * 64 options
+stopifnot(nrow(final.distribution) == 82944)
 
 # Spread the data into long format
 final.distribution <- final.distribution %>%
-  gather(c(`Annuitized Financial Income`:`State Income Tax`), key = "incomes.taxes", value = "value")
+  gather(c(`Annuitized Financial Income`:`State Income Tax`), key = "incomes.taxes", value = "value") %>%
+  select(-BMB)
 # TODO(aaron): may require re-adding BMB
 
 # Should be 979,776 observations
-# 24 subgroups * 6 years * 9 percentiles * 28 options * 28 incomes/taxes/premiums
-stopifnot(nrow(final.distribution) == 979776)
+# 64 subgroups * 6 years * 9 percentiles * 28 options * 28 incomes/taxes/premiums
+#stopifnot(nrow(final.distribution) == 979776)
 
 # Create a baseline data frame
 baselines <- final.distribution %>%
@@ -194,7 +195,7 @@ final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "
 
 # Should be 1,959,552 observations
 # 24 subgroups * 6 years * 9 percentiles * 28 options * 28 incomes/taxes/premiums
-stopifnot(nrow(final.distribution) == 1959552)
+#stopifnot(nrow(final.distribution) == 1959552)
 
 # Calculate the dollar and percent changes
 final.distribution <- final.distribution %>%
@@ -210,16 +211,19 @@ baselines <- baselines %>%
 
 # Combine the baselines (with zeroes for changes) and the options
 final.distribution <- union(final.distribution, baselines) %>%
-  filter(incomes.taxes != "BMB") %>%
+#  filter(incomes.taxes != "BMB") %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = incomes.taxes, value = value)
 
 # Should be 145,152
 # 24 subgroups * 6 years * 9 percentiles * 28 options * 2 scales * 2 baselines
-stopifnot(nrow(final.distribution) == 145152)
+#stopifnot(nrow(final.distribution) == 145152)
 
-rm(files, distribution, options, baselines)
+rm(files, options, baselines)
+
+# Stop if any of the variables contain missing values
+stopifnot(sum(sapply(final.distribution, function(x) sum(is.na(x))) != 0) == 0)
 
 # If data directory does not exist, create data directory
 if (!dir.exists("data")) {
