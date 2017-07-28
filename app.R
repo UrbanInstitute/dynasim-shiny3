@@ -17,13 +17,41 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-distribution <- read_csv("data/distributions.csv", 
+#income <- read_csv("data/distributions.csv", 
+#  col_types = cols(
+#    .default = col_double(),
+#    subgroup = col_character(),
+#    year = col_integer(),
+#    percentile = col_character(),
+#    group = col_character(),
+#    option = col_character(),
+#    scale = col_character(),
+#    baseline = col_character(),
+#    comparison = col_character()
+#  )
+#)
+
+income <- read_csv("data/distributions.csv",
   col_types = cols(
     .default = col_double(),
     subgroup = col_character(),
     year = col_integer(),
     percentile = col_character(),
     group = col_character(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    comparison = col_character()
+  )
+)
+
+assets <- read_csv("data/assets.csv", 
+  col_types =  cols(
+    .default = col_double(),
+    group = col_character(),
+    subgroup = col_character(),
+    year = col_integer(),
+    percentile = col_character(),
     option = col_character(),
     scale = col_character(),
     baseline = col_character(),
@@ -58,6 +86,28 @@ option_text <- read_csv("text/option.csv",
     text = col_character()
   )
 )
+
+# Clean and merge income and asset data
+assets <- assets %>%
+  filter(group %in% c("All", "Sex", "Race/Ethnicity", "Education", 
+                      "Marital Status", "Income Quintile", 
+                      "Lifetime Earnings Quintile")) %>%
+  filter(!(option %in% stringr::str_c("option", 1:26))) %>%
+  filter(subgroup != "Other") %>%
+  mutate(group = if_else(group == "All", "All Individuals", group),
+         group = if_else(group == "Income Quintile", "Per Capita Income Quintile", group))
+
+
+table(income$group %in% assets$group)
+table(income$subgroup %in% assets$subgroup)     # PROBLEM!
+table(income$year %in% assets$year)
+table(income$percentile %in% assets$percentile)
+table(income$option %in% assets$option)
+table(income$scale %in% assets$scale)
+table(income$baseline %in% assets$baseline)
+table(income$comparison %in% assets$comparison)
+
+distribution <- left_join(income, assets, by = c("group", "subgroup", "year", "percentile", "option", "scale", "baseline", "comparison"))
 
 # Gather the data
 distribution <- distribution %>%
@@ -102,7 +152,7 @@ distribution <- distribution %>%
                                                  "HS Graduate",
                                                  "Some College",
                                                  "College Graduate"))) %>%
-  gather(`Annuitized Financial Income`:`State Income Tax`, key = income.tax.premium, value = value)
+  gather(`Annuitized Financial Income`:`Total Assets`, key = income.tax.premium, value = value)
 
 ##
 ## SHINY
@@ -125,7 +175,6 @@ ui <- fluidPage(
            
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
-           HTML("<p>Explore the trust fund, by income, <b>by demographics</b>, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
            
            br()
            

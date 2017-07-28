@@ -22,8 +22,7 @@ files <- read_csv("options-guide.csv",
                     directory = col_character(),
                     file = col_character()
                   )) %>%
-  select(option, scale, link) %>%
-  mutate(bpc_boolean = FALSE)
+  select(option, scale, link, bpc_boolean)
 
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   
@@ -149,6 +148,34 @@ final.distribution <- union(final.distribution, baselines) %>%
   rename(baseline = baseline.type, level = incomes.taxes) %>%
   gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = income.source, value = value)
+
+# Fix subgroups
+final.distribution <- final.distribution %>%
+  mutate(
+    subgroup = if_else(subgroup == "All", "All Individuals", subgroup),
+    subgroup = gsub("Female", "Females", subgroup),
+    subgroup = if_else(subgroup == "Hispanic", "Hispanics", subgroup),    
+    subgroup = gsub("Black nonHispanic", "African-Americans", subgroup),
+    subgroup = gsub("White nonHispanic", "White, Non-Hispanics", subgroup),
+    subgroup = gsub("No high school diploma", "High School Dropouts", subgroup),
+    subgroup = gsub("High school graduate", "High School Graduates", subgroup),
+    subgroup = gsub("Some college", "Some College", subgroup),  
+    subgroup = gsub("College graduate", "College Graduates", subgroup), 
+    subgroup = gsub("Married", "Married Individuals", subgroup), 
+    subgroup = gsub("Never married", "Never Married Individuals", subgroup), 
+    subgroup = gsub("Divorced", "Divorced Individuals", subgroup),   
+    subgroup = gsub("Widowed", "Widowed Individuals", subgroup), 
+    subgroup = gsub("Bottom quintile (income)", "Bottom Quintile (Income)", subgroup), 
+    subgroup = gsub("2nd quintile (Income)", "Quintile 2 (Income)", subgroup), 
+    subgroup = gsub("3rd quintile (Income)", "Quintile 3 (Income)", subgroup),
+    subgroup = gsub("4th quintile (Income)", "Quintile 4 (Income)", subgroup),
+    subgroup = gsub("Top quintile (Income)", "Top Quintile (Income)", subgroup),  
+    subgroup = gsub("Bottom quintile", "Bottom Quintile", subgroup), 
+    subgroup = gsub("2nd quintile", "Quintile 2", subgroup), 
+    subgroup = gsub("3rd quintile", "Quintile 3", subgroup), 
+    subgroup = gsub("4th quintile", "Quintile 4", subgroup), 
+    subgroup = gsub("Top quintile", "Top Quintile", subgroup)
+  )
 
 rm(files, options, baselines)
 

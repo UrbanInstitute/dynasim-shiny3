@@ -125,7 +125,8 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
                           "Education", group)) %>%
     mutate(group = ifelse(subgroup %in% c("African-Americans", 
                                           "Hispanics",
-                                          "White, Non-Hispanics"),
+                                          "White, Non-Hispanics",
+                                          "Other"),
                           "Race/Ethnicity", group)) %>%
     mutate(group = ifelse(subgroup %in% c("Never Married Individuals",
                                           "Divorced Individuals",
