@@ -113,6 +113,7 @@ latoCSS <- "http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300itali
 ui <- fluidPage(
   
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = latoCSS)),
+  tags$head(tags$script(src = "pym.min.js")),
   
   theme = "shiny.css",
   
@@ -293,7 +294,8 @@ ui <- fluidPage(
            
            htmlOutput("text4")
     )
-  )  
+  ),
+  tags$script(src = "activatePym.js")
 )
 
 server <- function(input, output) {
