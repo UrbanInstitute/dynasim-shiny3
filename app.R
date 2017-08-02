@@ -31,7 +31,7 @@ source('urban_institute_themes/urban_theme_windows.R')
 #  )
 #)
 
-income <- read_csv("data/distributions.csv",
+income <- read_csv("data/incomes.csv",
   col_types = cols(
     .default = col_double(),
     subgroup = col_character(),
@@ -89,10 +89,6 @@ option_text <- read_csv("text/option.csv",
 
 # Clean and merge income and asset data
 assets <- assets %>%
-  filter(group %in% c("All", "Sex", "Race/Ethnicity", "Education", 
-                      "Marital Status", "Income Quintile", 
-                      "Lifetime Earnings Quintile")) %>%
-  filter(!(option %in% stringr::str_c("option", 1:26))) %>%
   filter(subgroup != "Other") %>%
   mutate(group = if_else(group == "All", "All Individuals", group),
          group = if_else(group == "Income Quintile", "Per Capita Income Quintile", group))

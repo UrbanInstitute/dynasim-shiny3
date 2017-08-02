@@ -20,10 +20,12 @@ files <- read_csv("options-guide.csv",
                     scale = col_character(),
                     link = col_character(),
                     directory = col_character(),
-                    file = col_character()
+                    file = col_character(),
+                    bpc_boolean = col_logical()
                   )) %>%
   select(option, scale, link, bpc_boolean)
 
+# Create functions that clean the clunky Excel files
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   
   distribution <- read_excel(link, 
@@ -47,12 +49,12 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
     temp[83, "income.source"] <- "Financial Assets"
     temp[161, "income.source"] <- "Retirement Account Assets"
     temp[240, "income.source"] <- "Home Equity"
-
+    
     temp <- temp %>%
       slice(-1) %>%
       mutate(year = year) %>%
       fill(group, income.source)
-
+    
     temp <- temp %>%
       group_by(group) %>%
       mutate(subgroup = if_else(group == "All", "All", subgroup),
@@ -81,12 +83,12 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
     cleanBPC(column1 = "X__58", column2 = "X__59", column3 = "X__60", column4 = "X__62:X__70", year = 2055),
     cleanBPC(column1 = "X__72", column2 = "X__73", column3 = "X__74", column4 = "X__76:X__84", year = 2065)
   )
-
+  
   # create tidy data frame
   distribution <- distribution %>%
     gather(key = percentile, value = incomes.taxes, -group, -subgroup, -year, -income.source) %>%
     mutate(incomes.taxes = as.numeric(incomes.taxes)) %>%
-#    spread(income.source, value) %>%
+    #    spread(income.source, value) %>%
     arrange(subgroup, year, percentile)
   
   # Create a variable for groups
@@ -102,7 +104,7 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   
   # Mutate numeric variables into class dbl, simplify quintiles, and add options/scales labels
   distribution <- distribution %>%
-#    mutate_at(vars(`Annuitized Financial Income`:`State Income Tax`), funs(as.numeric)) %>%
+    #    mutate_at(vars(`Annuitized Financial Income`:`State Income Tax`), funs(as.numeric)) %>%
     mutate(subgroup = gsub(" \\(Lifetime Earnings\\)", "", subgroup),
            subgroup = gsub(" \\(Per Capita Income\\)", "", subgroup)) %>%
     mutate(option = !!option_label,
@@ -129,7 +131,7 @@ options <- final.distribution
 #  filter(option != "Scheduled Law" & option != "Payable Law")
 
 final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "income.source"))
-                                
+
 # Calculate the dollar and percent changes
 final.distribution <- final.distribution %>%
   mutate(dollar.change = incomes.taxes - baseline.value) %>%
@@ -175,7 +177,8 @@ final.distribution <- final.distribution %>%
     subgroup = gsub("3rd quintile", "Quintile 3", subgroup), 
     subgroup = gsub("4th quintile", "Quintile 4", subgroup), 
     subgroup = gsub("Top quintile", "Top Quintile", subgroup)
-  )
+  ) %>%
+  filter(group %in% c("All", "Sex", "Race/Ethnicity", "Education", "Marital Status", "Income Quintile", "Lifetime Earnings Quintile"))
 
 rm(files, options, baselines)
 
