@@ -4,27 +4,28 @@ Karen Smith used DYNASIM to model many Social Security reforms for the Bipartisa
 
 ## Scripts
 
-### get_data_dollar_change.R
+### get-assets.R
 
-This script pulls and cleans data from the sheet "$income Distribution by Sour" in `X:\programs\run912\Run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx`. The Excel data are in 36 tables which are arranged vertically by demographic groups and horizontally by years. Variables (income, taxes, and premiums) are arranged vertically in each table and observations (percentiles) appear horizontally. 
+This script pulls and cleans data from the sheet "Total Asset distribution". 
+### get-incomes.R
 
-### get_data_levels. R
-
-This script pulls and cleans data from the sheet "income Distribution by Source" in `X:\programs\run912\Run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx`. The Excel data are in 36 tables which are arranged vertically by demographic groups and horizontally by years. Variables (income, taxes, and premiums) are arranged vertically in each table and observations (percentiles) appear horizontally. 
-
-### income_distribution_shiny.R
-
-This script takes the .csv files created in `get_data_levels.R` and `get_data_dollar_change.R` and turns them into an interactive shiny graphic.  
+This script pulls and cleans data from the sheet "income Distribution by Source".
 
 ### /data
 
-The /data subdirectory contains .csv files which are created in the get_data scripts and used by `income_distribution_shiny.R`.
+### assets.csv
 
-### /www
+A .csv file with distributions for 4 measures of wealth for many different policy options and demographic groups. 
 
-The /www subdirectory contains `shiny.css`. Shiny applications automatically look for material in the www subdirectory. The style sheet currently has a single universal css selector which changes the font in the Shiny application to [Lato](https://fonts.google.com/specimen/Lato). 
+### incomes.csv
 
-### themes
+A .csv file with distributions for 26 measures of income for many different policy options and demographic groups. 
+
+## /www
+
+The /www subdirectory contains `shiny.css`. Shiny applications automatically look for material in the www subdirectory. 
+
+## themes
 
 The R Shiny graphic is built using the [Urban Institute R theme](https://github.com/UrbanInstitute/urban_R_theme). The theme works better using Mac OSX than Windows so `urban_theme_mac.R` is used when publishing the Shiny graphic and `urban_theme_windows.R` is used for developing edits and new features. 
 
