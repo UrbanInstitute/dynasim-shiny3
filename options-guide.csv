@@ -1,0 +1,91 @@
+option.name,option,scale,link,directory,file,bpc_boolean
+Opt0,Scheduled Law,per capita,X:\programs\run912\opt0\BPCtableShellsOPT0.xlsx,X:\programs\run912\opt0\,BPCtableShellsOPT0.xlsx,FALSE
+Opt0,Scheduled Law,equivalent,X:\programs\run912\opt0\BPCtableShellsEQOPT0.xlsx,X:\programs\run912\opt0\,BPCtableShellsEQOPT0.xlsx,FALSE
+Opt0,Payable Law,per capita,X:\programs\run912\payable\BPCtableShellsPayable.xlsx,X:\programs\run912\payable\,BPCtableShellsPayable.xlsx,FALSE
+Opt0,Payable Law,equivalent,X:\programs\run912\payable\BPCtableShellsEquivalentPayable.xlsx,X:\programs\run912\payable\,BPCtableShellsEquivalentPayable.xlsx,FALSE
+1-mini.pia,Annual PIA,per capita,X:\programs\run912\opt1(MiniPIA)\BPCtableShellsMiniPIA.xlsx,X:\programs\run912\opt1(MiniPIA)\,BPCtableShellsMiniPIA.xlsx,FALSE
+1-mini.pia,Annual PIA,equivalent,X:\programs\run912\opt1(MiniPIA)\BPCtableShellsEquivalentMiniPIA.xlsx,X:\programs\run912\opt1(MiniPIA)\,BPCtableShellsEquivalentMiniPIA.xlsx,FALSE
+2-taxssb,Increase Benefits Taxation,per capita,X:\programs\run912\opt2(increaseTaxSSB)\BPCtableShellsOPT2.xlsx,X:\programs\run912\opt2(increaseTaxSSB)\,BPCtableShellsOPT2.xlsx,FALSE
+2-taxssb,Increase Benefits Taxation,equivalent,X:\programs\run912\opt2(increaseTaxSSB)\BPCtableShellsEquivalentOPT2.xlsx,X:\programs\run912\opt2(increaseTaxSSB)\,BPCtableShellsEquivalentOPT2.xlsx,FALSE
+3-capSpouse,Cap Spouse Benefits,per capita,X:\programs\run912\opt3(capSpouse)\BPCtableShellsCapSpouse.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsCapSpouse.xlsx,FALSE
+3-capSpouse,Cap Spouse Benefits,equivalent,X:\programs\run912\opt3(capSpouse)\BPCtableShellsEquivalentOPT3.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsEquivalentOPT3.xlsx,FALSE
+4-survivorjs75,75% Survivor Benefit,per capita,X:\programs\run912\opt4(survivorjs75)\BPCtableShellsOPT4.xlsx,X:\programs\run912\opt4(survivorjs75)\,BPCtableShellsOPT4.xlsx,FALSE
+4-survivorjs75,75% Survivor Benefit,equivalent,X:\programs\run912\opt4(survivorjs75)\BPCtableShellsEquivalentOPT4.xlsx,X:\programs\run912\opt4(survivorjs75)\,BPCtableShellsEquivalentOPT4.xlsx,FALSE
+5-taxmax90%,90% Tax Max,per capita,X:\programs\run912\opt5(increaseTAXMAX)\BPCtableShellsOPT5.xlsx,X:\programs\run912\opt5(increaseTAXMAX)\,BPCtableShellsOPT5.xlsx,FALSE
+5-taxmax90%,90% Tax Max,equivalent,X:\programs\run912\opt5(increaseTAXMAX)\BPCtableShellsEquivalentOPT5.xlsx,X:\programs\run912\opt5(increaseTAXMAX)\,BPCtableShellsEquivalentOPT5.xlsx,FALSE
+5b-taxmax90+13.4,90% Tax Max and 13.4% Payroll Tax,per capita,X:\programs\run912\opt5B(RaiseFICA)\BPCtableShellsOPT5B.xlsx,X:\programs\run912\opt5B(RaiseFICA)\,BPCtableShellsOPT5B.xlsx,FALSE
+5b-taxmax90+13.4,90% Tax Max and 13.4% Payroll Tax,equivalent,X:\programs\run912\opt5B(RaiseFICA)\BPCtableShellsEquivalentOPT5b.xlsx,X:\programs\run912\opt5B(RaiseFICA)\,BPCtableShellsEquivalentOPT5b.xlsx,FALSE
+5c-13.4,13.4% Payroll Tax,per capita,X:\programs\run912\opt5c(RaiseFICAonly)\BPCtableShellsOPT5c.xlsx,X:\programs\run912\opt5c(RaiseFICAonly)\,BPCtableShellsOPT5c.xlsx,FALSE
+5c-13.4,13.4% Payroll Tax,equivalent,X:\programs\run912\opt5c(RaiseFICAonly)\BPCtableShellsEquivalentOPT5c.xlsx,X:\programs\run912\opt5c(RaiseFICAonly)\,BPCtableShellsEquivalentOPT5c.xlsx,FALSE
+COLAChainCPI,Reduce COLA,per capita,X:\programs\run912\ChainCPI\BPCtableShellsChainCPI.xlsx,X:\programs\run912\ChainCPI\,BPCtableShellsChainCPI.xlsx,FALSE
+COLAChainCPI,Reduce COLA,equivalent,X:\programs\run912\ChainCPI\BPCtableShellsEquivalentChainCPI.xlsx,X:\programs\run912\ChainCPI\,BPCtableShellsEquivalentChainCPI.xlsx,FALSE
+6-reduceCOLA,Chained-CPI COLA,per capita,X:\programs\run912\opt6(decreaseCOLA)\BPCtableShellsOPT6.xlsx,X:\programs\run912\opt6(decreaseCOLA)\,BPCtableShellsOPT6.xlsx,FALSE
+6-reduceCOLA,Chained-CPI COLA,equivalent,X:\programs\run912\opt6(decreaseCOLA)\BPCtableShellsEquivalentOPT6.xlsx,X:\programs\run912\opt6(decreaseCOLA)\,BPCtableShellsEquivalentOPT6.xlsx,FALSE
+7-increaseFRA,Increase FRA,per capita,X:\programs\run912\opt7(IncreaseFRA)\BPCtableShellsOPT7.xlsx,X:\programs\run912\opt7(IncreaseFRA)\,BPCtableShellsOPT7.xlsx,FALSE
+7-increaseFRA,Increase FRA,equivalent,X:\programs\run912\opt7(IncreaseFRA)\BPCtableShellsEquivalentOPT7.xlsx,X:\programs\run912\opt7(IncreaseFRA)\,BPCtableShellsEquivalentOPT7.xlsx,FALSE
+8-increaseFRA+ERA,Increase FRA and EEA,per capita,X:\programs\run912\opt8(increaseFRAERA)\BPCtableShellsOPT8.xlsx,X:\programs\run912\opt8(increaseFRAERA)\,BPCtableShellsOPT8.xlsx,FALSE
+8-increaseFRA+ERA,Increase FRA and EEA,equivalent,X:\programs\run912\opt8(increaseFRAERA)\BPCtableShellsEquivalentOPT8.xlsx,X:\programs\run912\opt8(increaseFRAERA)\,BPCtableShellsEquivalentOPT8.xlsx,FALSE
+12-taxmax150000,"$150,000 Tax Max",per capita,X:\programs\run912\opt12(taxmax150000)\BPCtableShellsOPT12.xlsx,X:\programs\run912\opt12(taxmax150000)\,BPCtableShellsOPT12.xlsx,FALSE
+12-taxmax150000,"$150,000 Tax Max",equivalent,X:\programs\run912\opt12(taxmax150000)\BPCtableShellsEquivalentOPT12.xlsx,X:\programs\run912\opt12(taxmax150000)\,BPCtableShellsEquivalentOPT12.xlsx,FALSE
+taxmax180000,"$180,000 Tax Max",per capita,X:\programs\run912\taxmax180000\BPCtableShellsTaxmax180000.xlsx,X:\programs\run912\taxmax180000\,BPCtableShellsTaxmax180000.xlsx,FALSE
+taxmax180000,"$180,000 Tax Max",equivalent,X:\programs\run912\taxmax180000\BPCtableShellsEquivalentTaxmax180000.xlsx,X:\programs\run912\taxmax180000\,BPCtableShellsEquivalentTaxmax180000.xlsx,FALSE
+noTAXMAX,Eliminate the Tax Max,per capita,X:\programs\run912\Notaxmax\BPCtableShellsNotaxmax.xlsx,X:\programs\run912\Notaxmax\,BPCtableShellsNotaxmax.xlsx,FALSE
+noTAXMAX,Eliminate the Tax Max,equivalent,X:\programs\run912\Notaxmax\BPCtableShellsEquivalentNotaxmax.xlsx,X:\programs\run912\Notaxmax\,BPCtableShellsEquivalentNotaxmax.xlsx,FALSE
+FICA14,14.4% Payroll Tax,per capita,X:\programs\run912\FICA14\BPCtableShellsFICA14.xlsx,X:\programs\run912\FICA14\,BPCtableShellsFICA14.xlsx,FALSE
+FICA14,14.4% Payroll Tax,equivalent,X:\programs\run912\FICA14\BPCtableShellsEquivalentFICA14.xlsx,X:\programs\run912\FICA14\,BPCtableShellsEquivalentFICA14.xlsx,FALSE
+FICA15,15.4% Payroll Tax,per capita,X:\programs\run912\Fica15\BPCtableShellsFICA15.xlsx,X:\programs\run912\Fica15\,BPCtableShellsFICA15.xlsx,FALSE
+FICA15,15.4% Payroll Tax,equivalent,X:\programs\run912\Fica15\BPCtableShellsEquivalentFICA15.xlsx,X:\programs\run912\Fica15\,BPCtableShellsEquivalentFICA15.xlsx,FALSE
+BPC Package,BPC Package,per capita,X:\programs\Run912\run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx,X:\programs\Run912\run5SaveOpt4\,BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx,TRUE
+BPC Package,BPC Package,equivalent,X:\programs\Run912\run5SaveOpt4\BPCtableShellsEquivalentRun5SaveOpt4.xlsx,X:\programs\Run912\run5SaveOpt4\,BPCtableShellsEquivalentRun5SaveOpt4.xlsx,TRUE
+RothIRA2,option1,per capita,X:\programs\run912\RothIRA2\BPCtableShellsRothIRA2.xlsx,X:\programs\run912\RothIRA2\,BPCtableShellsRothIRA2v2.xlsx,FALSE
+RothIRA2,option1,equivalent,X:\programs\run912\RothIRA2\BPCTableShellsEquivalentRothIRA2.xlsx,X:\programs\run912\RothIRA2\,BPCTableShellsEquivalentRothIRA2.xlsx,FALSE
+RothIRA2allpart,option2,per capita,X:\programs\run912\RothIRA2allpart\BPCtableShellsRothIRA2allpart.xlsx,X:\programs\run912\RothIRA2allpart\,BPCtableShellsRothIRA2vallpartV2.xlsx,FALSE
+RothIRA2allpart,option2,equivalent,X:\programs\run912\RothIRA2allpart\BPCTableShellsEquivalentRothIRA2allpart.xlsx,X:\programs\run912\RothIRA2allpart\,BPCTableShellsEquivalentRothIRA2allpart.xlsx,FALSE
+RothIRA2b,option3,per capita,X:\programs\run912\RothIRA2b\BPCtableShellsRothIRA2b.xlsx,X:\programs\run912\RothIRA2b\,BPCtableShellsRothIRA2bV2.xlsx,FALSE
+RothIRA2b,option3,equivalent,X:\programs\run912\RothIRA2b\BPCTableShellsEquivalentRothIRA2b.xlsx,X:\programs\run912\RothIRA2b\,BPCTableShellsEquivalentRothIRA2b.xlsx,FALSE
+RothIRA2c,option4,per capita,X:\programs\run912\RothIRA2c\BPCtableShellsRothIRA2cV2.xlsx,X:\programs\run912\RothIRA2c\,BPCtableShellsRothIRA2cV2.xlsx,FALSE
+RothIRA2c,option4,equivalent,X:\programs\run912\RothIRA2c\BPCTableShellsEquivalentRothIRA2c.xlsx,X:\programs\run912\RothIRA2c\,BPCTableShellsEquivalentRothIRA2c.xlsx,FALSE
+RothIRA2d,option5,per capita,X:\programs\run912\RothIRA2d\BPCtableShellsRothIRA2dV2.xlsx,X:\programs\run912\RothIRA2d\,BPCtableShellsRothIRA2dV2.xlsx,FALSE
+RothIRA2d,option5,equivalent,X:\programs\run912\RothIRA2d\BPCTableShellsEquivalentRothIRA2d.xlsx,X:\programs\run912\RothIRA2d\,BPCTableShellsEquivalentRothIRA2d.xlsx,FALSE
+RothIRA2e,option6,per capita,X:\programs\run912\RothIRA2e\BPCtableShellsRothIRA2eV2.xlsx,X:\programs\run912\RothIRA2e\,BPCtableShellsRothIRA2eV2.xlsx,FALSE
+RothIRA2e,option6,equivalent,X:\programs\run912\RothIRA2e\BPCTableShellsEquivalentRothIRA2e.xlsx,X:\programs\run912\RothIRA2e\,BPCTableShellsEquivalentRothIRA2e.xlsx,FALSE
+RothIRA2f,option7,per capita,X:\programs\run912\RothIRA2f\BPCtableShellsRothIRA2fV2.xlsx,X:\programs\run912\RothIRA2f\,BPCtableShellsRothIRA2fV2.xlsx,FALSE
+RothIRA2f,option7,equivalent,X:\programs\run912\RothIRA2f\BPCTableShellsEquivalentRothIRA2f.xlsx,X:\programs\run912\RothIRA2f\,BPCTableShellsEquivalentRothIRA2f.xlsx,FALSE
+RothIRA2g,option8,per capita,X:\programs\run912\RothIRA2g\BPCtableShellsRothIRA2gV2.xlsx,X:\programs\run912\RothIRA2g\,BPCtableShellsRothIRA2gV2.xlsx,FALSE
+RothIRA2g,option8,equivalent,X:\programs\run912\RothIRA2g\BPCTableShellsEquivalentRothIRA2g.xlsx,X:\programs\run912\RothIRA2g\,BPCTableShellsEquivalentRothIRA2g.xlsx,FALSE
+RothIRA2nocashout,option9,per capita,X:\programs\run912\RothIRA2nocashout\BPCtableShellsRothIRA2nocashoutV2.xlsx,X:\programs\run912\RothIRA2nocashout\,BPCtableShellsRothIRA2nocashoutV2.xlsx,FALSE
+RothIRA2nocashout,option9,equivalent,X:\programs\run912\RothIRA2nocashout\BPCTableShellsEquivalentRothIRA2nocashout.xlsx,X:\programs\run912\RothIRA2nocashout\,BPCTableShellsEquivalentRothIRA2nocashout.xlsx,FALSE
+RothIRA3,option10,per capita,X:\programs\run912\RothIRA3\BPCtableShellsRothIRA3V2.xlsx,X:\programs\run912\RothIRA3\,BPCtableShellsRothIRA3V2.xlsx,FALSE
+RothIRA3,option10,equivalent,X:\programs\run912\RothIRA3\BPCTableShellsEquivalentRothIRA3.xlsx,X:\programs\run912\RothIRA3\,BPCTableShellsEquivalentRothIRA3.xlsx,FALSE
+RothIRA3b,option11,per capita,X:\programs\run912\RothIRA3b\BPCtableShellsRothIRA3bV2.xlsx,X:\programs\run912\RothIRA3b\,BPCtableShellsRothIRA3bV2.xlsx,FALSE
+RothIRA3b,option11,equivalent,X:\programs\run912\RothIRA3b\BPCTableShellsEquivalentRothIRA3b.xlsx,X:\programs\run912\RothIRA3b\,BPCTableShellsEquivalentRothIRA3b.xlsx,FALSE
+RothIRA3c,option12,per capita,X:\programs\run912\RothIRA3c\BPCtableShellsRothIRA3cV2.xlsx,X:\programs\run912\RothIRA3c\,BPCtableShellsRothIRA3cV2.xlsx,FALSE
+RothIRA3c,option12,equivalent,X:\programs\run912\RothIRA3c\BPCTableShellsEquivalentRothIRA3c.xlsx,X:\programs\run912\RothIRA3c\,BPCTableShellsEquivalentRothIRA3c.xlsx,FALSE
+RothIRA3d,option13,per capita,X:\programs\run912\RothIRA3d\BPCtableShellsRothIRA3dV2.xlsx,X:\programs\run912\RothIRA3d\,BPCtableShellsRothIRA3dV2.xlsx,FALSE
+RothIRA3d,option13,equivalent,X:\programs\run912\RothIRA3d\BPCTableShellsEquivalentRothIRA3d.xlsx,X:\programs\run912\RothIRA3d\,BPCTableShellsEquivalentRothIRA3d.xlsx,FALSE
+RothIRA4,option14,per capita,X:\programs\run912\RothIRA4\BPCtableShellsRothIRA4V2.xlsx,X:\programs\run912\RothIRA4\,BPCtableShellsRothIRA4V2.xlsx,FALSE
+RothIRA4,option14,equivalent,X:\programs\run912\RothIRA4\BPCTableShellsEquivalentRothIRA4.xlsx,X:\programs\run912\RothIRA4\,BPCTableShellsEquivalentRothIRA4.xlsx,FALSE
+RothIRA4b,option15,per capita,X:\programs\run912\RothIRA4b\BPCtableShellsRothIRA4bV2.xlsx,X:\programs\run912\RothIRA4b\,BPCtableShellsRothIRA4bV2.xlsx,FALSE
+RothIRA4b,option15,equivalent,X:\programs\run912\RothIRA4b\BPCTableShellsEquivalentRothIRA4b.xlsx,X:\programs\run912\RothIRA4b\,BPCTableShellsEquivalentRothIRA4b.xlsx,FALSE
+RothIRA4c,option16,per capita,X:\programs\run912\RothIRA4c\BPCtableShellsRothIRA4cV2.xlsx,X:\programs\run912\RothIRA4c\,BPCtableShellsRothIRA4cV2.xlsx,FALSE
+RothIRA4c,option16,equivalent,X:\programs\run912\RothIRA4c\BPCTableShellsEquivalentRothIRA4c.xlsx,X:\programs\run912\RothIRA4c\,BPCTableShellsEquivalentRothIRA4c.xlsx,FALSE
+RothIRA4d,option17,per capita,X:\programs\run912\RothIRA4d\BPCtableShellsRothIRA4dV2.xlsx,X:\programs\run912\RothIRA4d\,BPCtableShellsRothIRA4dV2.xlsx,FALSE
+RothIRA4d,option17,equivalent,X:\programs\run912\RothIRA4d\BPCTableShellsEquivalentRothIRA4d.xlsx,X:\programs\run912\RothIRA4d\,BPCTableShellsEquivalentRothIRA4d.xlsx,FALSE
+RothIRAHighLimits,option18,per capita,X:\programs\run912\RothIRAHighLimits\BPCtableShellsRothIRAHighLimitsV2.xlsx,X:\programs\run912\RothIRAHighLimits\,BPCtableShellsRothIRAHighLimitsV2.xlsx,FALSE
+RothIRAHighLimits,option18,equivalent,X:\programs\run912\RothIRAHighLimits\BPCTableShellsEquivalentRothIRAHighLimits.xlsx,X:\programs\run912\RothIRAHighLimits\,BPCTableShellsEquivalentRothIRAHighLimits.xlsx,FALSE
+RothIRALimit2,option19,per capita,X:\programs\run912\RothIRALimit2\BPCtableShellsRothIRALimit2V2.xlsx,X:\programs\run912\RothIRALimit2\,BPCtableShellsRothIRALimit2V2.xlsx,FALSE
+RothIRALimit2,option19,equivalent,X:\programs\run912\RothIRALimit2\BPCTableShellsEquivalentRothIRALimit2.xlsx,X:\programs\run912\RothIRALimit2\,BPCTableShellsEquivalentRothIRALimit2.xlsx,FALSE
+RothIRALimit2b,option20,per capita,X:\programs\run912\RothIRALimit2b\BPCtableShellsRothIRALimit2bV2.xlsx,X:\programs\run912\RothIRALimit2b\,BPCtableShellsRothIRALimit2bV2.xlsx,FALSE
+RothIRALimit2b,option20,equivalent,X:\programs\run912\RothIRALimit2b\BPCTableShellsEquivalentRothIRALimit2b.xlsx,X:\programs\run912\RothIRALimit2b\,BPCTableShellsEquivalentRothIRALimit2b.xlsx,FALSE
+RothIRALimit2c,option21,per capita,X:\programs\run912\RothIRALimit2c\BPCtableShellsRothIRALimit2cV2.xlsx,X:\programs\run912\RothIRALimit2c\,BPCtableShellsRothIRALimit2cV2.xlsx,FALSE
+RothIRALimit2c,option21,equivalent,X:\programs\run912\RothIRALimit2c\BPCTableShellsEquivalentRothIRALimit2c.xlsx,X:\programs\run912\RothIRALimit2c\,BPCTableShellsEquivalentRothIRALimit2c.xlsx,FALSE
+RothIRALimit2d,option22,per capita,X:\programs\run912\RothIRALimit2d\BPCtableShellsRothIRALimit2d.xlsx,X:\programs\run912\RothIRALimit2d\,BPCtableShellsRothIRALimit2d.xlsx,FALSE
+RothIRALimit2d,option22,equivalent,X:\programs\run912\RothIRALimit2d\BPCTableShellsEquivalentRothIRALimit2d.xlsx,X:\programs\run912\RothIRALimit2d\,BPCTableShellsEquivalentRothIRALimit2d.xlsx,FALSE
+RothIRALimit2e,option23,per capita,X:\programs\run912\RothIRALimit2e\BPCtableShellsRothIRALimit2e.xlsx,X:\programs\run912\RothIRALimit2e\,BPCtableShellsRothIRALimit2e.xlsx,FALSE
+RothIRALimit2e,option23,equivalent,X:\programs\run912\RothIRALimit2e\BPCTableShellsEquivalentRothIRALimit2e.xlsx,X:\programs\run912\RothIRALimit2e\,BPCTableShellsEquivalentRothIRALimit2e.xlsx,FALSE
+RothIRALimit3,option24,per capita,X:\programs\run912\RothIRALimit3\BPCtableShellsRothIRALimit3.xlsx,X:\programs\run912\RothIRALimit3\,BPCtableShellsRothIRALimit3.xlsx,FALSE
+RothIRALimit3,option24,equivalent,X:\programs\run912\RothIRALimit3\BPCTableShellsEquivalentRothIRALimit3.xlsx,X:\programs\run912\RothIRALimit3\,BPCTableShellsEquivalentRothIRALimit3.xlsx,FALSE
+RothIRALimit3b,option25,per capita,X:\programs\run912\RothIRALimit3b\BPCtableShellsRothIRALimit3b.xlsx,X:\programs\run912\RothIRALimit3b\,BPCtableShellsRothIRALimit3b.xlsx,FALSE
+RothIRALimit3b,option25,equivalent,X:\programs\run912\RothIRALimit3b\BPCTableShellsEquivalentRothIRALimit3b.xlsx,X:\programs\run912\RothIRALimit3b\,BPCTableShellsEquivalentRothIRALimit3b.xlsx,FALSE
+RothIRALimit4,option26,per capita,X:\programs\run912\RothIRALimit4\BPCtableShellsRothIRALimit4.xlsx,X:\programs\run912\RothIRALimit4\,BPCtableShellsRothIRALimit4.xlsx,FALSE
+RothIRALimit4,option26,equivalent,X:\programs\run912\RothIRALimit4\BPCTableShellsEquivalentRothIRALimit4.xlsx,X:\programs\run912\RothIRALimit4\,BPCTableShellsEquivalentRothIRALimit4.xlsx,FALSE
