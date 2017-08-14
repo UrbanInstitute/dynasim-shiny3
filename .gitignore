@@ -15,8 +15,8 @@
 /*.Rcheck/
 
 # RStudio files
-.Rproj.user/
-.Rproj
+.Rproj.user
+*.Rproj
 
 # produced vignettes
 vignettes/*.html
@@ -33,3 +33,9 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+
+# OS X System Files
+.DS_Store
+
+# Windows System Files
+*.DB

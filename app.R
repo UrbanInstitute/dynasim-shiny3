@@ -1,9 +1,6 @@
 ## Libraries and Source Files
 library(shiny)
 library(tidyverse)
-#library(extrafont)
-#library(grid)
-#library(RColorBrewer)
 library(scales)
 library(stringr)
 
@@ -17,20 +14,6 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-#income <- read_csv("data/distributions.csv", 
-#  col_types = cols(
-#    .default = col_double(),
-#    subgroup = col_character(),
-#    year = col_integer(),
-#    percentile = col_character(),
-#    group = col_character(),
-#    option = col_character(),
-#    scale = col_character(),
-#    baseline = col_character(),
-#    comparison = col_character()
-#  )
-#)
-
 income <- read_csv("data/incomes.csv",
   col_types = cols(
     .default = col_double(),

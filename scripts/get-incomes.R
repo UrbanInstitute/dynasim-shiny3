@@ -232,10 +232,4 @@ if (!dir.exists("data")) {
 }
 
 # Write tidy data frame
-final.distribution %>%
-  filter(baseline == "Scheduled Law") %>%
-  write_csv("data/incomes_scheduled.csv")
-
-final.distribution %>%
-  filter(baseline == "Payable Law") %>%
-  write_csv("data/incomes_payable.csv")
+write_csv(final.distribution, "data/incomes.csv")
