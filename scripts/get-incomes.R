@@ -25,6 +25,8 @@ files <- read_csv("options-guide.csv",
                   )) %>%
   select(option, scale, link, bpc_boolean)
 
+files <- files[1:45, ]
+
 # Create functions that clean the clunky Excel files
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
 
@@ -212,7 +214,7 @@ baselines <- baselines %>%
 
 # Combine the baselines (with zeroes for changes) and the options
 final.distribution <- union(final.distribution, baselines) %>%
-#  filter(incomes.taxes != "BMB") %>%
+  filter(incomes.taxes != "BMB") %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = incomes.taxes, value = value)

@@ -39,3 +39,9 @@ CPIEcola,CPI-E COLA,per capita,X:\programs\run912\CPIEcola\BPCtableShellsCPIEcol
 CPIEcola,CPI-E COLA,equivalent,X:\programs\run912\CPIEcola\BPCtableShellsEquivalentCPIEcola.xlsx,X:\programs\run912\CPIEcola\,BPCtableShellsEquivalentCPIEcola.xlsx,FALSE
 BPC Package,BPC Package,per capita,X:\programs\Run912\BPCrun5\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx,X:\programs\Run912\BPCrun5\,BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx,TRUE
 BPC Package,BPC Package,equivalent,X:\programs\Run912\BPCrun5\BPCtableShellsEquivalentRun5SaveOpt4withSUPERTAX.xlsx,X:\programs\Run912\BPCrun5\,BPCtableShellsEquivalentRun5SaveOpt4.xlsx,TRUE
+Increase COLA,Increase COLA,per capita,X:\programs\Run912\CPIEcola\BPCTableShellsCPIEcola.xlsx,X:\programs\Run912\CPIEcola\,BPCTableShellsCPIEcola.xlsx,FALSE
+Increase COLA,Increase COLA,equivalent,X:\programs\Run912\CPIEcola\BPCTableShellsEquivalentCPIEcola.xlsx,X:\programs\Run912\CPIEcola\,BPCTableShellsEquivalentCPIEcola.xlsx,FALSE
+Cap COLA,Cap COLA,per capita,X:\programs\Run912\CapCOLA\BPCTableShellsCapCola.xlsx,X:\programs\Run912\CapCOLA\,BPCTableShellsCapCola.xlsx,FALSE
+Cap COLA,Cap COLA,equivalent,X:\programs\Run912\CapCOLA\BPCTableShellsEquivalentCapCola.xlsx,X:\programs\Run912\CapCOLA\,BPCTableShellsEquivalentCapCola.xlsx,FALSE
+BMB,BMB,per capita,X:\programs\Run912\BMB\BPCTableShellsBMB.xlsx,X:\programs\Run912\BMB\,BPCTableShellsBMB.xlsx,TRUE
+BMB,BMB,equivalent,X:\programs\Run912\BMB\BPCTableShellsEquivalentBMB.xlsx,X:\programs\Run912\BMB\,BPCTableShellsEquivalentBMB.xlsx,TRUE
