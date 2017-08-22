@@ -1,9 +1,6 @@
 ## Libraries and Source Files
 library(shiny)
 library(tidyverse)
-#library(extrafont)
-#library(grid)
-#library(RColorBrewer)
 library(scales)
 library(stringr)
 
@@ -17,18 +14,32 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-distribution <- read_csv("data/distributions.csv", 
-  col_types = cols(
-    .default = col_double(),
-    subgroup = col_character(),
-    year = col_integer(),
-    percentile = col_character(),
-    group = col_character(),
-    option = col_character(),
-    scale = col_character(),
-    baseline = col_character(),
-    comparison = col_character()
-  )
+income <- read_csv("data/incomes.csv",
+                   col_types = cols(
+                     .default = col_double(),
+                     subgroup = col_character(),
+                     year = col_integer(),
+                     percentile = col_character(),
+                     group = col_character(),
+                     option = col_character(),
+                     scale = col_character(),
+                     baseline = col_character(),
+                     comparison = col_character()
+                   )
+)
+
+assets <- read_csv("data/assets.csv", 
+                   col_types =  cols(
+                     .default = col_double(),
+                     group = col_character(),
+                     subgroup = col_character(),
+                     year = col_integer(),
+                     percentile = col_character(),
+                     option = col_character(),
+                     scale = col_character(),
+                     baseline = col_character(),
+                     comparison = col_character()
+                   )
 )
 
 scale_text <- read_csv("text/scale.csv",
@@ -59,10 +70,31 @@ option_text <- read_csv("text/option.csv",
   )
 )
 
+# Clean and merge income and asset data
+assets <- assets %>%
+  filter(subgroup != "Other") %>%
+  mutate(group = if_else(group == "All", "All Individuals", group),
+         group = if_else(group == "Income Quintile", "Per Capita Income Quintile", group))
+
+
+table(income$group %in% assets$group)
+table(income$subgroup %in% assets$subgroup)     # PROBLEM!
+table(income$year %in% assets$year)
+table(income$percentile %in% assets$percentile)
+table(income$option %in% assets$option)
+table(income$scale %in% assets$scale)
+table(income$baseline %in% assets$baseline)
+table(income$comparison %in% assets$comparison)
+
+distribution <- left_join(income, assets, by = c("group", "subgroup", "year", "percentile", "option", "scale", "baseline", "comparison"))
+
+rm(income, assets)
+
 # Gather the data
 distribution <- distribution %>%
+  rename(`Medicare Surtax` = `Medicare SurTax`) %>%
   mutate(group = gsub("Per Capita ", "", group)) %>%
-  mutate(subgroup = gsub(" \\(Income\\)", "", subgroup)) %>% 
+  mutate(subgroup = gsub(" \\(Income\\)", "", subgroup)) %>%
   mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99", "Percent with Income Source"))) %>%
   mutate(subgroup = factor(subgroup, levels = c("All Individuals",
                                                 "Females",
@@ -83,26 +115,26 @@ distribution <- distribution %>%
                                                 "High School Graduates",
                                                 "Some College",
                                                 "College Graduates"),
-                                      labels = c("All Individuals",
-                                                 "Female",
-                                                 "Male",
-                                                 "Black",
-                                                 "Hispanic",
-                                                 "White, Non-Hispanic",
-                                                 "Bottom Quintile",
-                                                 "2nd Quintile",
-                                                 "3rd Quintile",
-                                                 "4th Quintile",
-                                                 "Top Quintile",
-                                                 "Never Married",
-                                                 "Divorced",
-                                                 "Married",
-                                                 "Widowed",
-                                                 "HS Dropout",
-                                                 "HS Graduate",
-                                                 "Some College",
-                                                 "College Graduate"))) %>%
-  gather(`Annuitized Financial Income`:`State Income Tax`, key = income.tax.premium, value = value)
+                           labels = c("All Individuals",
+                                      "Female",
+                                      "Male",
+                                      "Black",
+                                      "Hispanic",
+                                      "White, Non-Hispanic",
+                                      "Bottom Quintile",
+                                      "2nd Quintile",
+                                      "3rd Quintile",
+                                      "4th Quintile",
+                                      "Top Quintile",
+                                      "Never Married",
+                                      "Divorced",
+                                      "Married",
+                                      "Widowed",
+                                      "HS Dropout",
+                                      "HS Graduate",
+                                      "Some College",
+                                      "College Graduate"))) %>%
+  gather(`Annuitized Financial Income`:`Total Assets`, key = income.tax.premium, value = value)
 
 ##
 ## SHINY
@@ -113,6 +145,7 @@ latoCSS <- "http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300itali
 ui <- fluidPage(
   
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = latoCSS)),
+  tags$head(tags$script(src = "pym.min.js")),
   
   theme = "shiny.css",
   
@@ -174,6 +207,7 @@ ui <- fluidPage(
                               "Scheduled Law" = "Scheduled Law",
                               "BPC Option" = "BPC Package",
                               "Annual PIA" = "Annual PIA", 
+                              "Basic Minimum Benefit" = "BMB",                               
                               "Increase Benefits Taxation" = "Increase Benefits Taxation",
                               "Cap Spouse Benefits" = "Cap Spouse Benefits",
                               "75% Survivor Benefit" = "75% Survivor Benefit",
@@ -181,6 +215,8 @@ ui <- fluidPage(
                               "90% Tax Max and 13.4% Payroll Tax" = "90% Tax Max and 13.4% Payroll Tax",
                               "Reduce COLA" = "Reduce COLA",
                               "Chained-CPI COLA" = "Chained-CPI COLA",
+                              "Cap COLA" = "Cap COLA", 
+                              "Increase COLA" = "Increase COLA",                              
                               "Increase FRA" = "Increase FRA",
                               "Increase FRA and EEA" = "Increase FRA and EEA",
                               "$150,000 Tax Max" = "$150,000 Tax Max",
@@ -196,7 +232,7 @@ ui <- fluidPage(
                               "Current Law Scheduled" = "Scheduled Law")),      
       
       selectInput(inputId = "income.tax.premium",
-                  label = "Income, Tax, or Premium",
+                  label = "Income, Tax, Premium, or Asset",
                   choices = c("Annuitized Financial Income" = "Annuitized Financial Income",
                               "DB Pension Income" = "DB Pension Income",
                               "Earned Income" = "Earned Income",
@@ -222,7 +258,10 @@ ui <- fluidPage(
                               "Spouse Benefit" = "Spouse Benefit",
                               "Spouse Earnings" = "Spouse Earnings",
                               "SSI" = "SSI",
-                              "State Income Tax" = "State Income Tax"))),
+                              "State Income Tax" = "State Income Tax",
+                              "Financial Assets" = "Financial Assets",
+                              "Retirement Account Assets" = "Retirement Account Assets",
+                              "Total Assets" = "Total Assets"))),
 
     column(6, 
       selectInput(inputId = "comparison",
@@ -292,7 +331,8 @@ ui <- fluidPage(
            
            htmlOutput("text4")
     )
-  )  
+  ),
+  tags$script(src = "activatePym.js")
 )
 
 server <- function(input, output) {
@@ -328,7 +368,10 @@ server <- function(input, output) {
     if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit"} else
     if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings"} else
     if (input$income.tax.premium == "SSI") {"SSI"} else
-    if (input$income.tax.premium == "State Income Tax") {"State Income Tax"}
+    if (input$income.tax.premium == "State Income Tax") {"State Income Tax"} else
+    if (input$income.tax.premium == "Financial Assets") {"Financial Assets"} else
+    if (input$income.tax.premium == "Retirement Account Assets") {"Retirement Account Assets"} else
+    if (input$income.tax.premium == "Total Assets") {"Total Assets"}      
     
     paste(comparison, as.character(input$year), str_to_title(input$scale), incomes.taxes)
     
