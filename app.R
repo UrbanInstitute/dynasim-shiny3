@@ -92,6 +92,7 @@ rm(income, assets)
 
 # Gather the data
 distribution <- distribution %>%
+  rename(`Medicare Surtax` = `Medicare SurTax`) %>%
   mutate(group = gsub("Per Capita ", "", group)) %>%
   mutate(subgroup = gsub(" \\(Income\\)", "", subgroup)) %>%
   mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99", "Percent with Income Source"))) %>%
@@ -231,7 +232,7 @@ ui <- fluidPage(
                               "Current Law Scheduled" = "Scheduled Law")),      
       
       selectInput(inputId = "income.tax.premium",
-                  label = "Income, Tax, or Premium",
+                  label = "Income, Tax, Premium, or Asset",
                   choices = c("Annuitized Financial Income" = "Annuitized Financial Income",
                               "DB Pension Income" = "DB Pension Income",
                               "Earned Income" = "Earned Income",
@@ -257,7 +258,10 @@ ui <- fluidPage(
                               "Spouse Benefit" = "Spouse Benefit",
                               "Spouse Earnings" = "Spouse Earnings",
                               "SSI" = "SSI",
-                              "State Income Tax" = "State Income Tax"))),
+                              "State Income Tax" = "State Income Tax",
+                              "Financial Assets" = "Financial Assets",
+                              "Retirement Account Assets" = "Retirement Account Assets",
+                              "Total Assets" = "Total Assets"))),
 
     column(6, 
       selectInput(inputId = "comparison",
@@ -364,7 +368,10 @@ server <- function(input, output) {
     if (input$income.tax.premium == "Spouse Benefit") {"Spouse Benefit"} else
     if (input$income.tax.premium == "Spouse Earnings") {"Spouse Earnings"} else
     if (input$income.tax.premium == "SSI") {"SSI"} else
-    if (input$income.tax.premium == "State Income Tax") {"State Income Tax"}
+    if (input$income.tax.premium == "State Income Tax") {"State Income Tax"} else
+    if (input$income.tax.premium == "Financial Assets") {"Financial Assets"} else
+    if (input$income.tax.premium == "Retirement Account Assets") {"Retirement Account Assets"} else
+    if (input$income.tax.premium == "Total Assets") {"Total Assets"}      
     
     paste(comparison, as.character(input$year), str_to_title(input$scale), incomes.taxes)
     
