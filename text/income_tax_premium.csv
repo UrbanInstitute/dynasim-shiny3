@@ -1,6 +1,6 @@
 income_tax_premium,text
 Annuitized Financial Income,"<p><h4>Annuitized financial income</h4></p><p>Interest, dividends, rental income, and retirement account withdrawals.</p>"
-DB Pension Income,<p><h4>Defined benefit pension income</h4></p><p>Income from defined-benefit pensions. </p>
+DB Pension Income,<h4></h4><p></p
 Earned Income,"<p><h4>Earned income</h4></p><p>Wages, salaries, tips, net self-employment income, and long-term disability benefits received before the retirement age.</p>"
 Federal Income Tax,"<p><h4>Federal income tax</h4></p><p>Federal income tax includes tax on income, the alternative minimum tax, nonrefundable credits, and refundable credits. Individuals can have negative federal income tax because of the refundable earned income credit and refundable child credit.</p>"
 HI Tax,<p><h4>Hospital Insurance program Tax</h4></p><p>Worker share of the Hospital Insurance tax that finances Medicare Part A. This does not include the employer share of the tax.</p>

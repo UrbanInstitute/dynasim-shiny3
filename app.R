@@ -70,6 +70,13 @@ option_text <- read_csv("text/option.csv",
   )
 )
 
+demographic <- read_csv("text/demographic.csv",
+  col_types = cols(
+    demographic = col_character(),
+    description = col_character()
+  )
+)
+
 # Clean and merge income and asset data
 assets <- assets %>%
   filter(subgroup != "Other") %>%
@@ -195,7 +202,7 @@ ui <- fluidPage(
     
     column(6,
            
-           htmlOutput("text5")
+           htmlOutput("text_have_income")
            
            
     )
@@ -276,7 +283,7 @@ ui <- fluidPage(
                   label = "Demographic",
                   choices = c("All individuals" = "All Individuals",
                               "Sex" = "Sex",
-                              "Race & Ethnicity" = "Race/Ethnicity",
+                              "Race or ethnicity" = "Race/Ethnicity",
                               "Education" = "Education",
                               "Marital status" = "Marital Status",
                               "Income quintile" = "Income Quintile",
@@ -302,7 +309,17 @@ ui <- fluidPage(
     
     # Explanation of Social Security Reform
     
-    htmlOutput("text1")
+    htmlOutput("text_option")
+    )
+  ),
+  
+  fluidRow(
+    
+    column(12,
+           
+           # Explanation of Baseline
+           
+           htmlOutput("text_baseline")
     )
   ),
   
@@ -312,9 +329,19 @@ ui <- fluidPage(
            
       # Explanation of Income, Tax, or Premium
       
-      htmlOutput("text2")
+      htmlOutput("text_income_tax_premium")
     )
     
+  ),
+  
+  fluidRow(
+    
+    column(12, 
+           
+      # Explanation of Demographic
+      
+      htmlOutput("text_demographic")
+    )
   ),
   
   fluidRow(
@@ -323,20 +350,11 @@ ui <- fluidPage(
            
       # Explanation of Scales
       
-      htmlOutput("text3")
+      htmlOutput("text_scales")
     )
     
   ),
   
-  fluidRow(
-    
-    column(12,
-           
-           # Explanation of Baseline
-           
-           htmlOutput("text4")
-    )
-  ),
   tags$script(src = "activatePym.js")
 )
 
@@ -456,7 +474,7 @@ server <- function(input, output) {
     
   })  
   
-    output$text1 <- renderText({
+    output$text_option <- renderText({
     
       as.character(
         option_text %>%
@@ -466,7 +484,7 @@ server <- function(input, output) {
     
     })
     
-    output$text2 <- renderText({
+    output$text_income_tax_premium <- renderText({
       
       as.character(
         income_tax_premium_text %>%
@@ -476,7 +494,7 @@ server <- function(input, output) {
       
     })
     
-    output$text3 <- renderText({
+    output$text_scales <- renderText({
       
       as.character(
         scale_text %>%
@@ -486,7 +504,7 @@ server <- function(input, output) {
   
     })
     
-    output$text4 <- renderText({
+    output$text_baseline <- renderText({
       
       as.character(
         baseline_text %>%
@@ -496,7 +514,17 @@ server <- function(input, output) {
       
     })
     
-    output$text5 <- renderUI({
+    output$text_demographic <- renderText({
+      
+      as.character(
+        demographic %>%
+          filter(demographic == input$group) %>%
+          select(description)
+      )
+      
+    })
+    
+    output$text_have_income <- renderUI({
       
       percent <- distribution %>%
         filter(option == input$option) %>%
