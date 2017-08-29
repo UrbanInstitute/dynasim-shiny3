@@ -101,8 +101,8 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
            group = if_else(group == "Shared Income Quintile", "Income Quintile", group),
            group = if_else(group == "Shared Lifetime Earnings Quintile", "Lifetime Earnings Quintile", group))
   
-  option_label <- enquo(option_label)
-  scale_label <- enquo(scale_label)
+  #option_label <- enquo(option_label)
+  #scale_label <- enquo(scale_label)
   
   # Mutate numeric variables into class dbl, simplify quintiles, and add options/scales labels
   distribution <- distribution %>%
@@ -125,12 +125,11 @@ final.distribution <- pmap(list(files$link, files$bpc_boolean, files$option, fil
 
 # Create a baseline data frame
 baselines <- final.distribution %>%
-  filter(option == "Scheduled Law" | option == "Payable Law") %>%
+  filter(option == "Scheduled law" | option == "Payable law") %>%
   rename(baseline.value = incomes.taxes, baseline.type = option)
 
 # Create a options data frame
 options <- final.distribution
-#  filter(option != "Scheduled Law" & option != "Payable Law")
 
 final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "income.source"))
 
