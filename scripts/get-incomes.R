@@ -25,6 +25,8 @@ files <- read_csv("options-guide.csv",
                   )) %>%
   select(option, scale, link, bpc_boolean)
 
+files <- files[1:45, ]
+
 # Create functions that clean the clunky Excel files
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
 
@@ -146,8 +148,8 @@ distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
                                           "Top Quintile (Lifetime Earnings)"), 
                           "Lifetime Earnings Quintile", group))
   
-  option_label <- enquo(option_label)
-  scale_label <- enquo(scale_label)
+  #option_label <- enquo(option_label)
+  #scale_label <- enquo(scale_label)
   
   # Mutate numeric variables into class dbl, simplify quintiles, and add options/scales labels
   distribution <- distribution %>%
@@ -184,12 +186,11 @@ final.distribution <- final.distribution %>%
 
 # Create a baseline data frame
 baselines <- final.distribution %>%
-  filter(option == "Scheduled Law" | option == "Payable Law") %>%
+  filter(option == "Scheduled law" | option == "Payable law") %>%
   rename(baseline.value = value, baseline.type = option)
 
 # Create a options data frame
 options <- final.distribution
-#  filter(option != "Scheduled Law" & option != "Payable Law")
 # Should be 1,378,944 observations
 
 final.distribution <- left_join(options, baselines, by = c("subgroup", "year", "percentile", "group", "scale", "incomes.taxes"))
@@ -212,7 +213,7 @@ baselines <- baselines %>%
 
 # Combine the baselines (with zeroes for changes) and the options
 final.distribution <- union(final.distribution, baselines) %>%
-#  filter(incomes.taxes != "BMB") %>%
+  filter(incomes.taxes != "BMB") %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, dollar.change, key = "comparison", value = "value") %>%
   spread(key = incomes.taxes, value = value)
