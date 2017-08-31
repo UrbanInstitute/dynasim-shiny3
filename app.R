@@ -159,15 +159,10 @@ ui <- fluidPage(
     
     column(12,
            
-           titlePanel("Exploring Social Security Reform Options"),
-           
-           p("The Social Security trustees estimate that by the mid-2030s, the system will 
-             no longer be able to pay all scheduled benefits. Which reform option should 
-             policymakers pursue to help balance the system? Use our interactive tools to 
-             compare how the Social Security trust funds and different groups would fare 
-             over time under different policy options."),
-           
-           br()
+           p("Social Security reform affects low-, middle-, and high-income 
+             retirees differently. Use this interactive to explore the impacts 
+             of Social Security reforms across the income and wealth 
+             distributions for different populations from 2015 to 2065.")
            
            )
   ),
@@ -300,7 +295,6 @@ ui <- fluidPage(
   ),
   
   br(),
-  
   
     fluidRow(
     
