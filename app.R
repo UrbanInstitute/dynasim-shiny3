@@ -252,8 +252,8 @@ ui <- fluidPage(
                               "Other family member income" = "Other Family Member Income",
                               "Own benefit" = "Own Benefit",
                               "Own earnings" = "Own Earnings",
-                              "Annuity income" = "Annuity Income",
-                              "Cash income" = "Cash Income",
+                              "Gross annuity income" = "Annuity Income",
+                              "Gross cash income" = "Cash Income",
                               "Dividend income" = "Dividend Income",
                               "Interest income" = "Interest Income",
                               "IRA withdrawal" = "IRA Withdrawal",
@@ -374,8 +374,8 @@ server <- function(input, output) {
     if (input$income.tax.premium == "Other Family Member Income") {"other family member income"} else
     if (input$income.tax.premium == "Own Benefit") {"own benefit"} else
     if (input$income.tax.premium == "Own Earnings") {"own earnings"} else
-    if (input$income.tax.premium == "Annuity Income") {"annuity income"} else
-    if (input$income.tax.premium == "Cash Income") {"cash income"} else
+    if (input$income.tax.premium == "Annuity Income") {"gross annuity income"} else
+    if (input$income.tax.premium == "Cash Income") {"gross cash income"} else
     if (input$income.tax.premium == "Dividend Income") {"dividend income"} else
     if (input$income.tax.premium == "Interest Income") {"interest income"} else
     if (input$income.tax.premium == "IRA Withdrawal") {"IRA withdrawal"} else
