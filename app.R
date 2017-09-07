@@ -159,15 +159,10 @@ ui <- fluidPage(
     
     column(12,
            
-           titlePanel("Exploring Social Security Reform Options"),
-           
-           p("The Social Security trustees estimate that by the mid-2030s, the system will 
-             no longer be able to pay all scheduled benefits. Which reform option should 
-             policymakers pursue to help balance the system? Use our interactive tools to 
-             compare how the Social Security trust funds and different groups would fare 
-             over time under different policy options."),
-           
-           br()
+           p("Social Security reform affects low-, middle-, and high-income 
+             retirees differently. Use this interactive to explore the impacts 
+             of Social Security reforms across the income and wealth 
+             distributions for different populations from 2015 to 2065.")
            
            )
   ),
@@ -257,8 +252,8 @@ ui <- fluidPage(
                               "Other family member income" = "Other Family Member Income",
                               "Own benefit" = "Own Benefit",
                               "Own earnings" = "Own Earnings",
-                              "Annuity income" = "Annuity Income",
-                              "Cash income" = "Cash Income",
+                              "Gross annuity income" = "Annuity Income",
+                              "Gross cash income" = "Cash Income",
                               "Dividend income" = "Dividend Income",
                               "Interest income" = "Interest Income",
                               "IRA withdrawal" = "IRA Withdrawal",
@@ -300,7 +295,6 @@ ui <- fluidPage(
   ),
   
   br(),
-  
   
     fluidRow(
     
@@ -380,8 +374,8 @@ server <- function(input, output) {
     if (input$income.tax.premium == "Other Family Member Income") {"other family member income"} else
     if (input$income.tax.premium == "Own Benefit") {"own benefit"} else
     if (input$income.tax.premium == "Own Earnings") {"own earnings"} else
-    if (input$income.tax.premium == "Annuity Income") {"annuity income"} else
-    if (input$income.tax.premium == "Cash Income") {"cash income"} else
+    if (input$income.tax.premium == "Annuity Income") {"gross annuity income"} else
+    if (input$income.tax.premium == "Cash Income") {"gross cash income"} else
     if (input$income.tax.premium == "Dividend Income") {"dividend income"} else
     if (input$income.tax.premium == "Interest Income") {"interest income"} else
     if (input$income.tax.premium == "IRA Withdrawal") {"IRA withdrawal"} else
