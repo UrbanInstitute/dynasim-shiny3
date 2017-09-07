@@ -139,8 +139,8 @@ distribution <- distribution %>%
                                       "HS dropout",
                                       "HS graduate",
                                       "Some college",
-                                      "College graduate"))) %>%
-  gather(`Annuitized Financial Income`:`Total Assets`, key = income.tax.premium, value = value)
+                                      "College graduate")))
+#%>%gather(`Annuitized Financial Income`:`Total Assets`, key = income.tax.premium, value = value)
 
 ##
 ## SHINY
@@ -265,7 +265,7 @@ ui <- fluidPage(
                               "State income tax" = "State Income Tax",
                               "Financial assets" = "Financial Assets",
                               "Retirement account assets" = "Retirement Account Assets",
-                              "Total assets" = "Total Assets"))),
+                              "Total assets" = "`Total Assets`"))),
 
     column(6, 
       selectInput(inputId = "comparison",
@@ -419,12 +419,11 @@ server <- function(input, output) {
     distribution %>%
       filter(option == input$option) %>%
       filter(group == input$group) %>%  
-
       filter(comparison == input$comparison) %>%   
       filter(baseline == input$baseline) %>% 
       filter(scale == input$scale) %>%
-      filter(income.tax.premium == input$income.tax.premium) %>%
-      filter(percentile != "Percent with Income Source")
+      filter(percentile != "Percent with Income Source") %>%
+      select_("subgroup", value = input$income.tax.premium, "percentile", "year")   
   })  
   
   output$chart <- renderPlot({  
