@@ -142,6 +142,19 @@ distribution <- distribution %>%
                                       "College graduate")))
 #%>%gather(`Annuitized Financial Income`:`Total Assets`, key = income.tax.premium, value = value)
 
+# Create tibble with % with income
+have_income <- distribution %>%
+  filter(percentile == "Percent with Income Source") %>%
+  filter(group == "All Individuals") %>%
+  filter(comparison == "level") %>%
+  filter(baseline == "Payable law") %>%
+  filter(scale == "per capita")
+
+
+# Create tibble with just mean and percentiles
+distribution <- distribution %>%
+  filter(percentile != "Percent with Income Source")
+
 ##
 ## SHINY
 ##
@@ -237,34 +250,34 @@ ui <- fluidPage(
       
       selectInput(inputId = "income.tax.premium",
                   label = "Income, Tax, Premium, or Asset",
-                  choices = c("Annuitized financial income" = "Annuitized Financial Income",
-                              "Defined-benefit pension income" = "DB Pension Income",
-                              "Earned income" = "Earned Income",
-                              "Federal income tax" = "Federal Income Tax",
-                              "Hospital Insurance program tax" = "HI Tax",
-                              "Imputed rental income" = "Imputed Rental Income",
-                              "Means- and non-means tested benefits" = "Means+Nonmeans Benefits",
-                              "Medicare Part B premium" = "Medicare Part B Premium",
-                              "Medicare surtax" = "Medicare Surtax",
-                              "Net annuity income" = "Net Annuity Income",
-                              "Net cash income" = "Net Cash Income",
-                              "OASDI tax" = "OASDI Tax",
-                              "Other family member income" = "Other Family Member Income",
-                              "Own benefit" = "Own Benefit",
-                              "Own earnings" = "Own Earnings",
-                              "Gross annuity income" = "Annuity Income",
-                              "Gross cash income" = "Cash Income",
-                              "Dividend income" = "Dividend Income",
-                              "Interest income" = "Interest Income",
-                              "IRA withdrawal" = "IRA Withdrawal",
-                              "Rental income" = "Rental Income",
-                              "Social Security benefits" = "Social Security Benefits",
-                              "Spouse benefit" = "Spouse Benefit",
-                              "Spouse earnings" = "Spouse Earnings",
-                              "Supplemental Security Income" = "SSI",
-                              "State income tax" = "State Income Tax",
-                              "Financial assets" = "Financial Assets",
-                              "Retirement account assets" = "Retirement Account Assets",
+                  choices = c("Annuitized financial income" = "`Annuitized Financial Income`",
+                              "Defined-benefit pension income" = "`DB Pension Income`",
+                              "Earned income" = "`Earned Income`",
+                              "Federal income tax" = "`Federal Income Tax`",
+                              "Hospital Insurance program tax" = "`HI Tax`",
+                              "Imputed rental income" = "`Imputed Rental Income`",
+                              "Means- and non-means tested benefits" = "`Means+Nonmeans Benefits`",
+                              "Medicare Part B premium" = "`Medicare Part B Premium`",
+                              "Medicare surtax" = "`Medicare Surtax`",
+                              "Net annuity income" = "`Net Annuity Income`",
+                              "Net cash income" = "`Net Cash Income`",
+                              "OASDI tax" = "`OASDI Tax`",
+                              "Other family member income" = "`Other Family Member Income`",
+                              "Own benefit" = "`Own Benefit`",
+                              "Own earnings" = "`Own Earnings`",
+                              "Gross annuity income" = "`Annuity Income`",
+                              "Gross cash income" = "`Cash Income`",
+                              "Dividend income" = "`Dividend Income`",
+                              "Interest income" = "`Interest Income`",
+                              "IRA withdrawal" = "`IRA Withdrawal`",
+                              "Rental income" = "`Rental Income`",
+                              "Social Security benefits" = "`Social Security Benefits`",
+                              "Spouse benefit" = "`Spouse Benefit`",
+                              "Spouse earnings" = "`Spouse Earnings`",
+                              "Supplemental Security Income" = "`SSI`",
+                              "State income tax" = "`State Income Tax`",
+                              "Financial assets" = "`Financial Assets`",
+                              "Retirement account assets" = "`Retirement Account Assets`",
                               "Total assets" = "`Total Assets`"))),
 
     column(6, 
@@ -422,7 +435,6 @@ server <- function(input, output) {
       filter(comparison == input$comparison) %>%   
       filter(baseline == input$baseline) %>% 
       filter(scale == input$scale) %>%
-      filter(percentile != "Percent with Income Source") %>%
       select_("subgroup", value = input$income.tax.premium, "percentile", "year")   
   })  
   
@@ -518,16 +530,10 @@ server <- function(input, output) {
     
     output$text_have_income <- renderUI({
       
-      percent <- distribution %>%
+      percent <- have_income %>%
         filter(option == input$option) %>%
-        filter(group == "All Individuals") %>%  
         filter(year == input$year) %>%
-        filter(comparison == input$comparison) %>%   
-        filter(baseline == input$baseline) %>% 
-        filter(scale == input$scale) %>%
-        filter(income.tax.premium == input$income.tax.premium) %>%
-        filter(percentile == "Percent with Income Source") %>% 
-        select(value)
+        select_(value = input$income.tax.premium)   
       
       text_income <- as.character(income_tax_premium_text %>%
         filter(income_tax_premium == input$income.tax.premium) %>%
