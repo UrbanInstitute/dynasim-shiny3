@@ -12,33 +12,75 @@ source('urban_institute_themes/urban_theme_windows.R')
 # Source file for Mac
 #source('urban_institute_themes/urban_theme_mac.R')
 
-# Load Data
-income <- read_csv("data/incomes.csv",
-                   col_types = cols(
-                     .default = col_double(),
-                     subgroup = col_character(),
-                     year = col_integer(),
-                     percentile = col_character(),
-                     group = col_character(),
-                     option = col_character(),
-                     scale = col_character(),
-                     baseline = col_character(),
-                     comparison = col_character()
-                   )
-)
+# factor labels and levels
+percentile_levels <- c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99")
+subgroup_levels <- c("All Individuals", "Females", "Males",
+                     "African-Americans", "Hispanics", "White, Non-Hispanics",
+                     "Bottom Quintile", "Quintile 2", "Quintile 3", "Quintile 4",
+                     "Top Quintile", "Never Married Individuals",
+                     "Divorced Individuals", "Married Individuals",
+                     "Widowed Individuals", "High School Dropouts",
+                     "High School Graduates", "Some College", "College Graduates")
 
-assets <- read_csv("data/assets.csv", 
-                   col_types =  cols(
-                     .default = col_double(),
-                     group = col_character(),
-                     subgroup = col_character(),
-                     year = col_integer(),
-                     percentile = col_character(),
-                     option = col_character(),
-                     scale = col_character(),
-                     baseline = col_character(),
-                     comparison = col_character()
-                   )
+subgroup_labels <- c("All individuals", "Female", "Male", "Black", "Hispanic",
+                     "White, non-Hispanic", "Bottom quintile", "2nd quintile",
+                     "3rd quintile", "4th quintile", "Top quintile", 
+                     "Never married", "Divorced", "Married", "Widowed",
+                     "HS dropout", "HS graduate", "Some college", 
+                     "College graduate")
+
+# Load Data
+
+level <- read_csv("data/level.csv", 
+  col_types = cols(
+    .default = col_double(),
+    subgroup = col_character(),
+    year = col_integer(),
+    percentile = col_character(),
+    group = col_character(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    SSI = col_integer()
+  )
+) %>%
+  mutate(percentile = factor(percentile, levels = percentile_levels)) %>%
+  mutate(subgroup = factor(subgroup, levels = subgroup_levels,
+                           labels = subgroup_labels))
+
+dollar_change <- read_csv("data/dollar-change.csv", 
+  col_types = cols(
+    .default = col_double(),
+    subgroup = col_character(),
+    year = col_integer(),
+    percentile = col_character(),
+    group = col_character(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    `Means+Nonmeans Benefits` = col_integer(),
+    `Medicare Part B Premium` = col_integer(),
+    `Medicare Part D Premium` = col_integer(),
+    `Other Family Member Income` = col_integer()
+  )
+) %>%
+  mutate(percentile = factor(percentile, levels = percentile_levels)) %>%
+  mutate(subgroup = factor(subgroup, levels = subgroup_levels,
+                           labels = subgroup_labels))
+
+percent_with_income <- read_csv("data/percent-with-income.csv",
+  col_types = cols(
+    .default = col_double(),
+    subgroup = col_character(),
+    year = col_integer(),
+    percentile = col_character(),
+    group = col_character(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    comparison = col_character(),
+    `Net Annuity Income` = col_integer()
+  )
 )
 
 scale_text <- read_csv("text/scale.csv",
@@ -75,85 +117,6 @@ demographic <- read_csv("text/demographic.csv",
     description = col_character()
   )
 )
-
-# Clean and merge income and asset data
-assets <- assets %>%
-  filter(subgroup != "Other") %>%
-  mutate(group = if_else(group == "All", "All Individuals", group),
-         group = if_else(group == "Income Quintile", "Per Capita Income Quintile", group))
-
-
-table(income$group %in% assets$group)
-table(income$subgroup %in% assets$subgroup)
-table(income$year %in% assets$year)
-table(income$percentile %in% assets$percentile)
-table(income$option %in% assets$option)
-table(income$scale %in% assets$scale)
-table(income$baseline %in% assets$baseline)
-table(income$comparison %in% assets$comparison)
-
-distribution <- left_join(income, assets, by = c("group", "subgroup", "year", "percentile", "option", "scale", "baseline", "comparison"))
-
-rm(income, assets)
-
-# Gather the data
-distribution <- distribution %>%
-  rename(`Medicare Surtax` = `Medicare SurTax`) %>%
-  mutate(group = gsub("Per Capita ", "", group)) %>%
-  mutate(subgroup = gsub(" \\(Income\\)", "", subgroup)) %>%
-  mutate(percentile = factor(percentile, levels = c("Mean", "P5", "P10", "P25", "P50", "P75", "P90", "P95", "P99", "Percent with Income Source"))) %>%
-  mutate(subgroup = factor(subgroup, levels = c("All Individuals",
-                                                "Females",
-                                                "Males",
-                                                "African-Americans",
-                                                "Hispanics",
-                                                "White, Non-Hispanics",
-                                                "Bottom Quintile",
-                                                "Quintile 2",
-                                                "Quintile 3",
-                                                "Quintile 4",
-                                                "Top Quintile",
-                                                "Never Married Individuals",
-                                                "Divorced Individuals",
-                                                "Married Individuals",
-                                                "Widowed Individuals",
-                                                "High School Dropouts",
-                                                "High School Graduates",
-                                                "Some College",
-                                                "College Graduates"),
-                           labels = c("All individuals",
-                                      "Female",
-                                      "Male",
-                                      "Black",
-                                      "Hispanic",
-                                      "White, non-Hispanic",
-                                      "Bottom quintile",
-                                      "2nd quintile",
-                                      "3rd quintile",
-                                      "4th quintile",
-                                      "Top quintile",
-                                      "Never married",
-                                      "Divorced",
-                                      "Married",
-                                      "Widowed",
-                                      "HS dropout",
-                                      "HS graduate",
-                                      "Some college",
-                                      "College graduate")))
-#%>%gather(`Annuitized Financial Income`:`Total Assets`, key = income.tax.premium, value = value)
-
-# Create tibble with % with income
-have_income <- distribution %>%
-  filter(percentile == "Percent with Income Source") %>%
-  filter(group == "All Individuals") %>%
-  filter(comparison == "level") %>%
-  filter(baseline == "Payable law") %>%
-  filter(scale == "per capita")
-
-
-# Create tibble with just mean and percentiles
-distribution <- distribution %>%
-  filter(percentile != "Percent with Income Source")
 
 ##
 ## SHINY
@@ -210,7 +173,6 @@ ui <- fluidPage(
     column(6,
            
            htmlOutput("text_have_income")
-           
            
     )
   ),
@@ -429,14 +391,26 @@ server <- function(input, output) {
     })
 
   data_subset <- reactive({
-    distribution %>%
-      filter(option == input$option) %>%
-      filter(group == input$group) %>%  
-      filter(comparison == input$comparison) %>%   
-      filter(baseline == input$baseline) %>% 
-      filter(scale == input$scale) %>%
-      select_("subgroup", value = input$income.tax.premium, "percentile", "year")   
-  })  
+    if (input$comparison == "level") {  
+      
+      level %>%
+        filter(option == input$option) %>%
+        filter(group == input$group) %>%  
+        filter(baseline == input$baseline) %>% 
+        filter(scale == input$scale) %>%
+        select_("subgroup", value = input$income.tax.premium, "percentile", "year")      
+      
+    } else if (input$comparison == "dollar.change") {
+      
+      dollar_change %>%
+        filter(option == input$option) %>%
+        filter(group == input$group) %>%  
+        filter(baseline == input$baseline) %>% 
+        filter(scale == input$scale) %>%
+        select_("subgroup", value = input$income.tax.premium, "percentile", "year")     
+      
+    }
+  }) 
   
   output$chart <- renderPlot({  
 
@@ -530,7 +504,7 @@ server <- function(input, output) {
     
     output$text_have_income <- renderUI({
       
-      percent <- have_income %>%
+      percent <- percent_with_income %>%
         filter(option == input$option) %>%
         filter(year == input$year) %>%
         select_(value = input$income.tax.premium)   

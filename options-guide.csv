@@ -8,7 +8,7 @@ Opt0,Payable law,equivalent,X:\programs\run912\payable\BPCtableShellsEquivalentP
 2-taxssb,Increase benefits taxation,per capita,X:\programs\run912\opt2(increaseTaxSSB)\BPCtableShellsOPT2.xlsx,X:\programs\run912\opt2(increaseTaxSSB)\,BPCtableShellsOPT2.xlsx,FALSE
 2-taxssb,Increase benefits taxation,equivalent,X:\programs\run912\opt2(increaseTaxSSB)\BPCtableShellsEquivalentOPT2.xlsx,X:\programs\run912\opt2(increaseTaxSSB)\,BPCtableShellsEquivalentOPT2.xlsx,FALSE
 3-capSpouse,Cap spouse benefits,per capita,X:\programs\run912\opt3(capSpouse)\BPCtableShellsCapSpouse.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsCapSpouse.xlsx,FALSE
-3-capSpouse,Cap spouse benefits,equivalent,X:\programs\run912\opt3(capSpouse)\BPCtableShellsEquivalentOPT3.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsEquivalentOPT3.xlsx,FALSE
+3-capSpouse,Cap spouse benefits,equivalent,X:\programs\run912\opt3(capSpouse)\BPCtableShellsEquivalentCapSpouse.xlsx,X:\programs\run912\opt3(capSpouse)\,BPCtableShellsEquivalentOPT3.xlsx,FALSE
 4-survivorjs75,75 percent survivor benefit,per capita,X:\programs\run912\opt4(survivorjs75)\BPCtableShellsOPT4.xlsx,X:\programs\run912\opt4(survivorjs75)\,BPCtableShellsOPT4.xlsx,FALSE
 4-survivorjs75,75 percent survivor benefit,equivalent,X:\programs\run912\opt4(survivorjs75)\BPCtableShellsEquivalentOPT4.xlsx,X:\programs\run912\opt4(survivorjs75)\,BPCtableShellsEquivalentOPT4.xlsx,FALSE
 5-taxmax90%,90 percent tax max,per capita,X:\programs\run912\opt5(increaseTAXMAX)\BPCtableShellsOPT5.xlsx,X:\programs\run912\opt5(increaseTAXMAX)\,BPCtableShellsOPT5.xlsx,FALSE
