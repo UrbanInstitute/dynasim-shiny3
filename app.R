@@ -1,8 +1,10 @@
-## Libraries and Source Files
+# Libraries and Source Files
 library(shiny)
 library(tidyverse)
 library(scales)
 
+# Set options
+options(shiny.sanitize.errors = TRUE)
 options(scipen = 999)
 
 # Source file for Windows
