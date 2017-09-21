@@ -425,9 +425,6 @@ server <- function(input, output) {
       summarize(min = min(value))
     
     y.min <- min(0, as.numeric(y.min))
-    
-    print(y.max)
-    print(y.min)
 
     graphr <- function(origin, line.placement, line.color){
     
@@ -435,8 +432,9 @@ server <- function(input, output) {
         ggplot() +
           geom_bar(aes(x = percentile, y = value, fill = subgroup), position = "dodge", stat = "identity") +
           scale_y_continuous(limits = c(y.min, as.numeric(y.max)), labels = scales::dollar) +
-          labs(caption = "DYNASIM3",
-               x = "Mean and percentiles",
+          labs(caption = "DYNASIM3
+                          Urban Institute",
+               x = "Percentile",
                y = NULL) +
           expand_limits(y = origin) +
           geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
