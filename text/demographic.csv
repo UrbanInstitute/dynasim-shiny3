@@ -1,5 +1,5 @@
 demographic,description
-All Individuals,<h4>All individuals</h4><p>Everyone ages 62 and older in DYNASIM</p>
+All Individuals,<h4>All individuals</h4><p>Everyone ages 62 and older in DYNASIM.</p>
 Sex,<h4>Sex</h4><p>Individuals are classified as male or female. Sex does not change over time in DYNASIM.</p>
 Race/Ethnicity,"<h4>Race or ethnicity</h4><p>Individuals are classified as one of four racial or ethnic groups: Hispanic (regardless of race), non-Hispanic white, non-Hispanic black, or other. Race and ethnicity do not change over time in DYNASIM.</p>"
 Education,"<h4>Education</h4><p>Individuals are classified as high school dropout, high school graduate, some college, and college graduate. Education can increase over time in DYNASIM.</p>"

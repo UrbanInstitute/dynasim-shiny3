@@ -186,13 +186,13 @@ ui <- fluidPage(
                   label = "Social Security Reform",
                   choices = c("Payable law" = "Payable law",
                               "Scheduled law" = "Scheduled law",
-                              "BPC package" = "BPC package",
+                              "Bipartisan Policy Center package" = "Bipartisan Policy Center package",
                               "Annual primary insurance amount" = "Annual primary insurance amount", 
                               "Basic minimum benefit" = "Basic minimum benefit",                               
                               "Increase benefits taxation" = "Increase benefits taxation",
                               "Cap spouse benefits" = "Cap spouse benefits",
-                              "75 percent survivor benefit" = "75 percent survivor benefit",
-                              "90 percent tax max" = "90 percent tax max",
+                              "75% survivor benefit" = "75% survivor benefit",
+                              "90% tax max" = "90% tax max",
                               "90% tax max and 13.4% payroll tax" = "90% tax max and 13.4% payroll tax",
                               "Reduce COLA" = "Reduce COLA",
                               "Chained-CPI COLA" = "Chained-CPI COLA",
@@ -202,10 +202,10 @@ ui <- fluidPage(
                               "Increase FRA and EEA" = "Increase FRA and EEA",
                               "$150,000 tax max" = "$150,000 tax max",
                               "$180,000 tax max" = "$180,000 tax max",
-                              "Eliminate the tax max" = "Eliminate the tax Mmax",
-                              "13.4 percent payroll tax" = "13.4 percent payroll tax",
-                              "14.4 percent payroll tax" = "14.4 percent payroll tax",
-                              "15.4 percent payroll tax" = "15.4 percent payroll tax")),           
+                              "Eliminate the tax max" = "Eliminate the tax max",
+                              "13.4% payroll tax" = "13.4% payroll tax",
+                              "14.4% payroll tax" = "14.4% payroll tax",
+                              "15.4% payroll tax" = "15.4% payroll tax")),           
 
       selectInput(inputId = "baseline",
                   label = "Baseline",
@@ -252,13 +252,13 @@ ui <- fluidPage(
       
       selectInput(inputId = "group",
                   label = "Demographic",
-                  choices = c("All individuals" = "All Individuals",
+                  choices = c("All individuals" = "All individuals",
                               "Sex" = "Sex",
-                              "Race or ethnicity" = "Race/Ethnicity",
+                              "Race or ethnicity" = "Race or ethnicity",
                               "Education" = "Education",
-                              "Marital status" = "Marital Status",
-                              "Shared income quintile" = "Income Quintile",
-                              "Shared lifetime earnings quintile" = "Lifetime Earnings Quintile")),
+                              "Marital status" = "Marital status",
+                              "Shared income quintile" = "Income quintile",
+                              "Shared lifetime earnings quintile" = "Lifetime earnings quintile")),
       
       selectInput(inputId = "scale",
                   label = "Scale",
@@ -347,7 +347,7 @@ server <- function(input, output) {
     if (input$income.tax.premium == "Medicare Surtax") {"Medicare surtax"} else
     if (input$income.tax.premium == "Net Annuity Income") {"net annuity income"} else
     if (input$income.tax.premium == "Net Cash Income") {"net cash income"} else
-    if (input$income.tax.premium == "OASDI Tax") {"OASDI tax"} else
+    if (input$income.tax.premium == "OASDI Tax") {"Old Age and Survivors Disability Insurance tax"} else
     if (input$income.tax.premium == "Other Family Member Income") {"other family member income"} else
     if (input$income.tax.premium == "Own Benefit") {"own benefit"} else
     if (input$income.tax.premium == "Own Earnings") {"own earnings"} else
@@ -375,20 +375,20 @@ server <- function(input, output) {
     if (input$comparison == "level") {
       input$option
     } else {
-      paste(input$option, "vs.", input$baseline)
+      paste(input$option, "versus", tolower(input$baseline))
     }
     
   })
   
   output$subtitleb <- renderText({
     
-    if (input$group == "All Individuals") {"Everyone ages 62+, 2015 dollars"} else
-    if (input$group == "Sex") {"Ages 62+ by sex, 2015 dollars"} else
-    if (input$group == "Race/Ethnicity") {"Ages 62+ by race or ethnicity, 2015 dollars"} else
-    if (input$group == "Education") {"Ages 62+ by dducation, 2015 dollars"} else
-    if (input$group == "Marital Status") {"Ages 62+ by marital status, 2015 dollars"} else
-    if (input$group == "Income Quintile") {"Ages 62+ by shared income quintile, 2015 dollars"} else
-    if (input$group == "Lifetime Earnings Quintile") {"Ages 62+ by shared lifetime earnings quintile, 2015 dollars"}
+    if (input$group == "All Individuals") {"Everyone age 62 and older, 2015 dollars"} else
+    if (input$group == "Sex") {"Everyone age 62 and older by sex, 2015 dollars"} else
+    if (input$group == "Race/Ethnicity") {"Everyone age 62 and older by race or ethnicity, 2015 dollars"} else
+    if (input$group == "Education") {"Everyone age 62 and older by education, 2015 dollars"} else
+    if (input$group == "Marital Status") {"Everyone age 62 and older by marital status, 2015 dollars"} else
+    if (input$group == "Income Quintile") {"Everyone age 62 and older by shared income quintile, 2015 dollars"} else
+    if (input$group == "Lifetime Earnings Quintile") {"Everyone age 62 and older by shared lifetime earnings quintile, 2015 dollars"}
   
     })
 
