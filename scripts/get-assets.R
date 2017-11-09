@@ -25,8 +25,6 @@ files <- read_csv("options-guide.csv",
                   )) %>%
   select(option, scale, link, bpc_boolean)
 
-files <- files[1:45, ]
-
 # Create functions that clean the clunky Excel files
 distribution_scraper <- function(link, bpcpackage, option_label, scale_label) {
   
