@@ -129,6 +129,8 @@ latoCSS <- "http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300itali
 ui <- fluidPage(
   
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = latoCSS)),
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")),  
+  tags$head(tags$base(target = "_blank")),  
   tags$head(tags$script(src = "pym.min.js")),
   
   theme = "shiny.css",
@@ -138,9 +140,10 @@ ui <- fluidPage(
     column(12,
            
            p("Social Security reform affects low-, middle-, and high-income 
-             retirees differently. Use this interactive to explore the impacts 
+             retirees differently. Use this interactive to explore the effects 
              of Social Security reforms across the income and wealth 
-             distributions for different populations from 2015 to 2065.")
+             distributions for current and future older Americans from 2015 to 
+             2065.")
            
            )
   ),
@@ -186,13 +189,13 @@ ui <- fluidPage(
                   label = "Social Security Reform",
                   choices = c("Payable law" = "Payable law",
                               "Scheduled law" = "Scheduled law",
-                              "BPC package" = "BPC package",
+                              "Bipartisan Policy Center package" = "Bipartisan Policy Center package",
                               "Annual primary insurance amount" = "Annual primary insurance amount", 
                               "Basic minimum benefit" = "Basic minimum benefit",                               
                               "Increase benefits taxation" = "Increase benefits taxation",
                               "Cap spouse benefits" = "Cap spouse benefits",
-                              "75 percent survivor benefit" = "75 percent survivor benefit",
-                              "90 percent tax max" = "90 percent tax max",
+                              "75% survivor benefit" = "75% survivor benefit",
+                              "90% tax max" = "90% tax max",
                               "90% tax max and 13.4% payroll tax" = "90% tax max and 13.4% payroll tax",
                               "Reduce COLA" = "Reduce COLA",
                               "Chained-CPI COLA" = "Chained-CPI COLA",
@@ -202,10 +205,10 @@ ui <- fluidPage(
                               "Increase FRA and EEA" = "Increase FRA and EEA",
                               "$150,000 tax max" = "$150,000 tax max",
                               "$180,000 tax max" = "$180,000 tax max",
-                              "Eliminate the tax max" = "Eliminate the tax Mmax",
-                              "13.4 percent payroll tax" = "13.4 percent payroll tax",
-                              "14.4 percent payroll tax" = "14.4 percent payroll tax",
-                              "15.4 percent payroll tax" = "15.4 percent payroll tax")),           
+                              "Eliminate the tax max" = "Eliminate the tax max",
+                              "13.4% payroll tax" = "13.4% payroll tax",
+                              "14.4% payroll tax" = "14.4% payroll tax",
+                              "15.4% payroll tax" = "15.4% payroll tax")),           
 
       selectInput(inputId = "baseline",
                   label = "Baseline",
@@ -214,35 +217,35 @@ ui <- fluidPage(
       
       selectInput(inputId = "income.tax.premium",
                   label = "Income, Tax, Premium, or Asset",
-                  choices = c("Annuitized financial income" = "`Annuitized Financial Income`",
+                  choices = c("Gross annuity income" = "`Annuity Income`",
+                              "Gross cash income" = "`Cash Income`",
+                              "Net annuity income" = "`Net Annuity Income`",
+                              "Net cash income" = "`Net Cash Income`",
+                              "Financial assets" = "`Financial Assets`",
+                              "Retirement account assets" = "`Retirement Account Assets`",
+                              "Total assets" = "`Total Assets`",                    
+                              "Annuitized financial income" = "`Annuitized Financial Income`",
                               "Defined-benefit pension income" = "`DB Pension Income`",
+                              "Dividend income" = "`Dividend Income`",
                               "Earned income" = "`Earned Income`",
                               "Federal income tax" = "`Federal Income Tax`",
                               "Hospital Insurance program tax" = "`HI Tax`",
                               "Imputed rental income" = "`Imputed Rental Income`",
-                              "Means- and non-means tested benefits" = "`Means+Nonmeans Benefits`",
+                              "Interest income" = "`Interest Income`",
+                              "IRA withdrawal" = "`IRA Withdrawal`",
+                              "Means- and non-means-tested benefits" = "`Means+Nonmeans Benefits`",
                               "Medicare Part B premium" = "`Medicare Part B Premium`",
                               "Medicare surtax" = "`Medicare Surtax`",
-                              "Net annuity income" = "`Net Annuity Income`",
-                              "Net cash income" = "`Net Cash Income`",
                               "OASDI tax" = "`OASDI Tax`",
                               "Other family member income" = "`Other Family Member Income`",
                               "Own benefit" = "`Own Benefit`",
                               "Own earnings" = "`Own Earnings`",
-                              "Gross annuity income" = "`Annuity Income`",
-                              "Gross cash income" = "`Cash Income`",
-                              "Dividend income" = "`Dividend Income`",
-                              "Interest income" = "`Interest Income`",
-                              "IRA withdrawal" = "`IRA Withdrawal`",
                               "Rental income" = "`Rental Income`",
                               "Social Security benefits" = "`Social Security Benefits`",
                               "Spouse benefit" = "`Spouse Benefit`",
                               "Spouse earnings" = "`Spouse Earnings`",
                               "Supplemental Security Income" = "`SSI`",
-                              "State income tax" = "`State Income Tax`",
-                              "Financial assets" = "`Financial Assets`",
-                              "Retirement account assets" = "`Retirement Account Assets`",
-                              "Total assets" = "`Total Assets`"))),
+                              "State income tax" = "`State Income Tax`"))),
 
     column(6, 
       selectInput(inputId = "comparison",
@@ -325,6 +328,42 @@ ui <- fluidPage(
     
   ),
   
+  br(),
+  
+  fluidRow(
+    column(6,
+           h3("About the data"),
+           HTML("<p>The Urban Institute’s Dynamic Simulation of Income Model (DYNASIM) projects the size and characteristics (such as financial, health, and disability status) 
+                of the US population for the next 75 years. Using the best and most recent data available, it helps sort out how profound social, economic, and demographic 
+                shifts will likely affect older adults and their retirement as well as taxpayers, business, and government. The model can also show how outcomes would likely 
+                evolve under changes to public policies, business practices, or individual behaviors.</p>"),
+           HTML("<p><a href='https://www.urban.org/node/65826'>Read the DYNASIM primer</a></p>"),
+           HTML("<p><a href='https://www.urban.org/research/publication/dynamic-simulation-income-model-dynasim-overview'>Review the DYNASIM documentation</a></p>"),
+           HTML("<p>Questions about DYNASIM? <a href='mailto:retirementpolicy@urban.org' target='_self'>Contact us</a>.</p>")
+           
+           ),
+    column(6,
+           h3("Project Credits"),
+           HTML("<p><i>This work was funded by the US Department of Labor’s Employee Benefits Security Administration. 
+                We are grateful to them and to all our funders, who make it possible for Urban Institute to advance its mission.</i></p> 
+                <p><i>The views expressed are those of the authors and should not be attributed to the Urban Institute, its trustees, 
+                or its funders. Funders do not determine research findings or the insights and recommendations of our experts. 
+                More information on our funding principles is available <a href='https://www.urban.org/support'>here</a>. 
+                Read our terms of service <a href='https://www.urban.org/terms-service'>here</a></i>.</p>"),
+           
+           h5(HTML("<div class='credit-labels'>RESEARCH")),
+           HTML("<div class='credit-names'><p><a href='https://www.urban.org/author/karen-e-smith'>Karen Smith</a></p></div>"),
+           h5(HTML("<div class='credit-labels'>DESIGN AND DEVELOPMENT")),
+           HTML("<div class='credit-names'><p><a href='https://www.urban.org/author/aaron-r-williams'>Aaron Williams</a>, <a href='https://www.urban.org/author/jerry-ta'>Jerry Ta</a>, and <a href='https://www.urban.org/author/benjamin-chartoff'>Ben Chartoff</a></p></div>"),
+           h5(HTML("<div class='credit-labels'>EDITING")),
+           HTML("<div class='credit-names'><p><a href='https://www.urban.org/author/michael-marazzi'>Michael Marazzi</a></p></div>"),
+           h5(HTML("<div class='credit-labels'>WRITING")),
+           HTML("<div class='credit-names'><p><a href = 'https://www.urban.org/author/karen-e-smith'>Karen Smith</a> and <a href='https://www.urban.org/author/aaron-r-williams'>Aaron Williams</a></p></div>"),
+           
+           HTML("Copyright &copy; <a href='https://www.urban.org/'>Urban Institute</a> September 2017. View this project on <a href='https://github.com/urbaninstitute/dynasim-shiny1.git'>GitHub</a>.</p>")
+           )
+    ),
+  
   tags$script(src = "activatePym.js")
 )
 
@@ -336,35 +375,35 @@ server <- function(input, output) {
     
     comparison <- ifelse(input$comparison == "level", "", "Change in ")
     
-    incomes.taxes <- if (input$income.tax.premium == "Annuitized Financial Income") {"annuitized financial income"} else
-    if (input$income.tax.premium == "DB Pension Income") {"defined-benefit pension income"} else
-    if (input$income.tax.premium == "Earned Income") {"earned income"} else
-    if (input$income.tax.premium == "Federal Income Tax") {"federal income tax"} else
-    if (input$income.tax.premium == "HI Tax") {"Hospital Insurance Program tax"} else
-    if (input$income.tax.premium == "Imputed Rental Income") {"imputed rental income"} else
-    if (input$income.tax.premium == "Means and Non-Means Tested Benefits") {"means- and non-means tested benefits"} else
-    if (input$income.tax.premium == "Medicare Part B Premium") {"Medicare Part B premium"} else
-    if (input$income.tax.premium == "Medicare Surtax") {"Medicare surtax"} else
-    if (input$income.tax.premium == "Net Annuity Income") {"net annuity income"} else
-    if (input$income.tax.premium == "Net Cash Income") {"net cash income"} else
-    if (input$income.tax.premium == "OASDI Tax") {"OASDI tax"} else
-    if (input$income.tax.premium == "Other Family Member Income") {"other family member income"} else
-    if (input$income.tax.premium == "Own Benefit") {"own benefit"} else
-    if (input$income.tax.premium == "Own Earnings") {"own earnings"} else
-    if (input$income.tax.premium == "Annuity Income") {"gross annuity income"} else
-    if (input$income.tax.premium == "Cash Income") {"gross cash income"} else
-    if (input$income.tax.premium == "Dividend Income") {"dividend income"} else
-    if (input$income.tax.premium == "Interest Income") {"interest income"} else
-    if (input$income.tax.premium == "IRA Withdrawal") {"IRA withdrawal"} else
-    if (input$income.tax.premium == "Rental Income") {"rental income"} else
-    if (input$income.tax.premium == "Social Security Benefits") {"Social Security benefits"} else
-    if (input$income.tax.premium == "Spouse Benefit") {"spouse benefit"} else
-    if (input$income.tax.premium == "Spouse Earnings") {"spouse earnings"} else
-    if (input$income.tax.premium == "SSI") {"Supplemental Security Income"} else
-    if (input$income.tax.premium == "State Income Tax") {"state income tax"} else
-    if (input$income.tax.premium == "Financial Assets") {"financial assets"} else
-    if (input$income.tax.premium == "Retirement Account Assets") {"retirement account assets"} else
-    if (input$income.tax.premium == "Total Assets") {"total assets"}      
+    incomes.taxes <- if (input$income.tax.premium == "`Annuitized Financial Income`") {"annuitized financial income"} else
+    if (input$income.tax.premium == "`DB Pension Income`") {"defined-benefit pension income"} else
+    if (input$income.tax.premium == "`Earned Income`") {"earned income"} else
+    if (input$income.tax.premium == "`Federal Income Tax`") {"federal income tax"} else
+    if (input$income.tax.premium == "`HI Tax`") {"Hospital Insurance Program tax"} else
+    if (input$income.tax.premium == "`Imputed Rental Income`") {"imputed rental income"} else
+    if (input$income.tax.premium == "`Means+Nonmeans Benefits`") {"means- and non-means tested benefits"} else
+    if (input$income.tax.premium == "`Medicare Part B Premium`") {"Medicare Part B premium"} else
+    if (input$income.tax.premium == "`Medicare Surtax`") {"Medicare surtax"} else
+    if (input$income.tax.premium == "`Net Annuity Income`") {"net annuity income"} else
+    if (input$income.tax.premium == "`Net Cash Income`") {"net cash income"} else
+    if (input$income.tax.premium == "`OASDI Tax`") {"OASDI tax"} else
+    if (input$income.tax.premium == "`Other Family Member Income`") {"other family member income"} else
+    if (input$income.tax.premium == "`Own Benefit`") {"own benefit"} else
+    if (input$income.tax.premium == "`Own Earnings`") {"own earnings"} else
+    if (input$income.tax.premium == "`Annuity Income`") {"gross annuity income"} else
+    if (input$income.tax.premium == "`Cash Income`") {"gross cash income"} else
+    if (input$income.tax.premium == "`Dividend Income`") {"dividend income"} else
+    if (input$income.tax.premium == "`Interest Income`") {"interest income"} else
+    if (input$income.tax.premium == "`IRA Withdrawal`") {"IRA withdrawal"} else
+    if (input$income.tax.premium == "`Rental Income`") {"rental income"} else
+    if (input$income.tax.premium == "`Social Security Benefits`") {"Social Security benefits"} else
+    if (input$income.tax.premium == "`Spouse Benefit`") {"spouse benefit"} else
+    if (input$income.tax.premium == "`Spouse Earnings`") {"spouse earnings"} else
+    if (input$income.tax.premium == "`SSI`") {"Supplemental Security Income"} else
+    if (input$income.tax.premium == "`State Income Tax`") {"state income tax"} else
+    if (input$income.tax.premium == "`Financial Assets`") {"financial assets"} else
+    if (input$income.tax.premium == "`Retirement Account Assets`") {"retirement account assets"} else
+    if (input$income.tax.premium == "`Total Assets`") {"total assets"}      
     
     paste(comparison, as.character(input$year), input$scale, incomes.taxes)
     
@@ -375,20 +414,20 @@ server <- function(input, output) {
     if (input$comparison == "level") {
       input$option
     } else {
-      paste(input$option, "vs.", input$baseline)
+      paste(input$option, "versus", tolower(input$baseline))
     }
     
   })
   
   output$subtitleb <- renderText({
     
-    if (input$group == "All Individuals") {"Everyone ages 62+, 2015 dollars"} else
-    if (input$group == "Sex") {"Ages 62+ by sex, 2015 dollars"} else
-    if (input$group == "Race/Ethnicity") {"Ages 62+ by race or ethnicity, 2015 dollars"} else
-    if (input$group == "Education") {"Ages 62+ by dducation, 2015 dollars"} else
-    if (input$group == "Marital Status") {"Ages 62+ by marital status, 2015 dollars"} else
-    if (input$group == "Income Quintile") {"Ages 62+ by shared income quintile, 2015 dollars"} else
-    if (input$group == "Lifetime Earnings Quintile") {"Ages 62+ by shared lifetime earnings quintile, 2015 dollars"}
+    if (input$group == "All Individuals") {"Everyone age 62 and older, 2015 dollars"} else
+    if (input$group == "Sex") {"Everyone age 62 and older by sex, 2015 dollars"} else
+    if (input$group == "Race/Ethnicity") {"Everyone age 62 and older by race or ethnicity, 2015 dollars"} else
+    if (input$group == "Education") {"Everyone age 62 and older by education, 2015 dollars"} else
+    if (input$group == "Marital Status") {"Everyone age 62 and older by marital status, 2015 dollars"} else
+    if (input$group == "Income Quintile") {"Everyone age 62 and older by shared income quintile, 2015 dollars"} else
+    if (input$group == "Lifetime Earnings Quintile") {"Everyone age 62 and older by shared lifetime earnings quintile, 2015 dollars"}
   
     })
 
